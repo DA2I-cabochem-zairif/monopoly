@@ -5,7 +5,7 @@ import java.util.*;
 import monopoly.evenements.Evenement;
 import monopoly.proprietes.Propriete;
 
-public class PersoJoueur
+public class PersoJoueur implements Joueur
 {
 	private int numero;
 	private String nom;
@@ -13,9 +13,9 @@ public class PersoJoueur
 	private boolean elimine = false;
 	private int especes = 150000;
 	private Case position;
-	private List<Propriete> titres = null;
-	private List<Evenement> cartes = null;
-	private Stack<Evenement> chosesAFaire = null;
+        private List<Propriete> titres = new List<Propriete>();
+	private List<Evenement> cartes = new List<Evenement>();
+	private Stack<Evenement> chosesAFaire = new Stack<Evenement>();
 	
 	public PersoJoueur(int numero, String nom)
 	{
@@ -126,4 +126,20 @@ public class PersoJoueur
     {
 		return this.chosesAFaire;
 	}
+    
+    public void addProp(Propriete prop)
+    {
+	this.titres.add(prop);
+    }
+    
+    public String listerProp()
+    {
+	for (Propriete p : this.titres)
+	    System.out.println(p);
+    }
+    
+    public String toString()
+    {
+	return "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\n";
+    }
 }

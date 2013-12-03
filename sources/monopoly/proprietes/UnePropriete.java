@@ -118,6 +118,6 @@ public abstract class UnePropriete implements Propriete
     
     public String toString()
     {
-	"Nom : "+this.nom+"\nPrix : "+this.prix+"\n";
+	return "Nom : "+this.nom+"\nPrix : "+this.prix+"\n";
     }
 }
