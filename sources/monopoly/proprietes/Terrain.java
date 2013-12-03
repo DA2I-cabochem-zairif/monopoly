@@ -52,4 +52,17 @@ public class Terrain extends UnePropriete
 	
 	return detruire;
     }
+
+     /** Montant du loyer à percevoir */
+    public int loyer()
+    {
+	if(this.groupe().proprietaireUnique()){
+	    if(niveauImmo > 0){
+		return this.loyer[niveauImmo];
+	    }
+	    return this.loyer[niveauImmo]*2;
+	}else{
+	    return this.loyer[niveauImmo];
+	}
+    }
 }

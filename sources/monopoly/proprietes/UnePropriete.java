@@ -11,7 +11,7 @@ public abstract class UnePropriete implements Propriete
     private String nom;
     private boolean estHypotheque;
     private Joueur proprietaire;
-    private int loyer;
+    private int[] loyer;
     private int prix;
     private int valeurHypo;
     private Groupe groupe;
@@ -38,6 +38,10 @@ public abstract class UnePropriete implements Propriete
     public String nom()
     {
 	return this.nom;
+    }
+
+    public void setProprietaire(Joueur j){
+	this.proprietaire = j;
     }
     
     /** Indique si la propriété est hypothéquée */
@@ -103,15 +107,17 @@ public abstract class UnePropriete implements Propriete
     }
     
     /** Montant du loyer à percevoir */
-    public int loyer()
-    {
-	return this.loyer;
-    }
+    public abstract int loyer();
     
     /** Niveau des constructions (0 = terrain nu, 1 à 4 = nb de
      * maisons, 5 = hôtel)  */
     public int niveauImmobilier()
     {
 	return this.niveauImmo;
+    }
+    
+    public String toString()
+    {
+	"Nom : "+this.nom+"\nPrix : "+this.prix+"\n";
     }
 }
