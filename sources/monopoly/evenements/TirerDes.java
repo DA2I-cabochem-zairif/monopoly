@@ -7,5 +7,6 @@ import monopoly.jeu.Case ;
  * événements du jeu */
 public class TirerDes extends AbstractEvent {
     
+    public void executer(){}
 
 }

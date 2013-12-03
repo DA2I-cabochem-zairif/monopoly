@@ -5,6 +5,6 @@ import monopoly.jeu.Case ;
 
 /** Cette Classes abstraite implémente les fonctionnalités associées aux
  * événements du jeu */
-public class Emprisonnement extends AbstractEvent {
+public class PayerLoyer extends AbstractEvent {
     public void executer(){}
 }
