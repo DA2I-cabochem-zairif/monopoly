@@ -1,7 +1,7 @@
 package monopoly.evenements;
 
-import monopoly.jeu.Joueur;
-import monopoly.jeu.Case;
+import monopoly.jeu.*;
+import monopoly.proprietes.*;
 
 public class AchatProp extends AbstractEvent
 {
@@ -17,7 +17,7 @@ public class AchatProp extends AbstractEvent
     {
 	if (this.cible.payer(this.prop.prixAchat()))
 	{
-	    this.cible.addProp(prop);
+	    this.cible.titres().add(prop);
 	    this.prop.setProprietaire(this.cible);
 	}
     }

@@ -13,8 +13,8 @@ public class PersoJoueur implements Joueur
 	private boolean elimine = false;
 	private int especes = 150000;
 	private Case position;
-        private List<Propriete> titres = new List<Propriete>();
-	private List<Evenement> cartes = new List<Evenement>();
+        private List<Propriete> titres = new ArrayList<Propriete>();
+	private List<Evenement> cartes = new ArrayList<Evenement>();
 	private Stack<Evenement> chosesAFaire = new Stack<Evenement>();
 	
 	public PersoJoueur(int numero, String nom)
@@ -127,15 +127,12 @@ public class PersoJoueur implements Joueur
 		return this.chosesAFaire;
 	}
     
-    public void addProp(Propriete prop)
-    {
-	this.titres.add(prop);
-    }
-    
     public String listerProp()
     {
+	String liste = "";
 	for (Propriete p : this.titres)
-	    System.out.println(p);
+	    liste += p.toString();
+	return liste;
     }
     
     public String toString()

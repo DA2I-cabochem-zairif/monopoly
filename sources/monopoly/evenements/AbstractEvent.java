@@ -1,7 +1,7 @@
 package monopoly.evenements ;
 
-import monopoly.jeu.Joueur ;
-import monopoly.jeu.Case ;
+import monopoly.jeu.* ;
+import monopoly.jeu.* ;
 
 /** Cette Classes abstraite implémente les fonctionnalités associées aux
  * événements du jeu */

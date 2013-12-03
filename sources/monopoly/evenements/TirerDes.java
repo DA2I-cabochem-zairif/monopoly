@@ -7,6 +7,7 @@ import monopoly.jeu.* ;
 public class TirerDes extends AbstractEvent
 {
     private int lancer;
+    public static int DERNIER_LANCER;
     
     public TirerDes(String nom, Joueur cible)
     {
@@ -14,6 +15,7 @@ public class TirerDes extends AbstractEvent
 	double lancer1 = Math.random() * 6 + 1;
 	double lancer2 = Math.random() * 6 + 1;
 	lancer = (int)lancer1 + (int)lancer2;
+	TirerDes.DERNIER_LANCER = lancer;
     }
 
     public void executer()
