@@ -15,7 +15,7 @@ public abstract class UnePropriete implements Propriete
     private int prix;
     private int valeurHypo;
     private Groupe groupe;
-    private int niveauImmo;
+    protected int niveauImmo;
     
     public UnePropriete(Case pos, int prix, Groupe groupe)
     {
