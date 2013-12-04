@@ -8,6 +8,12 @@ public class UnGroupe implements Groupe
     private int coutImmo;
     private List<Propriete> lesProp = new ArrayList<Propriete>();
     
+    public UnGroupe(String nom, int cout)
+    {
+	this.nom = nom;
+	this.coutImmo = cout;
+    }
+    
     /** L'intitulé du groupe */
     public String nom()
     {
@@ -45,5 +51,16 @@ public class UnGroupe implements Groupe
 	}
 	
 	return prop;
+    }
+    
+    public String toString()
+    {
+	return "Nom du groupe : "+this.nom+"\nCout immobilier : "+this.coutImmo;
+    }
+    
+    public static void main(String [] args)
+    {
+	UnGroupe ug = new UnGroupe("Nom d'un groupe", 1000);
+	System.out.println(ug);
     }
 }

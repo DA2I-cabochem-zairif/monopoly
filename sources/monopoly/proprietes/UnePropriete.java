@@ -11,13 +11,13 @@ public abstract class UnePropriete implements Propriete
     private String nom;
     private boolean estHypotheque;
     private Joueur proprietaire;
-    private int[] loyer;
+    protected int[] loyer;
     private int prix;
     private int valeurHypo;
     private Groupe groupe;
     protected int niveauImmo;
     
-    public UnePropriete(Case pos, int prix, Groupe groupe)
+    public UnePropriete(Case pos, int prix, Groupe groupe, int[] loyer)
     {
 	this.position = pos;
 	this.nom = this.position.nom();
@@ -26,6 +26,7 @@ public abstract class UnePropriete implements Propriete
 	this.groupe = groupe;
 	this.niveauImmo = 0;
 	this.valeurHypo = this.prix / 2;
+	this.loyer = loyer;
     }
     
     /** La case du plateau de jeu associée à ce titre de propriété */
@@ -118,6 +119,6 @@ public abstract class UnePropriete implements Propriete
     
     public String toString()
     {
-	return "Nom : "+this.nom+"\nPrix : "+this.prix+"\n";
+	return "Nom de la propriété : "+this.nom+"\nPrix : "+this.prix+"\nLa case : "+this.position+"\nPropriétaire : "+this.proprietaire+"\nLoyers : "+this.loyer;
     }
 }

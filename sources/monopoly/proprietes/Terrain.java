@@ -7,9 +7,9 @@ public class Terrain extends UnePropriete
 {
     private int prixMaison;
     
-    public Terrain(int prixMaison, Case pos, int prix, Groupe groupe)
+    public Terrain(int prixMaison, Case pos, int prix, Groupe groupe, int[] loyer)
     {
-	super(pos, prix, groupe);
+	super(pos, prix, groupe, loyer);
 	this.prixMaison = prixMaison;
     }
     
@@ -64,5 +64,10 @@ public class Terrain extends UnePropriete
 	}else{
 	    return this.loyer[niveauImmo];
 	}
+    }
+    
+    public String toString()
+    {
+	return super.toString()+"\nPrix de la maison : "+this.prixMaison+"\n";
     }
 }

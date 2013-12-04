@@ -27,16 +27,22 @@ public class AchatProp extends AbstractEvent
 	return this.prop;
     }
     
+    public String toString()
+    {
+	return "Propriété concernée : \n"+this.prop+"\nJoueur concerné : "+this.cible+"\nNom de l'achat : "+this.nom;
+    }
+    
     public static void main(String [] args)
     {
-	System.out.println("------------ Joueur -----------");
 	PersoJoueur pj = new PersoJoueur(1, "Bob");
 	
-	System.out.println(pj);
+	int[] loyers = new int[5];
+	loyers[0] = 100 ; loyers[1] = 200 ; loyers[2] = 300 ; loyers[3] = 400 ; loyers[4] = 500 ; 
+	Terrain t = new Terrain(300, new MonoCase(1, "Une case"), 1500, new UnGroupe("Nom d'un groupe", 1000), loyers);
 	
-	System.out.println("------------ Propriete -----------");
-	Terrain t = new Terrain(300, new MonoCase(1, "Une case"), 1500, new Groupe());
-	
-	System.out.println(pj);
+	AchatProp ap = new AchatProp(t, "Transaction", pj);
+	System.out.println(ap);
+	ap.executer();
+	System.out.println(ap);
     }
 }
