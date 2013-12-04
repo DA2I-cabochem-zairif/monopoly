@@ -18,6 +18,14 @@ public class MonoCase implements Case
 	this.event = event;
     }
     
+    public MonoCase(int num, String nom)
+    {
+	this.num = num;
+	this.nom = nom;
+	this.prop = null;
+	this.event = null;
+    }
+    
     /** Numéro de la case */
     public int numero()
     {
@@ -48,5 +56,15 @@ public class MonoCase implements Case
     public Evenement evenement()
     {
 	return this.event;
+    }
+    
+    public void setProp(Propriete p)
+    {
+	this.prop = p;
+    }
+    
+    public void setEvent(Event e)
+    {
+	this.event = e;
     }
 }

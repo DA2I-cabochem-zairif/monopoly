@@ -29,7 +29,13 @@ public class AchatProp extends AbstractEvent
     
     public static void main(String [] args)
     {
+	System.out.println("------------ Joueur -----------");
 	PersoJoueur pj = new PersoJoueur(1, "Bob");
+	
+	System.out.println(pj);
+	
+	System.out.println("------------ Propriete -----------");
+	Terrain t = new Terrain(300, new MonoCase(1, "Une case"), 1500, new Groupe());
 	
 	System.out.println(pj);
     }

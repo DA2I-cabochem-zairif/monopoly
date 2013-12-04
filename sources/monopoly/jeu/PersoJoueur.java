@@ -135,6 +135,11 @@ public class PersoJoueur implements Joueur
 	return liste;
     }
     
+    public void liberer()
+    {
+	this.estEnPrison = false;
+    }
+    
     public String toString()
     {
 	return "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\n";
