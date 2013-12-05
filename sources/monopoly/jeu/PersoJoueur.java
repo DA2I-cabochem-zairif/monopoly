@@ -21,6 +21,7 @@ public class PersoJoueur implements Joueur
 	{
 		this.numero = numero;
 		this.nom = nom;
+		this.position = new MonoCase(1, "Case départ");
 	}
 	
 	/** Le numéro du joueur */
@@ -142,6 +143,9 @@ public class PersoJoueur implements Joueur
     
     public String toString()
     {
-	return "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\n";
+	String j = "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\nListe des propriétés : \nPlacé sur : "+this.position+"\n";
+	for (Propriete p : this.titres)
+	    j += p.nom()+"\n";
+	return j;
     }
 }

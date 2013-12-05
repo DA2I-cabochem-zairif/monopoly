@@ -38,11 +38,13 @@ public class AchatProp extends AbstractEvent
 	
 	int[] loyers = new int[5];
 	loyers[0] = 100 ; loyers[1] = 200 ; loyers[2] = 300 ; loyers[3] = 400 ; loyers[4] = 500 ; 
-	Terrain t = new Terrain(300, new MonoCase(1, "Une case"), 1500, new UnGroupe("Nom d'un groupe", 1000), loyers);
+	Terrain t = new Terrain(300, new MonoCase(2, "Case 2"), 1500, new UnGroupe("Nom d'un groupe", 1000), loyers);
+	MonoCase c2 = new MonoCase(6, "Case 6");
 	
 	AchatProp ap = new AchatProp(t, "Transaction", pj);
-	System.out.println(ap);
 	ap.executer();
-	System.out.println(ap);
+	System.out.println(pj);
+	pj.placerSur(c2);
+	System.out.println(pj);
     }
 }
