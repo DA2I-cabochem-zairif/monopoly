@@ -13,7 +13,7 @@ public class PersoJoueur implements Joueur
 	private boolean elimine = false;
 	private int especes = 150000;
 	private Case position;
-        private List<Propriete> titres = new ArrayList<Propriete>();
+    private List<Propriete> titres = new ArrayList<Propriete>();
 	private List<Evenement> cartes = new ArrayList<Evenement>();
 	private Stack<Evenement> chosesAFaire = new Stack<Evenement>();
 	
@@ -130,22 +130,20 @@ public class PersoJoueur implements Joueur
     
     public String listerProp()
     {
-	String liste = "";
+	String liste = "Liste des propriétés : \n";
 	for (Propriete p : this.titres)
-	    liste += p.toString();
+	    liste += p.nom();
 	return liste;
     }
     
     public void liberer()
     {
-	this.estEnPrison = false;
+    	this.estEnPrison = false;
     }
     
     public String toString()
     {
-	String j = "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\nListe des propriétés : \nPlacé sur : "+this.position+"\n";
-	for (Propriete p : this.titres)
-	    j += p.nom()+"\n";
-	return j;
+		String j = "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\nPlacé sur : "+this.position+"\n"+this.listerProp();
+		return j;
     }
 }

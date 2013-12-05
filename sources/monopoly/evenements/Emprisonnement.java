@@ -2,9 +2,17 @@ package monopoly.evenements ;
 
 import monopoly.jeu.Joueur ;
 import monopoly.jeu.Case ;
+import java.util.*;
 
-/** Cette Classes abstraite implémente les fonctionnalités associées aux
- * événements du jeu */
-public class Emprisonnement extends AbstractEvent {
-    public void executer(){}
+public class Emprisonnement extends AbstractEvent
+{	
+	public Emprisonnement(String nom, Joueur cible)
+    {
+		super(nom, cible);
+	}
+
+	public void executer()
+	{
+		this.cible.emprisonner();
+	}
 }

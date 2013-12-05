@@ -68,6 +68,6 @@ public class Terrain extends UnePropriete
     
     public String toString()
     {
-	return super.toString()+"\nPrix de la maison : "+this.prixMaison+"\n";
+    	return super.toString()+"\nPrix de la maison : "+this.prixMaison+"\n";
     }
 }

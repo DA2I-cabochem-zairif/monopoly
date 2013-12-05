@@ -65,10 +65,11 @@ public abstract class UnePropriete implements Propriete
     public boolean deshypothequer()
     {
 	boolean leve = false;
-	if (this.proprietaire.especes() > (this.valeurHypo + (this.valeurHypo * 0.1)))
+	if (this.proprietaire.especes() > (this.valeurHypo + (this.prix * 0.1)) && this.estHypotheque)
 	{
 	    leve = true;
 	    this.estHypotheque = false;
+	    this.proprietaire.payer((int)(this.valeurHypo + (this.prix * 0.1)));
 	}
 	
 	return leve;
@@ -119,6 +120,9 @@ public abstract class UnePropriete implements Propriete
     
     public String toString()
     {
-	return "Nom de la propriété : "+this.nom+"\nPrix : "+this.prix+"\nLa case : "+this.position+"\nPropriétaire : "+this.proprietaire+"\nLoyers : "+this.loyer;
+    	String prop = "Nom de la propriété : "+this.nom+"\nPrix : "+this.prix+"\nLa case : "+this.position+"\nLoyers : "+this.loyer+"\n";
+    	if (this.proprietaire != null)
+    		prop += this.proprietaire.nom();
+    	return prop;
     }
 }

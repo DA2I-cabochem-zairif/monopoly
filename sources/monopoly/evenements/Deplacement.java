@@ -2,9 +2,20 @@ package monopoly.evenements ;
 
 import monopoly.jeu.Joueur ;
 import monopoly.jeu.Case ;
+import monopoly.jeu.MonoCase;
 
-/** Cette Classes abstraite implémente les fonctionnalités associées aux
- * événements du jeu */
-public class Deplacement extends AbstractEvent {
-    public void executer(){}
+public class Deplacement extends AbstractEvent
+{
+	private Case caseCible;
+	
+    public Deplacement(String nom, Joueur cible, Case caseCible)
+    {
+		super(nom, cible);
+		this.caseCible = caseCible;
+	}
+
+	public void executer()
+	{
+		this.cible.placerSur(this.caseCible);
+	}
 }

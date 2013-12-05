@@ -20,11 +20,5 @@ public class PayerLoyer extends AbstractEvent
     	{
     		this.prop.proprietaire().verser(this.prop.loyer());
     	}
-    	
-    }
-    
-    public static void main(String[] args)
-    {
-	
     }
 }
