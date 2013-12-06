@@ -3,6 +3,7 @@ package monopoly.jeu;
 import java.util.*;
 
 import monopoly.evenements.Evenement;
+import monopoly.evenements.TirerDes;
 import monopoly.proprietes.Propriete;
 
 public class PersoJoueur implements Joueur
@@ -16,12 +17,23 @@ public class PersoJoueur implements Joueur
     private List<Propriete> titres = new ArrayList<Propriete>();
 	private List<Evenement> cartes = new ArrayList<Evenement>();
 	private Stack<Evenement> chosesAFaire = new Stack<Evenement>();
+	private List<Joueur> adversaires = new ArrayList<Joueur>();
+	private Game g;
 	
-	public PersoJoueur(int numero, String nom)
+	public PersoJoueur(int numero, String nom, Game g)
 	{
 		this.numero = numero;
 		this.nom = nom;
-		this.position = new MonoCase(1, "Case départ");
+		this.position = new MonoCase(1, "Case départ", g);
+		this.g = g;
+	}
+	
+	public PersoJoueur(int numero, String nom, Case depart, Game g)
+	{
+		this.numero = numero;
+		this.nom = nom;
+		this.position = depart;
+		this.g = g;
 	}
 	
 	/** Le numéro du joueur */
@@ -103,7 +115,15 @@ public class PersoJoueur implements Joueur
      * <code>this</code> et les éliminés)*/
     public List<Joueur> adversaires()
     {
-		return null;
+    	ArrayList<Joueur> adv = new ArrayList<Joueur>();
+    	for (Joueur j : this.g.lesJoueurs())
+    	{
+    		if (j.numero() != this.numero)
+    			adv.add(j);
+    	}
+    	this.adversaires = adv;
+    	
+		return this.adversaires;
 	}
     
     /** Titres de propriétés possédés par le joueur */
@@ -139,6 +159,13 @@ public class PersoJoueur implements Joueur
     public void liberer()
     {
     	this.estEnPrison = false;
+    }
+    
+    public int dernierLancer()
+    {
+    	TirerDes td = new TirerDes("Lancer", this);
+    	td.executer();
+    	return td.valeur();
     }
     
     public String toString()

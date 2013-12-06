@@ -3,7 +3,6 @@ package monopoly.evenements ;
 import java.util.Iterator;
 
 import monopoly.jeu.Joueur ;
-import monopoly.jeu.Case ;
 import monopoly.proprietes.Propriete;
 
 public class Recette extends AbstractEvent

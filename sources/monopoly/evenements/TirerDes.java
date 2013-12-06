@@ -19,23 +19,16 @@ public class TirerDes extends AbstractEvent
     	double lancer1 = Math.random() * 6 + 1;
     	double lancer2 = Math.random() * 6 + 1;
     	this.lancer = (int)lancer1 + (int)lancer2;
-    	TirerDes.DERNIER_LANCER = lancer;
-		Case ancienne = this.cible.position();
+    	TirerDes.DERNIER_LANCER = this.lancer;
+		/*Case ancienne = this.cible.position();
 		int numAncienne = ancienne.numero();
 		int numNouvelle = numAncienne + this.valeur();
 		Case nouvelle = new MonoCase(3, "Viens ici mon mignon");//ancienne.get(numNouvelle);
-		this.cible.placerSur(nouvelle);
+		this.cible.placerSur(nouvelle);*/
     }
     
     public int valeur()
     {
 	return this.lancer;
-    }
-    
-    public static void main(String [] args)
-    {
-	TirerDes td = new TirerDes("osef", new PersoJoueur(1, "osef"));
-	
-	System.out.println(td.valeur());
     }
 }

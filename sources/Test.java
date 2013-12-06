@@ -1,23 +1,13 @@
-import monopoly.evenements.AchatProp;
-import monopoly.evenements.Carte;
-import monopoly.evenements.Depense;
-import monopoly.evenements.Deplacement;
-import monopoly.evenements.Emprisonnement;
-import monopoly.evenements.PayerLoyer;
-import monopoly.evenements.Recette;
-import monopoly.evenements.TirerDes;
-import monopoly.jeu.MonoCase;
-import monopoly.jeu.PersoJoueur;
-import monopoly.proprietes.Terrain;
-import monopoly.proprietes.UnGroupe;
-
-
+import monopoly.evenements.*;
+import monopoly.jeu.*;
+import monopoly.proprietes.*;
 
 public class Test
 {
 	public static void main(String[] args)
 	{
-		PersoJoueur pj = new PersoJoueur(1, "Bob");
+		// Tests sur les évenements et les joueurs
+		/*PersoJoueur pj = new PersoJoueur(1, "Bob");
 		PersoJoueur pj2 = new PersoJoueur(2, "Lennon");
 		
 		int[] loyers = new int[5];
@@ -34,12 +24,12 @@ public class Test
 		/*TirerDes td = new TirerDes("Lance", pj);
 		td.executer();*/
 		//d.executer();
-		System.out.println(pj);
+		/*System.out.println(pj);
 		Recette r = new Recette("Recette", pj, 10000);
 		r.executer();
 		System.out.println(pj);
 		Depense test = new Depense("Je suis une carte", pj, 1000);
-		Carte c = new Carte("La carte", pj, test);
+		Carte c = new Carte(1, new UnGroupe("CC", 10), "La carte", pj, test);
 		c.executer();
 		System.out.println(pj);
 		/*System.out.println(pj2);
@@ -50,5 +40,9 @@ public class Test
 		/*Emprisonnement e = new Emprisonnement("Prison", pj);
 		e.executer();
 		System.out.println(pj.enPrison());*/
+		
+		Game g = new Game(20);
+		g.play();
+		
 	}
 }

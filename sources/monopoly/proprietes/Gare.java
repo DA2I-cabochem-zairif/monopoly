@@ -3,8 +3,29 @@ package monopoly.proprietes;
 import monopoly.jeu.Joueur;
 import monopoly.jeu.Case;
 
-public abstract class Gare extends UnePropriete{
-    public int loyer(){
-	return loyer*Math.pow(2,NiveauImmo);
+public class Gare extends Monopole
+{
+	public static int LOYER_BASE = 2500;
+	
+    public Gare(Case pos, int prix, Groupe groupe, int[] loyer)
+    {
+		super(pos, prix, groupe, loyer);
+	}
+    
+	public int loyer()
+	{
+		int loyer = Gare.LOYER_BASE;
+		Joueur prop = this.proprietaire();
+		int nb = 0;
+		for (Propriete p : this.groupe().composition())
+		{
+			if (p.proprietaire().nom().equals(prop) && !p.hypotheque())
+				nb++;
+		}
+		
+		for (int i = 2 ; i <= nb ; i++)
+			loyer *= 2;
+		
+		return loyer;
     }
 }

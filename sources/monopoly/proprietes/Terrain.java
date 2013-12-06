@@ -1,7 +1,6 @@
 package monopoly.proprietes ;
 
-import monopoly.jeu.Joueur ;
-import monopoly.jeu.Case ;
+import monopoly.jeu.*;
 
 public class Terrain extends UnePropriete
 {
