@@ -1,8 +1,9 @@
 package monopoly.jeu;
 
+import java.io.*;
 import java.util.*;
 
-import monopoly.evenements.AchatProp;
+import monopoly.evenements.*;
 import monopoly.proprietes.*;
 
 public class Game
@@ -11,6 +12,8 @@ public class Game
 	private List<Groupe> lesGroupes = new ArrayList<Groupe>();
 	private List<Joueur> lesJoueurs = new ArrayList<Joueur>();
 	private List<Propriete> lesProps = new ArrayList<Propriete>();
+	private List<String[]> paramsMonop = new ArrayList<String[]>();
+	
 	private int nbCases;
 	
 	public Game(int nbCases)
@@ -20,7 +23,7 @@ public class Game
 	
 	public void creerCases()
 	{
-		for (int i = 1 ; i < this.nbCases / 4 ; i++)
+		/*for (int i = 1 ; i < this.nbCases / 4 ; i++)
 		{
 			MonoCase mc = new MonoCase(i, "Voici la case "+i, this);
 			this.lesCases.add(mc);
@@ -36,6 +39,10 @@ public class Game
 		{
 			MonoCase mc = new MonoCase(i, "Voici la case "+i, this);
 			this.lesCases.add(mc);
+		}*/
+		for (String[] list : this.paramsMonop)
+		{
+			this.lesCases.add(new MonoCase(Integer.parseInt(list[0]), list[1], this));
 		}
 	}
 	
@@ -101,13 +108,90 @@ public class Game
 	
 	public void play()
 	{
+		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
 		this.creerCases();
 		this.creerJoueurs();
 		this.creerGroupes();
 		this.creerProprietes();
-		Joueur j = this.lesJoueurs.get(0);
+		for (Case c : this.lesCases)
+		{
+			System.out.println(c+"\n");
+		}
+		/*Joueur j = this.lesJoueurs.get(0);
 		System.out.println(j+"\n");
 		AchatProp acheterBd = new AchatProp(this.lesProps.get(0), "Achat du boulevard truc", j);
 		acheterBd.executer();
+		System.out.println(j+"\n");*/
+		
+		/*for (String[] listS : this.paramsMonop)
+		{
+			for (int i = 0 ; i < listS.length ; i++)
+			{
+				System.out.print(listS[i]+" ");
+			}
+			System.out.println("\nTaille : "+listS.length);
+		}*/
+	}
+	
+	public static ArrayList<String> readFile(File file)
+	{
+        ArrayList<String> result = new ArrayList<String>();
+
+        FileReader fr = null;
+		try
+		{
+			fr = new FileReader(file);
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+        BufferedReader br = new BufferedReader(fr);
+
+        try
+        {
+			for (String line = br.readLine(); line != null; line = br.readLine())
+			{
+			    result.add(line);
+			}
+		}
+        catch (IOException e)
+        {
+			e.printStackTrace();
+		}
+
+        try
+        {
+			br.close();
+		}
+        catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+        try
+        {
+			fr.close();
+		}
+        catch (IOException e)
+        {
+			e.printStackTrace();
+		}
+
+        return result;
+    }
+	
+	public void creerParamsMonop(String fileName, List<String[]> list)
+	{
+		String path = System.getProperty("user.dir" );
+		File file = new File(path+"/config/"+fileName);
+		ArrayList<String> csvToString = Game.readFile(file);
+		for (String s : csvToString)
+		{
+			String[] params = s.split(";");
+			//this.paramsMonop.add(params);
+			list.add(params);
+		}
+		//this.paramsMonop.remove(0);
+		list.remove(0);
 	}
 }
