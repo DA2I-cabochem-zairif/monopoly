@@ -64,4 +64,9 @@ public class Depense extends AbstractEvent
 			}
 		}
 	}
+	
+	public String toString()
+	{
+		return this.nom+". Somme à débourser : "+this.somme;
+	}
 }

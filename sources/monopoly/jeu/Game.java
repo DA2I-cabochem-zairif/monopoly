@@ -16,7 +16,6 @@ public class Game
 	private List<Propriete> lesProps = new ArrayList<Propriete>();
 	private List<String[]> paramsMonop = new ArrayList<String[]>();
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
-	
 	private int nbCases;
 	
 	public Game(int nbCases)
@@ -38,16 +37,18 @@ public class Game
 		{
 			if (list[3].equals("aller"))
 			{
-				Deplacement d = new Deplacement("", this.lesCases.get(Integer.parseInt(list[4]) - 1));
+				Deplacement d = new Deplacement(list[2], this.lesCases.get(Integer.parseInt(list[4]) - 1));
 				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d));
 			}
 			else if (list[3].equals("dépense"))
 			{
-				
+				Depense d = new Depense(list[2], Integer.parseInt(list[4]));
+				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d));
 			}
 			else if (list[3].equals("déplacement relatif"))
 			{
-				
+				DeplacementRelatif d = new DeplacementRelatif(list[2], Integer.parseInt(list[4]), this.lesCases);
+				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d));
 			}
 			else if (list[3].equals("prison"))
 			{
