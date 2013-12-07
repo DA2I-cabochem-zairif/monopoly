@@ -17,17 +17,28 @@ public class Game
 	private List<String[]> paramsMonop = new ArrayList<String[]>();
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
 	private int nbCases;
+	public static Case PRISON;
 	
 	public Game(int nbCases)
 	{
 		this.nbCases = nbCases;
 	}
 	
+	public List<Groupe> lesGroupes()
+	{
+		return this.lesGroupes;
+	}
+	
 	public void creerCases()
 	{
 		for (String[] list : this.paramsMonop)
 		{
-			this.lesCases.add(new MonoCase(Integer.parseInt(list[0]), list[1], this));
+			Case c = new MonoCase(Integer.parseInt(list[0]), list[1], this);
+			this.lesCases.add(c);
+			if (c.nom().equals("Prison"))
+			{
+				Game.PRISON = c;
+			}
 		}
 	}
 	
@@ -35,7 +46,7 @@ public class Game
 	{
 		for (String[] list : this.paramsCartes)
 		{
-			if (list[3].equals("aller"))
+			if (list[3].equals("aller") || list[3].equals("revenir"))
 			{
 				Deplacement d = new Deplacement(list[2], this.lesCases.get(Integer.parseInt(list[4]) - 1));
 				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d));
@@ -52,15 +63,13 @@ public class Game
 			}
 			else if (list[3].equals("prison"))
 			{
-				
+				Emprisonnement e = new Emprisonnement(list[2]);
+				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], e));
 			}
 			else if (list[3].equals("recette"))
 			{
-				
-			}
-			else if (list[3].equals("revenir"))
-			{
-				
+				Recette r = new Recette(list[2], Integer.parseInt(list[4]));
+				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], r));
 			}
 			else if (list[3].equals("bonus"))
 			{
@@ -91,16 +100,16 @@ public class Game
 	
 	public void creerGroupes()
 	{
-		Groupe bleuCiel = new UnGroupe("Bleu Ciel", 100);
-		Groupe bleuRoi = new UnGroupe("Bleu Ciel", 200);
-		Groupe compagnies = new UnGroupe("Compagnies", 300);
-		Groupe gares = new UnGroupe("Gares", 400);
-		Groupe jaune = new UnGroupe("Jaune", 500);
-		Groupe mauve = new UnGroupe("Mauve", 600);
-		Groupe orange = new UnGroupe("Orange", 700);
-		Groupe rouge = new UnGroupe("Rouge", 800);
-		Groupe vert = new UnGroupe("Vert", 900);
-		Groupe violet = new UnGroupe("Violet", 1000);
+		Groupe bleuCiel = new UnGroupe("Bleu Ciel", 100, this);
+		Groupe bleuRoi = new UnGroupe("Bleu Ciel", 200, this);
+		Groupe compagnies = new UnGroupe("Compagnies", 300, this);
+		Groupe gares = new UnGroupe("Gares", 400, this);
+		Groupe jaune = new UnGroupe("Jaune", 500, this);
+		Groupe mauve = new UnGroupe("Mauve", 600, this);
+		Groupe orange = new UnGroupe("Orange", 700, this);
+		Groupe rouge = new UnGroupe("Rouge", 800, this);
+		Groupe vert = new UnGroupe("Vert", 900, this);
+		Groupe violet = new UnGroupe("Violet", 1000, this);
 		
 		this.lesGroupes.add(bleuCiel);
 		this.lesGroupes.add(bleuRoi);
@@ -178,10 +187,10 @@ public class Game
 		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
 		this.creerCases();
+		this.creerGroupes();
 		this.creerCartes();
 		this.creerEvents();
 		this.creerJoueurs();
-		this.creerGroupes();
 		this.creerProprietes();
 		for (Carte carte : this.lesCartes)
 		{
@@ -205,6 +214,17 @@ public class Game
 			}
 			System.out.println("\nTaille : "+listS.length);
 		}*/
+		/*DeplacementRelatif d = new DeplacementRelatif("Test", -3, this.lesCases);
+		System.out.println(this.lesJoueurs.get(0).position().numero());
+		d.setCible(this.lesJoueurs.get(0));
+		d.executer();
+		System.out.println(this.lesJoueurs.get(0).position().numero());*/
+		/*Emprisonnement e = new Emprisonnement("test");
+		System.out.println(this.lesJoueurs.get(0).position().nom());
+		e.setCible(this.lesJoueurs.get(0));
+		e.executer();
+		System.out.println(this.lesJoueurs.get(0).position().nom());*/
+		
 	}
 	
 	public static ArrayList<String> readFile(File file)

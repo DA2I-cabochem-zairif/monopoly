@@ -2,7 +2,7 @@ public class Calcul
 {
 	public static void main(String[] args)
 	{
-		int actuel = 36, dep = 5, arrive = 0, total = 40;
+		int actuel = 1, dep = -3, arrive = 0, total = 40;
 		
 		if (actuel + dep < 1)
 		{

@@ -16,9 +16,10 @@ public class DeplacementRelatif extends AbstractEvent
 		this.changement = changement;
 	}
 	
-	public DeplacementRelatif(String nom, Joueur cible, int changement)
+	public DeplacementRelatif(String nom, Joueur cible, int changement, List<Case> lesCases)
 	{
 		super(nom, cible);
+		this.lesCases = lesCases;
 		this.changement = changement;
 	}
 
@@ -34,15 +35,16 @@ public class DeplacementRelatif extends AbstractEvent
 	    	{
 	    		dep++;
 	    	}
-	    	indexActuel = taille + dep;
+	    	indexCible = taille + dep;
 	    }
 	    else if (indexActuel + dep > taille)
 	    {
+	    	System.out.println("la");
 	    	for (int i = indexActuel ; i < taille ; i++)
 	    	{
 	    		dep--;
 	    	}
-	    	indexActuel = dep;
+	    	indexCible = dep;
 	    }
 	    else
 	    {
@@ -50,6 +52,11 @@ public class DeplacementRelatif extends AbstractEvent
 	    }
 	    
 	    this.cible.placerSur(this.lesCases.get(indexCible - 1));
+	}
+	
+	public void setCible(Joueur j)
+	{
+		this.cible = j;
 	}
 	
 	public String toString()

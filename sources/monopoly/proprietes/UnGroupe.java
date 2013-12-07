@@ -2,16 +2,27 @@ package monopoly.proprietes ;
 
 import java.util.*;
 
+import monopoly.jeu.Case;
+import monopoly.jeu.Game;
+
 public class UnGroupe implements Groupe
 {
     private String nom;
     private int coutImmo;
+    private Game g;
     private List<Propriete> lesProp = new ArrayList<Propriete>();
     
     public UnGroupe(String nom, int cout)
     {
 	this.nom = nom;
 	this.coutImmo = cout;
+    }
+    
+    public UnGroupe(String nom, int cout, Game g)
+    {
+	this.nom = nom;
+	this.coutImmo = cout;
+	this.g = g;
     }
     
     /** L'intitulé du groupe */
@@ -35,7 +46,13 @@ public class UnGroupe implements Groupe
     /** Retourne le groupe dont le nom est spécifié */
     public Groupe get(String nom)
     {
-	return null;
+    	Groupe dest = null;
+    	for (Groupe g : this.g.lesGroupes())
+    	{
+    		if (g.nom() == nom)
+    			dest = g;
+    	}
+    	return dest;
     }
     
     /** Indique si le groupe appartient entièrement à un seul joueur */

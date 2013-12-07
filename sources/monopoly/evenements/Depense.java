@@ -21,6 +21,11 @@ public class Depense extends AbstractEvent
 		super(nom);
 		this.somme = somme;
 	}
+    
+    public void setCible(Joueur j)
+    {
+    	this.cible = j;
+    }
 
 	public void executer()
 	{

@@ -13,4 +13,5 @@ public interface Evenement {
     Joueur cible() ;    
     /** Action a effectué **/
     void executer();
+    
 }

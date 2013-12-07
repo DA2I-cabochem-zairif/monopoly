@@ -20,6 +20,11 @@ public class Recette extends AbstractEvent
     	super(nom);
     	this.somme = somme;
     }
+    
+    public void setCible(Joueur j)
+    {
+    	this.cible = j;
+    }
 
 	public void executer()
 	{
@@ -34,5 +39,10 @@ public class Recette extends AbstractEvent
 			if (it.hasNext())
 				p = it.next();
 		}
+	}
+	
+	public String toString()
+	{
+		return this.nom+". Somme à empocher : "+this.somme;
 	}
 }
