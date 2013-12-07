@@ -14,6 +14,12 @@ public class Recette extends AbstractEvent
 		super(nom, cible);
 		this.somme = somme;
 	}
+    
+    public Recette(String nom, int somme)
+    {
+    	super(nom);
+    	this.somme = somme;
+    }
 
 	public void executer()
 	{

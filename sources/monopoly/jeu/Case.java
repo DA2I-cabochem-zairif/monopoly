@@ -16,4 +16,8 @@ public interface Case {
     /** Événément susceptible de se déclencher à l'arrivée sur cette
      * case (éventuellement <code>null</code>) */
     Evenement evenement() ;
+    
+    void setProp(Propriete p);
+    
+    void setEvent(Evenement e);
 }

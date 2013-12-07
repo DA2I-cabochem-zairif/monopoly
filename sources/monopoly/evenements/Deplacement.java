@@ -13,9 +13,25 @@ public class Deplacement extends AbstractEvent
 		super(nom, cible);
 		this.caseCible = caseCible;
 	}
-
+    
+    public Deplacement(String nom, Case caseCible)
+    {
+		super(nom);
+		this.caseCible = caseCible;
+	}
+    
+    public void setCible(Joueur j)
+    {
+    	this.cible = j;
+    }
+    
 	public void executer()
 	{
 		this.cible.placerSur(this.caseCible);
+	}
+	
+	public String toString()
+	{
+		return "Déplacement à la case numéro "+this.caseCible.numero()+" : "+this.caseCible.nom();
 	}
 }

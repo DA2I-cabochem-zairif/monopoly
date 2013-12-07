@@ -18,6 +18,11 @@ public abstract class AbstractEvent implements Evenement
 	this.cible=cible;
     }
     
+    public AbstractEvent(String nom)
+    {
+	this.nom=nom;
+    }
+    
     public String nom()
     {
 	return nom;
@@ -26,6 +31,11 @@ public abstract class AbstractEvent implements Evenement
     public Joueur cible()
     {
 	return cible;
+    }
+    
+    public void setCible(Joueur j)
+    {
+    	this.cible = j;
     }
     
     public abstract void executer();

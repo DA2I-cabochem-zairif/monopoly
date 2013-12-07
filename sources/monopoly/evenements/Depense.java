@@ -15,6 +15,12 @@ public class Depense extends AbstractEvent
 		super(nom, cible);
 		this.somme = somme;
 	}
+    
+    public Depense(String nom, int somme)
+    {
+		super(nom);
+		this.somme = somme;
+	}
 
 	public void executer()
 	{
