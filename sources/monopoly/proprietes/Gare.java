@@ -24,10 +24,15 @@ public class Gare extends Monopole
 		int nb = 0;
 		for (Propriete p : this.groupe().composition())
 		{
-			if (p.proprietaire().nom().equals(prop) && !p.hypotheque())
-				nb++;
+			if (p.proprietaire() != null)
+			{
+				if (p.proprietaire().nom().equals(prop.nom()) && !p.hypotheque())
+				{
+					System.out.println("coucou");
+					nb++;
+				}
+			}
 		}
-		
 		for (int i = 2 ; i <= nb ; i++)
 			loyer *= 2;
 		

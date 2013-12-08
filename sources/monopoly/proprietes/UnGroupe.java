@@ -61,7 +61,7 @@ public class UnGroupe implements Groupe
 		boolean prop = true;
 		for (int i = 1 ; i < lesProp.size() ; i++)
 		{
-			if (lesProp.get(i).proprietaire() != null)
+			if (lesProp.get(i).proprietaire() != null && lesProp.get(i - 1).proprietaire() != null )
 			{
 				if (!lesProp.get(i).proprietaire().nom().equals(lesProp.get(i - 1).proprietaire().nom()))
 				{

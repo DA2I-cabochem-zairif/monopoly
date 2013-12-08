@@ -32,8 +32,9 @@ public class Game
 		{
 			Case c = new MonoCase(Integer.parseInt(list[0]), list[1], this);
 			this.lesCases.add(c);
-			if (c.nom().equals("Prison"))
+			if (c.nom().equals("Allez en prison"))
 			{
+				c.setEvent(new Emprisonnement("Go prison"));
 				Game.PRISON = c;
 			}
 			if (list.length > 3)
@@ -202,6 +203,47 @@ public class Game
 		return this.lesJoueurs;
 	}
 	
+	public void initialiserTour(Joueur j)
+	{
+		Scanner sc = new Scanner(System.in);
+		TirerDes td = new TirerDes("Tirage de dés de "+j.nom(), j);
+		td.executer();
+		System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
+		System.out.println(td);
+		DeplacementRelatif dr = new DeplacementRelatif("Déplace", j, td.valeur(), this.lesCases);
+		dr.executer();
+		System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
+		if (j.position().propriete() == null)
+		{
+			System.out.println("Rien à acheter ici");
+			if (j.position().evenement() != null)
+			{
+				j.position().evenement().setCible(j);
+				j.position().evenement().executer();
+			}
+		}
+		else
+		{
+			if (j.position().propriete().proprietaire() == null)
+			{
+				System.out.println("Voulez-vous acheter "+j.position().propriete().nom()+" ?");
+				if (sc.nextLine().equals("o"))
+					new AchatProp(j.position().propriete(), "acheter", j).executer();
+			}
+			else if (!j.position().propriete().nom().equals(j.nom()))
+			{
+				PayerLoyer pl = new PayerLoyer(j.position().propriete(), "Raquer", j);
+				pl.executer();
+			}
+			else
+			{
+				/* construire maison
+				 * vérifier que le loyer change bien
+				 */
+			}
+		}
+	}
+	
 	public void play()
 	{
 		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
@@ -223,21 +265,21 @@ public class Game
 		{
 			System.out.println(c+"\n");
 		}*/
+		/*for (Joueur j : this.lesJoueurs)
+		{
+			System.out.println(j);
+		}*/
+		Joueur j2 = this.lesJoueurs.get(1);
+		Evenement e = new AchatProp(this.lesCases.get(0).get(9).propriete(), "Transaction", j2);
+		e.executer();
 		Joueur j1 = this.lesJoueurs.get(0);
-		AchatProp ap1 = new AchatProp(this.lesCases.get(0).get(7).propriete(), "Transaction 1", j1);
-		ap1.executer();
-		System.out.println("Loyer : "+j1.titres().get(0).loyer());
-		System.out.println(j1.titres().get(0).groupe().proprietaireUnique());
-		System.out.println("\n");
-		AchatProp ap2 = new AchatProp(this.lesCases.get(0).get(9).propriete(), "Transaction 1", j1);
-		ap2.executer();
-		System.out.println(j1);
-		System.out.println(j1.titres().get(0).groupe().proprietaireUnique());
-		System.out.println("\n");
-		AchatProp ap3 = new AchatProp(this.lesCases.get(0).get(10).propriete(), "Transaction 1", j1);
-		ap3.executer();
-		System.out.println(j1);
-		System.out.println(j1.titres().get(0).groupe().proprietaireUnique());
+		while (!j1.elimine())
+		{
+			this.initialiserTour(j1);
+			System.out.println();
+			System.out.println("Topo : "+j1);
+			System.out.println();
+		}
 	}
 	
 	public static ArrayList<String> readFile(File file)

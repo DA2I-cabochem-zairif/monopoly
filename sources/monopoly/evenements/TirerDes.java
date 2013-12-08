@@ -31,4 +31,9 @@ public class TirerDes extends AbstractEvent
     {
 	return this.lancer;
     }
+    
+    public String toString()
+    {
+    	return this.cible.nom()+" fait "+this.lancer;
+    }
 }
