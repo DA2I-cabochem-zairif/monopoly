@@ -96,6 +96,20 @@ public class MonoCase implements Case
     
     public String toString()
     {
-	return "Numero de la case : "+this.num+"\nNom de la case : "+this.nom+"\nEvenement : "+this.event+"\nPropriete : "+this.prop;
+    	String carac = "Numero de la case : "+this.num+"\nNom de la case : "+this.nom+"\nEvenement : "+this.event+"\n";
+    	if (this.prop != null)
+    	{
+    		carac += "Propriété : "+this.prop.nom()+", prix d'achat : "+this.prop.prixAchat()+", appartient à ";
+    		if (this.prop.proprietaire() == null)
+    		{
+    			carac += "aucun joueur";
+    		}
+    		else
+    		{
+    			carac += this.prop.proprietaire().nom();
+    		}
+    		carac += "\n";
+    	}
+    	return carac;
     }
 }

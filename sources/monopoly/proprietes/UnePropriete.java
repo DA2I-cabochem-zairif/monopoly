@@ -136,7 +136,7 @@ public abstract class UnePropriete implements Propriete
     
     public String toString()
     {
-    	String prop = "Nom de la propriété : "+this.nom+"\nPrix : "+this.prix+"\nLa case : "+this.position+"\nLoyers : "+this.loyer+"\n";
+    	String prop = "Nom de la propriété : "+this.nom+"\nPrix : "+this.prix+"\nLa case : "+this.position.numero()+"\nLoyers : "+this.loyer+"\n";
     	if (this.proprietaire != null)
     		prop += this.proprietaire.nom();
     	return prop;

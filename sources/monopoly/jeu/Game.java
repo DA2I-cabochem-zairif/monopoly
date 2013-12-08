@@ -13,7 +13,6 @@ public class Game
 	private List<Carte> lesCartes = new ArrayList<Carte>();
 	private List<Groupe> lesGroupes = new ArrayList<Groupe>();
 	private List<Joueur> lesJoueurs = new ArrayList<Joueur>();
-	private List<Propriete> lesProps = new ArrayList<Propriete>();
 	private List<String[]> paramsMonop = new ArrayList<String[]>();
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
 	private int nbCases;
@@ -33,6 +32,12 @@ public class Game
 	{
 		for (String[] list : this.paramsMonop)
 		{
+			Case c = new MonoCase(Integer.parseInt(list[0]), list[1], this);
+			this.lesCases.add(c);
+			if (c.nom().equals("Prison"))
+			{
+				Game.PRISON = c;
+			}
 			if (list.length > 3)
 			{
 				if(list[3].equals("terrain"))
@@ -45,15 +50,9 @@ public class Game
 						loyer[cpt] = Integer.parseInt(s);
 						cpt++;
 					}
-					System.out.println(list[5]);
-					Terrain t = new Terrain(Integer.parseInt(list[6]), Integer.parseInt(list[5]), this.lesGroupes.get(0).get(list[4]), loyer);
+					Terrain t = new Terrain(list[1], Integer.parseInt(list[6]), c, Integer.parseInt(list[5]), this.lesGroupes.get(0).get(list[4]), loyer);
+					c.setProp(t);
 				}
-			}
-			Case c = new MonoCase(Integer.parseInt(list[0]), list[1], this);
-			this.lesCases.add(c);
-			if (c.nom().equals("Prison"))
-			{
-				Game.PRISON = c;
 			}
 		}
 	}
@@ -142,18 +141,6 @@ public class Game
 		}
 	}
 	
-	public void creerProprietes()
-	{
-		/*int[] loyers = new int[5];
-		loyers[0] = 100; loyers[1] = 200; loyers[2] = 300; loyers[3] = 400; loyers[4] = 500;
-		int[] loyers2 = new int[5];
-		loyers2[0] = 100; loyers2[1] = 200; loyers2[2] = 300; loyers2[3] = 400; loyers2[4] = 500;
-		Terrain bd = new Terrain(1500, this.lesCases.get(4), 500, this.lesGroupes.get(0), loyers);
-		Terrain av = new Terrain(1800, this.lesCases.get(16), 700, this.lesGroupes.get(0), loyers2);
-		this.lesProps.add(bd);
-		this.lesProps.add(av);*/
-	}
-	
 	public void creerEvents()
 	{
 		for (String[] list : this.paramsMonop)
@@ -210,14 +197,9 @@ public class Game
 		this.creerCartes();
 		this.creerEvents();
 		this.creerJoueurs();
-		this.creerProprietes();
 		/*for (Groupe g : this.lesGroupes)
 		{
 			System.out.println(g);
-		}*/
-		/*for (Propriete p : this.lesProps)
-		{
-			System.out.println(p);
 		}*/
 		/*for (Carte carte : this.lesCartes)
 		{
