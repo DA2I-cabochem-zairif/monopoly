@@ -25,19 +25,23 @@ public class Recette extends AbstractEvent
     {
     	this.cible = j;
     }
-
+    
 	public void executer()
 	{
 		System.out.println("Versement de "+this.somme+" à "+this.cible.nom());
 		this.cible.verser(this.somme);
 		System.out.println(this.cible.nom()+" possède "+this.cible.especes()+" euros.");
 		Iterator<Propriete> it = this.cible.titres().iterator();
-		Propriete p = it.next();
-		while (p.deshypothequer())
+		Propriete p = null;
+		if (it.hasNext())
 		{
-			System.out.println(this.cible.nom()+" a récupéré son bien : "+p.nom());
-			if (it.hasNext())
-				p = it.next();
+			p = it.next();
+			while (p.deshypothequer())
+			{
+				System.out.println(this.cible.nom()+" a récupéré son bien : "+p.nom());
+				if (it.hasNext())
+					p = it.next();
+			}
 		}
 	}
 	

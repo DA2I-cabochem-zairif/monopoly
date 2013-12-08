@@ -49,7 +49,7 @@ public class Depense extends AbstractEvent
 				while (this.cible.especes() <= this.somme)
 				{
 					// @todo : Hypothéquer en fonction de la valeur d'achat.
-					while(p.hypotheque())
+					while(p.hypotheque() && it.hasNext())
 					{
 						p = it.next();
 					}

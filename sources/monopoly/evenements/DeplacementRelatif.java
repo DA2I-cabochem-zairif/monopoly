@@ -39,7 +39,6 @@ public class DeplacementRelatif extends AbstractEvent
 	    }
 	    else if (indexActuel + dep > taille)
 	    {
-	    	System.out.println("la");
 	    	for (int i = indexActuel ; i < taille ; i++)
 	    	{
 	    		dep--;

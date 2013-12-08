@@ -23,8 +23,13 @@ public class Compagnie extends Monopole
 		int nb = 0;
 		for (Propriete p : this.groupe().composition())
 		{
-			if (p.proprietaire().nom().equals(prop) && !p.hypotheque())
-				nb++;
+			if (p.proprietaire() != null)
+			{
+				if (p.proprietaire().nom().equals(prop) && !p.hypotheque())
+				{
+					nb++;
+				}
+			}
 		}
 		
 		if (nb == 2)

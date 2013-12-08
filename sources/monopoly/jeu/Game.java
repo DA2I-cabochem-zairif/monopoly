@@ -269,15 +269,19 @@ public class Game
 		{
 			System.out.println(j);
 		}*/
-		Joueur j2 = this.lesJoueurs.get(1);
-		Evenement e = new AchatProp(this.lesCases.get(0).get(9).propriete(), "Transaction", j2);
-		e.executer();
 		Joueur j1 = this.lesJoueurs.get(0);
-		while (!j1.elimine())
+		Joueur j2 = this.lesJoueurs.get(1);
+		while (!j1.elimine() || !j2.elimine())
 		{
+			System.out.println(("========== Au tour de "+j1.nom()+" =========="));
 			this.initialiserTour(j1);
 			System.out.println();
 			System.out.println("Topo : "+j1);
+			System.out.println();
+			System.out.println(("========== Au tour de "+j2.nom()+" =========="));
+			this.initialiserTour(j2);
+			System.out.println();
+			System.out.println("Topo : "+j2);
 			System.out.println();
 		}
 	}

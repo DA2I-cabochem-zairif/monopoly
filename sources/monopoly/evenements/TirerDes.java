@@ -19,6 +19,7 @@ public class TirerDes extends AbstractEvent
     	double lancer1 = Math.random() * 6 + 1;
     	double lancer2 = Math.random() * 6 + 1;
     	this.lancer = (int)lancer1 + (int)lancer2;
+    	//this.lancer = 12;
     	TirerDes.DERNIER_LANCER = this.lancer;
 		/*Case ancienne = this.cible.position();
 		int numAncienne = ancienne.numero();
