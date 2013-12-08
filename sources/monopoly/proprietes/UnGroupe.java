@@ -58,26 +58,33 @@ public class UnGroupe implements Groupe
     /** Indique si le groupe appartient entièrement à un seul joueur */
     public boolean proprietaireUnique()
     {
-	boolean prop = true;
-	for (int i = 1 ; i < lesProp.size() ; i++)
-	{
-	    if (lesProp.get(i).proprietaire().nom().equals(lesProp.get(i - 1).proprietaire().nom()))
-	    {
-		prop = false;
-	    }
-	}
-	
-	return prop;
+		boolean prop = true;
+		for (int i = 1 ; i < lesProp.size() ; i++)
+		{
+			if (lesProp.get(i).proprietaire() != null)
+			{
+				if (!lesProp.get(i).proprietaire().nom().equals(lesProp.get(i - 1).proprietaire().nom()))
+				{
+					prop = false;
+				}
+			}
+			else
+			{
+				prop = false;
+			}
+		}
+		
+		return prop;
     }
     
     public String toString()
     {
-	return "Nom du groupe : "+this.nom+"\nCout immobilier : "+this.coutImmo;
-    }
-    
-    public static void main(String [] args)
-    {
-	UnGroupe ug = new UnGroupe("Nom d'un groupe", 1000);
-	System.out.println(ug);
+    	String caracs = "Nom du groupe : "+this.nom+"\nCout immobilier : "+this.coutImmo+"\nPropriétés de ce groupe : \n"; 
+		for (Propriete p : this.lesProp)
+		{
+			caracs += p.nom()+" | ";
+		}
+		caracs += "\n";
+		return caracs;
     }
 }

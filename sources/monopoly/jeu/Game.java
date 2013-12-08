@@ -9,18 +9,16 @@ import monopoly.proprietes.*;
 public class Game
 {
 	private List<Case> lesCases = new ArrayList<Case>();
-	//private HashMap<Carte, Evenement> lesCartes = new HashMap<Carte, Evenement>();
 	private List<Carte> lesCartes = new ArrayList<Carte>();
 	private List<Groupe> lesGroupes = new ArrayList<Groupe>();
 	private List<Joueur> lesJoueurs = new ArrayList<Joueur>();
 	private List<String[]> paramsMonop = new ArrayList<String[]>();
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
-	private int nbCases;
 	public static Case PRISON;
 	
-	public Game(int nbCases)
+	public Game()
 	{
-		this.nbCases = nbCases;
+		
 	}
 	
 	public List<Groupe> lesGroupes()
@@ -52,6 +50,23 @@ public class Game
 					}
 					Terrain t = new Terrain(list[1], Integer.parseInt(list[6]), c, Integer.parseInt(list[5]), this.lesGroupes.get(0).get(list[4]), loyer);
 					c.setProp(t);
+					this.lesGroupes.get(0).get(list[4]).composition().add(t);
+				}
+				else
+				{
+					Monopole m = null;
+					if (list[4].equals("gares"))
+					{
+						int[] loyer = new int[1]; loyer[0] = 2500;
+						m = new Gare(list[1], c, Integer.parseInt(list[5]), this.lesGroupes.get(0).get(list[4]), loyer);
+					}
+					else
+					{
+						int[] loyer = new int[1]; loyer[0] = 2500;
+						m = new Compagnie(list[1], c, Integer.parseInt(list[5]), this.lesGroupes.get(0).get(list[4]), loyer);
+					}
+					c.setProp(m);
+					this.lesGroupes.get(0).get(list[4]).composition().add(m);
 				}
 			}
 		}
@@ -166,7 +181,6 @@ public class Game
 						else if (paramsEvent[0].equals("carte"))
 						{
 							//System.out.println(paramsEvent[0]+" et "+paramsEvent[1]);
-							
 						}
 					}
 					else
@@ -209,31 +223,21 @@ public class Game
 		{
 			System.out.println(c+"\n");
 		}*/
-		/*Joueur j = this.lesJoueurs.get(0);
-		System.out.println(j+"\n");
-		AchatProp acheterBd = new AchatProp(this.lesProps.get(0), "Achat du boulevard truc", j);
-		acheterBd.executer();
-		System.out.println(j+"\n");*/
-		
-		/*for (String[] listS : this.paramsMonop)
-		{
-			for (int i = 0 ; i < listS.length ; i++)
-			{
-				System.out.print(listS[i]+" ");
-			}
-			System.out.println("\nTaille : "+listS.length);
-		}*/
-		/*DeplacementRelatif d = new DeplacementRelatif("Test", -3, this.lesCases);
-		System.out.println(this.lesJoueurs.get(0).position().numero());
-		d.setCible(this.lesJoueurs.get(0));
-		d.executer();
-		System.out.println(this.lesJoueurs.get(0).position().numero());*/
-		/*Emprisonnement e = new Emprisonnement("test");
-		System.out.println(this.lesJoueurs.get(0).position().nom());
-		e.setCible(this.lesJoueurs.get(0));
-		e.executer();
-		System.out.println(this.lesJoueurs.get(0).position().nom());*/
-		//System.out.println(new UnGroupe("test", 100, this).get("Mauve"));
+		Joueur j1 = this.lesJoueurs.get(0);
+		AchatProp ap1 = new AchatProp(this.lesCases.get(0).get(7).propriete(), "Transaction 1", j1);
+		ap1.executer();
+		System.out.println("Loyer : "+j1.titres().get(0).loyer());
+		System.out.println(j1.titres().get(0).groupe().proprietaireUnique());
+		System.out.println("\n");
+		AchatProp ap2 = new AchatProp(this.lesCases.get(0).get(9).propriete(), "Transaction 1", j1);
+		ap2.executer();
+		System.out.println(j1);
+		System.out.println(j1.titres().get(0).groupe().proprietaireUnique());
+		System.out.println("\n");
+		AchatProp ap3 = new AchatProp(this.lesCases.get(0).get(10).propriete(), "Transaction 1", j1);
+		ap3.executer();
+		System.out.println(j1);
+		System.out.println(j1.titres().get(0).groupe().proprietaireUnique());
 	}
 	
 	public static ArrayList<String> readFile(File file)

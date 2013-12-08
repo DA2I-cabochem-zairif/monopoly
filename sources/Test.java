@@ -40,7 +40,7 @@ public class Test
 		/*Emprisonnement e = new Emprisonnement("Prison", pj);
 		e.executer();
 		System.out.println(pj.enPrison());*/
-		Game g = new Game(20);
+		Game g = new Game();
 		g.play();
 	}
 }

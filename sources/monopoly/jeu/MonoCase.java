@@ -99,7 +99,7 @@ public class MonoCase implements Case
     	String carac = "Numero de la case : "+this.num+"\nNom de la case : "+this.nom+"\nEvenement : "+this.event+"\n";
     	if (this.prop != null)
     	{
-    		carac += "Propriété : "+this.prop.nom()+", prix d'achat : "+this.prop.prixAchat()+", appartient à ";
+    		carac += "Propriété : "+this.prop.nom()+", groupe : "+this.prop.groupe().nom()+", prix d'achat : "+this.prop.prixAchat()+", appartient à ";
     		if (this.prop.proprietaire() == null)
     		{
     			carac += "aucun joueur";

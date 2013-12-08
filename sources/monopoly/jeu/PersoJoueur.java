@@ -152,7 +152,7 @@ public class PersoJoueur implements Joueur
     {
 	String liste = "Liste des propriétés : \n";
 	for (Propriete p : this.titres)
-	    liste += p.nom();
+	    liste += p.nom()+" | ";
 	return liste;
     }
     
@@ -170,7 +170,7 @@ public class PersoJoueur implements Joueur
     
     public String toString()
     {
-		String j = "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\nPlacé sur : "+this.position+"\n"+this.listerProp();
+		String j = "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\nPlacé sur : "+this.position.nom()+"\n"+this.listerProp();
 		return j;
     }
 }
