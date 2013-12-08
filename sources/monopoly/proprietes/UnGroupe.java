@@ -49,7 +49,7 @@ public class UnGroupe implements Groupe
     	Groupe dest = null;
     	for (Groupe g : this.g.lesGroupes())
     	{
-    		if (g.nom() == nom)
+    		if (g.nom().equals(nom))
     			dest = g;
     	}
     	return dest;

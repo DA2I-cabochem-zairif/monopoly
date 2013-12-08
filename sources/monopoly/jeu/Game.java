@@ -33,6 +33,22 @@ public class Game
 	{
 		for (String[] list : this.paramsMonop)
 		{
+			if (list.length > 3)
+			{
+				if(list[3].equals("terrain"))
+				{
+					int[] loyer = new int[6];
+					String[] stringLoyers = list[7].split(",");
+					int cpt = 0;
+					for (String s : stringLoyers)
+					{
+						loyer[cpt] = Integer.parseInt(s);
+						cpt++;
+					}
+					System.out.println(list[5]);
+					Terrain t = new Terrain(Integer.parseInt(list[6]), Integer.parseInt(list[5]), this.lesGroupes.get(0).get(list[4]), loyer);
+				}
+			}
 			Case c = new MonoCase(Integer.parseInt(list[0]), list[1], this);
 			this.lesCases.add(c);
 			if (c.nom().equals("Prison"))
@@ -100,39 +116,42 @@ public class Game
 	
 	public void creerGroupes()
 	{
-		Groupe bleuCiel = new UnGroupe("Bleu Ciel", 100, this);
-		Groupe bleuRoi = new UnGroupe("Bleu Ciel", 200, this);
-		Groupe compagnies = new UnGroupe("Compagnies", 300, this);
-		Groupe gares = new UnGroupe("Gares", 400, this);
-		Groupe jaune = new UnGroupe("Jaune", 500, this);
-		Groupe mauve = new UnGroupe("Mauve", 600, this);
-		Groupe orange = new UnGroupe("Orange", 700, this);
-		Groupe rouge = new UnGroupe("Rouge", 800, this);
-		Groupe vert = new UnGroupe("Vert", 900, this);
-		Groupe violet = new UnGroupe("Violet", 1000, this);
-		
-		this.lesGroupes.add(bleuCiel);
-		this.lesGroupes.add(bleuRoi);
-		this.lesGroupes.add(compagnies);
-		this.lesGroupes.add(gares);
-		this.lesGroupes.add(jaune);
-		this.lesGroupes.add(mauve);
-		this.lesGroupes.add(orange);
-		this.lesGroupes.add(rouge);
-		this.lesGroupes.add(vert);
-		this.lesGroupes.add(violet);
+		for (String[] list : this.paramsMonop)
+		{
+			if (list.length > 3)
+			{
+				if (this.lesGroupes.size() == 0)
+				{
+					int coutImmo = 0;
+					if (list[3].equals("terrain"))
+					{
+						coutImmo = Integer.parseInt(list[6]);
+					}
+					this.lesGroupes.add(new UnGroupe(list[4], coutImmo, this));
+				}
+				else if (this.lesGroupes.get(0).get(list[4]) == null)
+				{
+					int coutImmo = 0;
+					if (list[3].equals("terrain"))
+					{
+						coutImmo = Integer.parseInt(list[6]);
+					}
+					this.lesGroupes.add(new UnGroupe(list[4], coutImmo, this));
+				}
+			}
+		}
 	}
 	
 	public void creerProprietes()
 	{
-		int[] loyers = new int[5];
+		/*int[] loyers = new int[5];
 		loyers[0] = 100; loyers[1] = 200; loyers[2] = 300; loyers[3] = 400; loyers[4] = 500;
 		int[] loyers2 = new int[5];
 		loyers2[0] = 100; loyers2[1] = 200; loyers2[2] = 300; loyers2[3] = 400; loyers2[4] = 500;
 		Terrain bd = new Terrain(1500, this.lesCases.get(4), 500, this.lesGroupes.get(0), loyers);
 		Terrain av = new Terrain(1800, this.lesCases.get(16), 700, this.lesGroupes.get(0), loyers2);
 		this.lesProps.add(bd);
-		this.lesProps.add(av);
+		this.lesProps.add(av);*/
 	}
 	
 	public void creerEvents()
@@ -186,16 +205,24 @@ public class Game
 	{
 		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
-		this.creerCases();
 		this.creerGroupes();
+		this.creerCases();
 		this.creerCartes();
 		this.creerEvents();
 		this.creerJoueurs();
 		this.creerProprietes();
-		for (Carte carte : this.lesCartes)
+		/*for (Groupe g : this.lesGroupes)
+		{
+			System.out.println(g);
+		}*/
+		/*for (Propriete p : this.lesProps)
+		{
+			System.out.println(p);
+		}*/
+		/*for (Carte carte : this.lesCartes)
 		{
 			System.out.println(carte+"\n");
-		}
+		}*/
 		/*for (Case c : this.lesCases)
 		{
 			System.out.println(c+"\n");
@@ -224,7 +251,7 @@ public class Game
 		e.setCible(this.lesJoueurs.get(0));
 		e.executer();
 		System.out.println(this.lesJoueurs.get(0).position().nom());*/
-		
+		//System.out.println(new UnGroupe("test", 100, this).get("Mauve"));
 	}
 	
 	public static ArrayList<String> readFile(File file)

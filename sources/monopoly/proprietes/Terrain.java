@@ -6,9 +6,15 @@ public class Terrain extends UnePropriete
 {
     private int prixMaison;
     
-    public Terrain(int prixMaison, Case pos, int prix, Groupe groupe, int[] loyer)
+    public Terrain(String nom, int prixMaison, Case pos, int prix, Groupe groupe, int[] loyer)
     {
-	super(pos, prix, groupe, loyer);
+	super(nom, pos, prix, groupe, loyer);
+	this.prixMaison = prixMaison;
+    }
+    
+    public Terrain(String nom, int prixMaison, int prix, Groupe groupe, int[] loyer)
+    {
+	super(nom, prix, groupe, loyer);
 	this.prixMaison = prixMaison;
     }
     

@@ -7,9 +7,14 @@ public class Gare extends Monopole
 {
 	public static int LOYER_BASE = 2500;
 	
-    public Gare(Case pos, int prix, Groupe groupe, int[] loyer)
+    public Gare(String nom, Case pos, int prix, Groupe groupe, int[] loyer)
     {
-		super(pos, prix, groupe, loyer);
+		super(nom, pos, prix, groupe, loyer);
+	}
+    
+    public Gare(String nom, int prix, Groupe groupe, int[] loyer)
+    {
+		super(nom, prix, groupe, loyer);
 	}
     
 	public int loyer()

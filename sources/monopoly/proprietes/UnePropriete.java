@@ -17,16 +17,32 @@ public abstract class UnePropriete implements Propriete
     private Groupe groupe;
     protected int niveauImmo;
     
-    public UnePropriete(Case pos, int prix, Groupe groupe, int[] loyer)
+    public UnePropriete(String nom, Case pos, int prix, Groupe groupe, int[] loyer)
     {
 	this.position = pos;
-	this.nom = this.position.nom();
+	this.nom = nom;
 	this.estHypotheque = false;
 	this.prix = prix;
 	this.groupe = groupe;
 	this.niveauImmo = 0;
 	this.valeurHypo = this.prix / 2;
 	this.loyer = loyer;
+    }
+    
+    public UnePropriete(String nom, int prix, Groupe groupe, int[] loyer)
+    {
+	this.nom = nom;
+	this.estHypotheque = false;
+	this.prix = prix;
+	this.groupe = groupe;
+	this.niveauImmo = 0;
+	this.valeurHypo = this.prix / 2;
+	this.loyer = loyer;
+    }
+    
+    public void setPosition(Case c)
+    {
+    	this.position = c;
     }
     
     /** La case du plateau de jeu associée à ce titre de propriété */

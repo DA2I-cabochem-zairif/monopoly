@@ -5,10 +5,15 @@ import monopoly.jeu.Joueur;
 import monopoly.jeu.Case;
 
 public class Compagnie extends Monopole
-{	
-    public Compagnie(Case pos, int prix, Groupe groupe, int[] loyer)
+{
+    public Compagnie(String nom, Case pos, int prix, Groupe groupe, int[] loyer)
     {
-		super(pos, prix, groupe, loyer);
+		super(nom, pos, prix, groupe, loyer);
+	}
+    
+    public Compagnie(String nom, int prix, Groupe groupe, int[] loyer)
+    {
+		super(nom, prix, groupe, loyer);
 	}
 
 	public int loyer()

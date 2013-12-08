@@ -6,9 +6,14 @@ import monopoly.jeu.Case;
 public abstract class Monopole extends UnePropriete
 {
 
-	public Monopole(Case pos, int prix, Groupe groupe, int[] loyer)
+	public Monopole(String nom, Case pos, int prix, Groupe groupe, int[] loyer)
     {
-		super(pos, prix, groupe, loyer);
+		super(nom, pos, prix, groupe, loyer);
+	}
+	
+	public Monopole(String nom, int prix, Groupe groupe, int[] loyer)
+    {
+		super(nom, prix, groupe, loyer);
 	}
 
 	public boolean constructible()
