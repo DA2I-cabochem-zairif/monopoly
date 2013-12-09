@@ -28,7 +28,6 @@ public class Gare extends Monopole
 			{
 				if (p.proprietaire().nom().equals(prop.nom()) && !p.hypotheque())
 				{
-					System.out.println("coucou");
 					nb++;
 				}
 			}

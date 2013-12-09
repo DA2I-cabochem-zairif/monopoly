@@ -9,33 +9,43 @@ public class Carte extends AbstractEvent
 	private Evenement e;
 	private int num;
 	private String type;
+	private String action;
 	
-    public Carte(int  num, String type, String nom, Joueur cible, Evenement e)
+    public Carte(int  num, String type, String nom, Joueur cible, Evenement e, String action)
     {
 		super(nom, cible);
 		this.e = e;
 		this.num = num;
 		this.type = type;
+		this.action = action;
 	}
     
-    public Carte(int  num, String type, String nom, Evenement e)
+    public Carte(int  num, String type, String nom, Evenement e, String action)
     {
 		super(nom);
 		this.e = e;
 		this.num = num;
 		this.type = type;
+		this.action = action;
 	}
     
-    public Carte(int  num, String type, String nom)
+    public Carte(int  num, String type, String nom, String action)
     {
 		super(nom);
 		this.num = num;
 		this.type = type;
+		this.action = action;
 	}
 
 	public void executer()
 	{
+		e.setCible(this.cible);
 		e.executer();
+	}
+	
+	public void setCible(Joueur j)
+	{
+		this.cible = j;
 	}
 	
 	public void setEvenement(Evenement e)
@@ -55,6 +65,6 @@ public class Carte extends AbstractEvent
 	
 	public String toString()
 	{
-		return "Num : "+this.num+"\nNom : "+this.nom+"\nType : "+this.type+"\nCible : "+this.cible+"\nEvenement : "+this.e;
+		return this.nom;
 	}
 }

@@ -70,6 +70,17 @@ public class PersoJoueur implements Joueur
     public void eliminer()
     {
     	this.elimine = false;
+    	for (Joueur j : this.adversaires())
+		{
+			Iterator<Joueur> it = this.adversaires.iterator();
+			while (it.hasNext())
+			{
+				if (it.next().nom().equals(this.nom))
+				{
+					it.remove();
+				}
+			}
+		}
     }
     
     /** Liquidités possédées par le joueur */

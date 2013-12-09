@@ -16,9 +16,10 @@ public class PayerLoyer extends AbstractEvent
     
     public void executer()
     {
-    	if (this.cible.payer(this.prop.loyer()))
+    	if (!this.cible.nom().equals(this.prop.proprietaire().nom()))
     	{
-    		this.prop.proprietaire().verser(this.prop.loyer());
+    		new Depense("Verser loyer", this.cible, this.prop.loyer()).executer();
+    		new Recette("Percevoir loyer", this.prop.proprietaire(), this.prop.loyer()).executer();
     	}
     }
 }

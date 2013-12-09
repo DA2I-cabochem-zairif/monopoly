@@ -43,6 +43,8 @@ public class DeplacementRelatif extends AbstractEvent
 	    	{
 	    		dep--;
 	    	}
+	    	Game.DEPART.evenement().setCible(this.cible);
+	    	Game.DEPART.evenement().executer();
 	    	indexCible = dep;
 	    }
 	    else
@@ -51,6 +53,7 @@ public class DeplacementRelatif extends AbstractEvent
 	    }
 	    
 	    this.cible.placerSur(this.lesCases.get(indexCible - 1));
+	    //new Deplacement(this.nom, this.cible, this.lesCases.get(indexCible - 1)).executer();
 	}
 	
 	public void setCible(Joueur j)

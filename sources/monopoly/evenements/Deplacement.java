@@ -28,6 +28,10 @@ public class Deplacement extends AbstractEvent
 	public void executer()
 	{
 		this.cible.placerSur(this.caseCible);
+		/*if (this.cible.position().evenement() != null)
+		{
+			this.cible.position().evenement().executer();
+		}*/
 	}
 	
 	public String toString()

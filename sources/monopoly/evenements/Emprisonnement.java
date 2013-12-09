@@ -1,12 +1,12 @@
 package monopoly.evenements ;
 
-import monopoly.jeu.Game;
-import monopoly.jeu.Joueur ;
-import monopoly.jeu.Case ;
+import monopoly.jeu.*;
 import java.util.*;
 
 public class Emprisonnement extends AbstractEvent
-{	
+{
+	public static HashMap<Joueur, Integer> TAB_PRISON = new HashMap<Joueur, Integer>();
+	
 	public Emprisonnement(String nom, Joueur cible)
     {
 		super(nom, cible);

@@ -9,12 +9,14 @@ import monopoly.proprietes.*;
 public class Game
 {
 	private List<Case> lesCases = new ArrayList<Case>();
-	private List<Carte> lesCartes = new ArrayList<Carte>();
+	private List<Carte> lesCartesChances = new ArrayList<Carte>();
+	private List<Carte> lesCartesCC = new ArrayList<Carte>();
 	private List<Groupe> lesGroupes = new ArrayList<Groupe>();
 	private List<Joueur> lesJoueurs = new ArrayList<Joueur>();
 	private List<String[]> paramsMonop = new ArrayList<String[]>();
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
 	public static Case PRISON;
+	public static Case DEPART;
 	
 	public Game()
 	{
@@ -32,10 +34,17 @@ public class Game
 		{
 			Case c = new MonoCase(Integer.parseInt(list[0]), list[1], this);
 			this.lesCases.add(c);
+			if (c.nom().equals("Prison"))
+			{
+				Game.PRISON = c;
+			}
 			if (c.nom().equals("Allez en prison"))
 			{
 				c.setEvent(new Emprisonnement("Go prison"));
-				Game.PRISON = c;
+			}
+			if (c.nom().equals("Départ"))
+			{
+				Game.DEPART = c;
 			}
 			if (list.length > 3)
 			{
@@ -80,37 +89,92 @@ public class Game
 			if (list[3].equals("aller") || list[3].equals("revenir"))
 			{
 				Deplacement d = new Deplacement(list[2], this.lesCases.get(Integer.parseInt(list[4]) - 1));
-				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d));
+				if (list[1].equals("CC"))
+				{
+					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d, list[3]));
+				}
+				else
+				{
+					this.lesCartesChances.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d, list[3]));
+				}
 			}
 			else if (list[3].equals("dépense"))
 			{
 				Depense d = new Depense(list[2], Integer.parseInt(list[4]));
-				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d));
+				if (list[1].equals("CC"))
+				{
+					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d, list[3]));
+				}
+				else
+				{
+					this.lesCartesChances.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d, list[3]));
+				}
 			}
 			else if (list[3].equals("déplacement relatif"))
 			{
 				DeplacementRelatif d = new DeplacementRelatif(list[2], Integer.parseInt(list[4]), this.lesCases);
-				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d));
+				if (list[1].equals("CC"))
+				{
+					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d, list[3]));
+				}
+				else
+				{
+					this.lesCartesChances.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d, list[3]));
+				}
 			}
 			else if (list[3].equals("prison"))
 			{
 				Emprisonnement e = new Emprisonnement(list[2]);
-				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], e));
+				if (list[1].equals("CC"))
+				{
+					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], e, list[3]));
+				}
+				else
+				{
+					this.lesCartesChances.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], e, list[3]));
+				}
 			}
 			else if (list[3].equals("recette"))
 			{
 				Recette r = new Recette(list[2], Integer.parseInt(list[4]));
-				this.lesCartes.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], r));
+				if (list[1].equals("CC"))
+				{
+					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], r, list[3]));
+				}
+				else
+				{
+					this.lesCartesChances.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], r, list[3]));
+				}
 			}
-			else if (list[3].equals("bonus"))
+			else if (list[3].equals("frais immo"))
 			{
-				
+				String[] frais = list[4].split(",");
+				int sommes[] = new int[2];
+				sommes[0] = Integer.parseInt(frais[0]);
+				sommes[1] = Integer.parseInt(frais[1]);
+				FraisImmo fr = new FraisImmo(list[2], sommes);
+				if (list[1].equals("CC"))
+				{
+					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], fr, list[3]));
+				}
+				else
+				{
+					this.lesCartesChances.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], fr, list[3]));
+				}
 			}
 			else if (list[3].equals("cadeau"))
 			{
-				
+				Cadeau c = new Cadeau(list[2], Integer.parseInt(list[4]));
+				if (list[1].equals("CC"))
+				{
+					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], c, list[3]));
+				}
+				else
+				{
+					this.lesCartesChances.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], c, list[3]));
+				}
 			}
-			else if (list[3].equals("frais immo"))
+			else if (list[3].equals("bonus"))
 			{
 				
 			}
@@ -125,7 +189,9 @@ public class Game
 	{
 		for (int i = 1 ; i <= 4 ; i++)
 		{
-			this.lesJoueurs.add(new PersoJoueur(i, "Joueur "+i, this.lesCases.get(0), this));
+			Joueur j = new PersoJoueur(i, "Joueur "+i, this.lesCases.get(0), this);
+			this.lesJoueurs.add(j);
+			Emprisonnement.TAB_PRISON.put(j, 0);
 		}
 	}
 	
@@ -159,6 +225,7 @@ public class Game
 	
 	public void creerEvents()
 	{
+		int cpt = 0;
 		for (String[] list : this.paramsMonop)
 		{
 			if (list.length > 2)
@@ -181,7 +248,18 @@ public class Game
 						}
 						else if (paramsEvent[0].equals("carte"))
 						{
-							//System.out.println(paramsEvent[0]+" et "+paramsEvent[1]);
+							Collections.shuffle(lesCartesCC);
+							Collections.shuffle(lesCartesChances);
+							Carte c = null;
+							if (paramsEvent[1].equals("chance"))
+							{
+								c = this.lesCartesChances.get(cpt);
+							}
+							else if (paramsEvent[1].equals("CC"))
+							{
+								c = this.lesCartesCC.get(cpt);
+							}
+							this.lesCases.get(index).setEvent(c);
 						}
 					}
 					else
@@ -206,48 +284,93 @@ public class Game
 	public void initialiserTour(Joueur j)
 	{
 		Scanner sc = new Scanner(System.in);
-		TirerDes td = new TirerDes("Tirage de dés de "+j.nom(), j);
-		td.executer();
-		System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
-		System.out.println(td);
-		DeplacementRelatif dr = new DeplacementRelatif("Déplace", j, td.valeur(), this.lesCases);
-		dr.executer();
-		System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
-		if (j.position().propriete() == null)
+		System.out.println(j.nom()+" est en prison : "+j.enPrison());
+		if (j.enPrison())
 		{
-			System.out.println("Rien à acheter ici");
-			if (j.position().evenement() != null)
+			Emprisonnement.TAB_PRISON.put(j, Emprisonnement.TAB_PRISON.get(j) + 1);
+			if (Emprisonnement.TAB_PRISON.get(j) >= 3)
 			{
-				j.position().evenement().setCible(j);
-				j.position().evenement().executer();
+				j.liberer();
+				Emprisonnement.TAB_PRISON.put(j, 0);
 			}
 		}
-		else
+		if (!j.enPrison())
 		{
-			if (j.position().propriete().proprietaire() == null)
+			TirerDes td = new TirerDes("Tirage de dés de "+j.nom(), j);
+			td.executer();
+			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom()+" et possède "+j.especes());
+			System.out.println(td);
+			DeplacementRelatif dr = new DeplacementRelatif("Déplace", j, td.valeur(), this.lesCases);
+			// j.chosesAFaire().push(dr);
+			dr.executer();
+			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
+			if (j.position().propriete() == null)
 			{
-				System.out.println("Voulez-vous acheter "+j.position().propriete().nom()+" ?");
-				if (sc.nextLine().equals("o"))
-					new AchatProp(j.position().propriete(), "acheter", j).executer();
-			}
-			else if (!j.position().propriete().nom().equals(j.nom()))
-			{
-				PayerLoyer pl = new PayerLoyer(j.position().propriete(), "Raquer", j);
-				pl.executer();
+				if (j.position().evenement() != null)
+				{
+					j.position().evenement().setCible(j);
+					System.out.println(j.position().evenement());
+					j.position().evenement().executer();
+				}
+				else
+				{
+					System.out.println("Bienvenue à la visite de "+j.position().nom());
+				}
 			}
 			else
 			{
-				/* construire maison
-				 * vérifier que le loyer change bien
-				 */
+				if (j.position().propriete().proprietaire() == null)
+				{
+					System.out.println("Voulez-vous acheter "+j.position().propriete().nom()+" ?");
+					if (sc.nextLine().equals("o"))
+					{
+						new AchatProp(j.position().propriete(), "acheter", j).executer();
+					}
+				}
+				else if (!j.position().propriete().proprietaire().nom().equals(j.nom()))
+				{
+					PayerLoyer pl = new PayerLoyer(j.position().propriete(), "Raquer", j);
+					pl.executer();
+				}
+				else
+				{
+					System.out.println("Voulez-vous construire une maison ?");
+					if (sc.nextLine().equals("o"))
+					{
+						System.out.println("Ancien loyer : "+j.position().propriete().loyer());
+						if (j.position().propriete().construire())
+						{
+							System.out.println("Bravo vous avez une maison");
+							System.out.println("Nouveau loyer : "+j.position().propriete().loyer());
+						}
+						else
+						{
+							System.out.println("Tu n'as pas assez de pognon, vive le capitalisme (ou bien tu as un monopole et tu ne peux pas construire dessus !!!)");
+						}
+					}
+				}
 			}
+			if (td.faitUnDouble())
+			{
+				System.out.println("Vous avez fait un double : rejouez !");
+				System.out.println("============================================================================");
+				this.initialiserTour(j);
+			}
+		}
+	}
+	
+	public void dépiler(Joueur j)
+	{
+		while (!j.chosesAFaire().empty())
+		{
+			System.out.println("sof");
 		}
 	}
 	
 	public void play()
 	{
-		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
+		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
 		this.creerGroupes();
 		this.creerCases();
 		this.creerCartes();
@@ -257,7 +380,11 @@ public class Game
 		{
 			System.out.println(g);
 		}*/
-		/*for (Carte carte : this.lesCartes)
+		/*for (Carte carte : this.lesCartesCC)
+		{
+			System.out.println(carte+"\n");
+		}
+		for (Carte carte : this.lesCartesChances)
 		{
 			System.out.println(carte+"\n");
 		}*/
@@ -271,7 +398,7 @@ public class Game
 		}*/
 		Joueur j1 = this.lesJoueurs.get(0);
 		Joueur j2 = this.lesJoueurs.get(1);
-		while (!j1.elimine() || !j2.elimine())
+		/*while (!j1.elimine() || !j2.elimine())
 		{
 			System.out.println(("========== Au tour de "+j1.nom()+" =========="));
 			this.initialiserTour(j1);
@@ -280,6 +407,21 @@ public class Game
 			System.out.println();
 			System.out.println(("========== Au tour de "+j2.nom()+" =========="));
 			this.initialiserTour(j2);
+			System.out.println();
+			System.out.println("Topo : "+j2);
+			System.out.println();
+		}*/
+		
+		while (!j1.elimine() || !j2.elimine())
+		{
+			System.out.println(j1.chosesAFaire().empty());
+			System.out.println(("========== Au tour de "+j1.nom()+" =========="));
+			//this.dépiler(j1);
+			System.out.println();
+			System.out.println("Topo : "+j1);
+			System.out.println();
+			System.out.println(("========== Au tour de "+j2.nom()+" =========="));
+			//this.dépiler(j2);
 			System.out.println();
 			System.out.println("Topo : "+j2);
 			System.out.println();

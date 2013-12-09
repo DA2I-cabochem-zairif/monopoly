@@ -10,11 +10,6 @@ public class Bonus extends AbstractEvent
 		super(nom, cible);
 	}
 	
-	public Bonus(String nom)
-    {
-		super(nom);
-	}
-	
 	public void setJoueur(Joueur j)
 	{
 		this.cible = j;

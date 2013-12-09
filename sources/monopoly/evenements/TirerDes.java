@@ -7,25 +7,31 @@ import monopoly.jeu.* ;
 public class TirerDes extends AbstractEvent
 {
     private int lancer;
+    private boolean faitUnDouble = false;
     public static int DERNIER_LANCER;
     
     public TirerDes(String nom, Joueur cible)
     {
     	super(nom, cible);
     }
-
+    
     public void executer()
     {
     	double lancer1 = Math.random() * 6 + 1;
     	double lancer2 = Math.random() * 6 + 1;
+    	if ((int)lancer1 == (int)lancer2)
+    	{
+    		this.faitUnDouble = true;
+    	}
+    	System.out.println("Dé 1 : "+(int)lancer1+" et dé 2 : "+(int)lancer2);
     	this.lancer = (int)lancer1 + (int)lancer2;
-    	//this.lancer = 12;
+    	//this.lancer = 30;
     	TirerDes.DERNIER_LANCER = this.lancer;
-		/*Case ancienne = this.cible.position();
-		int numAncienne = ancienne.numero();
-		int numNouvelle = numAncienne + this.valeur();
-		Case nouvelle = new MonoCase(3, "Viens ici mon mignon");//ancienne.get(numNouvelle);
-		this.cible.placerSur(nouvelle);*/
+    }
+    
+    public boolean faitUnDouble()
+    {
+    	return this.faitUnDouble;
     }
     
     public int valeur()
