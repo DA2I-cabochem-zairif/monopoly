@@ -15,11 +15,11 @@ public class AchatProp extends AbstractEvent
     
     public void executer()
     {
-	if (this.cible.payer(this.prop.prixAchat()))
-	{
-	    this.cible.titres().add(prop);
-	    this.prop.setProprietaire(this.cible);
-	}
+		if (this.cible.payer(this.prop.prixAchat()))
+		{
+		    this.cible.titres().add(prop);
+		    this.prop.setProprietaire(this.cible);
+		}
     }
     
     public Propriete propriete()

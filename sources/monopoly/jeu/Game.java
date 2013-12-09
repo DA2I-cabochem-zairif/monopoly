@@ -17,6 +17,7 @@ public class Game
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
 	public static Case PRISON;
 	public static Case DEPART;
+	public static List<Case> LES_CASES;
 	
 	public Game()
 	{
@@ -359,14 +360,6 @@ public class Game
 		}
 	}
 	
-	public void dépiler(Joueur j)
-	{
-		while (!j.chosesAFaire().empty())
-		{
-			System.out.println("sof");
-		}
-	}
-	
 	public void play()
 	{
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
@@ -412,9 +405,9 @@ public class Game
 			System.out.println();
 		}*/
 		
-		while (!j1.elimine() || !j2.elimine())
+		/*while (!j1.elimine() || !j2.elimine())
 		{
-			System.out.println(j1.chosesAFaire().empty());
+			System.out.println(j1.initialiserTour().empty());
 			System.out.println(("========== Au tour de "+j1.nom()+" =========="));
 			//this.dépiler(j1);
 			System.out.println();
@@ -425,6 +418,21 @@ public class Game
 			System.out.println();
 			System.out.println("Topo : "+j2);
 			System.out.println();
+		}*/
+		Game.LES_CASES = this.lesCases;
+		while (!j1.elimine())
+		{
+			this.jouerTour(j1);
+		}
+	}
+	
+	public void jouerTour(Joueur j)
+	{
+		j.chosesAFaire().push(new TirerDes("test", j));
+		while (!j.chosesAFaire().empty())
+		{
+			j.chosesAFaire().pop().executer();
+			System.out.println("Topo : \n"+j);
 		}
 	}
 	

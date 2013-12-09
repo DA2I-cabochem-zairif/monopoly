@@ -27,6 +27,7 @@ public class TirerDes extends AbstractEvent
     	this.lancer = (int)lancer1 + (int)lancer2;
     	//this.lancer = 30;
     	TirerDes.DERNIER_LANCER = this.lancer;
+    	this.cible.chosesAFaire().push(new DeplacementRelatif(this.nom, this.cible, this.lancer, Game.LES_CASES));
     }
     
     public boolean faitUnDouble()
