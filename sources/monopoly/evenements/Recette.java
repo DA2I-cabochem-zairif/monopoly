@@ -31,6 +31,7 @@ public class Recette extends AbstractEvent
 		System.out.println("Versement de "+this.somme+" à "+this.cible.nom());
 		this.cible.verser(this.somme);
 		System.out.println(this.cible.nom()+" possède "+this.cible.especes()+" euros.");
+		// trier ici du prix d'achat le 
 		Iterator<Propriete> it = this.cible.titres().iterator();
 		Propriete p = null;
 		if (it.hasNext())
@@ -40,7 +41,9 @@ public class Recette extends AbstractEvent
 			{
 				System.out.println(this.cible.nom()+" a récupéré son bien : "+p.nom());
 				if (it.hasNext())
+				{
 					p = it.next();
+				}
 			}
 		}
 	}

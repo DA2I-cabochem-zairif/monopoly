@@ -17,6 +17,7 @@ public class AchatProp extends AbstractEvent
     {
 		if (this.cible.payer(this.prop.prixAchat()))
 		{
+			System.out.println(this.cible.nom()+" achète "+this.prop.nom()+" pour "+this.prop.prixAchat());
 		    this.cible.titres().add(prop);
 		    this.prop.setProprietaire(this.cible);
 		}

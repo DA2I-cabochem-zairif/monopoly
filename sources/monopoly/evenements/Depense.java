@@ -40,21 +40,60 @@ public class Depense extends AbstractEvent
 			if (this.cible.titres().size() == 0)
 			{
 				this.cible.eliminer();
-				System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!!");
+				System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de prop");
 			}
 			else
 			{
+				// trier ici du prix d'achat de plus élevé au moins élevé
+				/*ArrayList<Integer> prix = new ArrayList<Integer>();
+				HashMap<Integer, Propriete> tri = new HashMap<Integer, Propriete>();
+				ArrayList<Propriete> nouvelle = new ArrayList<Propriete>();
+				for (Propriete p : this.cible.titres())
+				{
+					tri.put(p.prixAchat(), p);
+					prix.add(p.prixAchat());
+				}
+				Collections.sort(prix, Collections.reverseOrder());
+				for (Integer i : prix)
+				{
+					nouvelle.add(tri.get(i));
+				}
+				this.cible.titres().clear();
+				this.cible.titres().addAll(nouvelle);*/
 				Iterator<Propriete> it = this.cible.titres().iterator();
 				Propriete p = it.next();
-				while (this.cible.especes() <= this.somme)
+				/*while (this.cible.especes() <= this.somme)
 				{
-					// @todo : Hypothéquer en fonction de la valeur d'achat.
 					while(p.hypotheque() && it.hasNext())
 					{
 						p = it.next();
 					}
-					p.hypothequer();
-					System.out.println(this.cible.nom()+" hypothèque "+p.nom()+" et récupère "+p.prixAchat() / 2+" euros.");
+					if (!p.hypotheque())
+					{
+						p.hypothequer();
+						System.out.println(this.cible.nom()+" hypothèque "+p.nom()+" et récupère "+p.prixAchat() / 2+" euros.");
+					}
+				}*/
+				while (this.cible.especes() <= this.somme && !this.cible.elimine())
+				{
+					if (it.hasNext())
+					{
+						p = it.next();
+						while (p.niveauImmobilier() > 0 && this.cible.especes() <= this.somme && !p.hypotheque())
+						{
+							p.detruire();
+						}
+						if (this.cible.especes() <= this.somme && !p.hypotheque())
+						{
+							p.hypothequer();
+							System.out.println(this.cible.nom()+" hypothèque "+p.nom()+" et récupère "+p.prixAchat() / 2+" euros.");
+						}
+					}
+					else
+					{
+						this.cible.eliminer();
+						System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car plus rien à hypo");
+					}
 				}
 				if (this.cible.payer(this.somme))
 				{
@@ -65,6 +104,7 @@ public class Depense extends AbstractEvent
 					diff = this.somme - this.cible.especes();
 					System.out.println("Il manque "+diff+" euros à "+this.cible.nom());
 					this.cible.eliminer();
+					System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de thune");
 				}
 			}
 		}

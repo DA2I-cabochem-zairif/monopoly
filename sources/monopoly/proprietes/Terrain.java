@@ -1,8 +1,9 @@
 package monopoly.proprietes ;
 
+import monopoly.evenements.Recette;
 import monopoly.jeu.*;
 
-public class Terrain extends UnePropriete
+public class Terrain extends UnePropriete implements Comparable
 {
     private int prixMaison;
     
@@ -21,7 +22,7 @@ public class Terrain extends UnePropriete
     /** Indique si la propriété est constructible */
     public boolean constructible()
     {
-	return this.groupe().proprietaireUnique() && !this.hypotheque();
+    	return this.groupe().proprietaireUnique() && !this.hypotheque();
     }
     
     /** Construit un bâtiment sur cette propriété si c'est possible
@@ -31,7 +32,7 @@ public class Terrain extends UnePropriete
     public boolean construire()
     {
 	boolean constr = false;
-	if (this.proprietaire().payer(this.prixMaison) && this.niveauImmobilier() < 5)
+	if (this.proprietaire().payer(this.prixMaison) && this.niveauImmobilier() < 5 && this.constructible())
 	{
 	    constr = true;
 	    this.niveauImmo++;
@@ -51,7 +52,8 @@ public class Terrain extends UnePropriete
 	if (this.niveauImmobilier() > 0)
 	{
 	    this.niveauImmo--;
-	    this.proprietaire().verser(this.prixMaison / 2);
+	    //this.proprietaire().verser(this.prixMaison / 2);
+	    new Recette("detruire", this.proprietaire(), this.prixMaison / 2).executer();
 	    detruire = true;
 	}
 	
@@ -75,4 +77,21 @@ public class Terrain extends UnePropriete
     {
     	return super.toString()+"\nPrix de la maison : "+this.prixMaison+"\n";
     }
+    
+	public int compareTo(Object o)
+	{
+		int result = 0;
+		
+		Terrain t = (Terrain)o;
+		if (this.prixAchat() < t.prixAchat())
+		{
+			result = -1;
+		}
+		else if (this.prixAchat() > t.prixAchat())
+		{
+			result = 1;
+		}
+		
+		return result;
+	}
 }

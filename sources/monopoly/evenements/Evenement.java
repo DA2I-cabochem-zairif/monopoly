@@ -11,7 +11,8 @@ public interface Evenement {
     String nom() ;
     /** Le joueur qui subit l'événement */
     Joueur cible() ;    
-    /** Action a effectué **/
+    /** Action à effectuer **/
     void executer();
+    /** Définit le joueur qui est concerné par l'évènement **/
     void setCible(Joueur j);
 }

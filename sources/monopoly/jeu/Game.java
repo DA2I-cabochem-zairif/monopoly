@@ -18,6 +18,8 @@ public class Game
 	public static Case PRISON;
 	public static Case DEPART;
 	public static List<Case> LES_CASES;
+	public static List<Carte> LES_CHANCES;
+	public static List<Carte> LES_CC;
 	
 	public Game()
 	{
@@ -363,7 +365,8 @@ public class Game
 	public void play()
 	{
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
-		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
+		//this.creerParamsMonop("monopoly.csv", this.paramsMonop);
+		this.creerParamsMonop("test.csv", this.paramsMonop);
 		this.creerGroupes();
 		this.creerCases();
 		this.creerCartes();
@@ -389,9 +392,9 @@ public class Game
 		{
 			System.out.println(j);
 		}*/
-		Joueur j1 = this.lesJoueurs.get(0);
+		/*Joueur j1 = this.lesJoueurs.get(0);
 		Joueur j2 = this.lesJoueurs.get(1);
-		/*while (!j1.elimine() || !j2.elimine())
+		while (!j1.elimine() || !j2.elimine())
 		{
 			System.out.println(("========== Au tour de "+j1.nom()+" =========="));
 			this.initialiserTour(j1);
@@ -404,35 +407,53 @@ public class Game
 			System.out.println("Topo : "+j2);
 			System.out.println();
 		}*/
+		/*Joueur j = this.lesJoueurs.get(0);
+		j.titres().add(this.lesCases.get(1).propriete());
+		j.titres().add(this.lesCases.get(21).propriete());
+		j.titres().add(this.lesCases.get(32).propriete());
+		j.titres().add(this.lesCases.get(26).propriete());
+		j.titres().add(this.lesCases.get(14).propriete());
+		j.titres().add(this.lesCases.get(6).propriete());
+		j.titres().add(this.lesCases.get(19).propriete());
+		*/
 		
-		/*while (!j1.elimine() || !j2.elimine())
-		{
-			System.out.println(j1.initialiserTour().empty());
-			System.out.println(("========== Au tour de "+j1.nom()+" =========="));
-			//this.dépiler(j1);
-			System.out.println();
-			System.out.println("Topo : "+j1);
-			System.out.println();
-			System.out.println(("========== Au tour de "+j2.nom()+" =========="));
-			//this.dépiler(j2);
-			System.out.println();
-			System.out.println("Topo : "+j2);
-			System.out.println();
-		}*/
 		Game.LES_CASES = this.lesCases;
-		while (!j1.elimine())
+		Game.LES_CC = this.lesCartesCC;
+		Game.LES_CHANCES = this.lesCartesChances;
+		int tour = 1;
+		while (!this.lesJoueurs.get(0).elimine() || !this.lesJoueurs.get(1).elimine() || !this.lesJoueurs.get(2).elimine() || !this.lesJoueurs.get(3).elimine())
 		{
-			this.jouerTour(j1);
+			System.out.println("====================================");
+			System.out.println("========== Début du tour "+tour+"==========");
+			System.out.println("====================================");
+			for (Joueur j : this.lesJoueurs)
+			{
+				System.out.println(j.nom()+" est éliminé ? "+j.elimine());
+				this.jouerTour(j);
+			}
+			System.out.println("====================================");
+			System.out.println("========== Fin du tour "+tour+"==========");
+			System.out.println("====================================");
+			tour++;
 		}
 	}
 	
 	public void jouerTour(Joueur j)
 	{
-		j.chosesAFaire().push(new TirerDes("test", j));
-		while (!j.chosesAFaire().empty())
+		if (!j.elimine())
 		{
-			j.chosesAFaire().pop().executer();
-			System.out.println("Topo : \n"+j);
+			j.chosesAFaire().push(new TirerDes("test", j));
+			while (!j.chosesAFaire().empty())
+			{
+				j.chosesAFaire().pop().executer();
+			}
+			System.out.println();
+			System.out.println("Topo de "+j.nom()+" : \n"+j);
+			System.out.println();
+		}
+		else
+		{
+			System.out.println(j.nom()+" est éliminé !");
 		}
 	}
 	

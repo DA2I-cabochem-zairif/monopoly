@@ -8,6 +8,7 @@ public class TirerDes extends AbstractEvent
 {
     private int lancer;
     private boolean faitUnDouble = false;
+    private int nbLancer = 1;
     public static int DERNIER_LANCER;
     
     public TirerDes(String nom, Joueur cible)
@@ -23,11 +24,48 @@ public class TirerDes extends AbstractEvent
     	{
     		this.faitUnDouble = true;
     	}
+    	System.out.println(this.cible.nom()+" est sur "+this.cible.position().nom());
     	System.out.println("Dé 1 : "+(int)lancer1+" et dé 2 : "+(int)lancer2);
     	this.lancer = (int)lancer1 + (int)lancer2;
-    	//this.lancer = 30;
+    	//this.lancer = 4;
     	TirerDes.DERNIER_LANCER = this.lancer;
-    	this.cible.chosesAFaire().push(new DeplacementRelatif(this.nom, this.cible, this.lancer, Game.LES_CASES));
+    	System.out.println(this.cible.nom()+" fait "+this.lancer);
+		if (this.cible.enPrison())
+		{
+			Emprisonnement.TAB_PRISON.put(this.cible, Emprisonnement.TAB_PRISON.get(this.cible) + 1);
+			if (Emprisonnement.TAB_PRISON.get(this.cible) >= 3)
+			{
+				this.cible.liberer();
+				Emprisonnement.TAB_PRISON.put(this.cible, 0);
+				System.out.println(this.cible.nom()+" sort de prison !");
+			}
+		}
+    	if (this.faitUnDouble())
+    	{
+    		if (this.cible.enPrison())
+    		{
+    			this.cible.liberer();
+    			System.out.println(this.cible.nom()+" a fait un double, il sort de prison !");
+    		}
+    		else
+    		{
+    			this.faitUnDouble = false;
+    			this.cible.chosesAFaire().push(this);
+	    		System.out.println(this.cible.nom()+" a fait un double, il va donc rejouer !");
+	    		System.out.println("Nb de lancers : "+this.nbLancer);
+	    		this.nbLancer++;
+	    		if (this.nbLancer == 3)
+	    		{
+	    			this.cible.chosesAFaire().clear();
+	    			this.cible.chosesAFaire().push(new Emprisonnement("Trop de doubles tue le double", this.cible));
+	    		}
+    		}
+    		System.out.println();
+    	}
+    	if (!this.cible.enPrison())
+    	{
+    		this.cible.chosesAFaire().push(new DeplacementRelatif(this.nom, this.cible, this.lancer, Game.LES_CASES));
+    	}
     }
     
     public boolean faitUnDouble()

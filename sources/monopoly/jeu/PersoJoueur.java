@@ -69,18 +69,32 @@ public class PersoJoueur implements Joueur
     /** Élimine le joueur */
     public void eliminer()
     {
-    	this.elimine = false;
-    	for (Joueur j : this.adversaires())
-		{
-			Iterator<Joueur> it = this.adversaires.iterator();
-			while (it.hasNext())
+    	if (!this.elimine)
+    	{
+	    	this.elimine = true;
+	    	this.chosesAFaire.clear();
+	    	for (Joueur j : this.adversaires())
 			{
-				if (it.next().nom().equals(this.nom))
+				Iterator<Joueur> it = this.adversaires.iterator();
+				while (it.hasNext())
 				{
-					it.remove();
+					if (it.next().nom().equals(this.nom))
+					{
+						it.remove();
+					}
 				}
 			}
-		}
+	    	/*for (Propriete p : this.titres)
+	    	{
+	    		System.out.println(p.nom()+" est libéré");
+	    		while (p.niveauImmobilier() >= 0)
+	    		{
+	    			p.detruire();
+	    		}
+	    		p.setProprietaire(null);
+	    	}*/
+	    	System.out.println(this.listerProp());
+    	}
     }
     
     /** Liquidités possédées par le joueur */
@@ -182,6 +196,10 @@ public class PersoJoueur implements Joueur
     public String toString()
     {
 		String j = "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\nPlacé sur : "+this.position.nom()+"\n"+this.listerProp();
+		if (this.estEnPrison)
+		{
+			j += "\n"+this.nom+" est en prison !";
+		}
 		return j;
     }
 }

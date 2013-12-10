@@ -26,6 +26,7 @@ public class Emprisonnement extends AbstractEvent
 	{
 		this.cible.emprisonner();
 		this.cible.placerSur(Game.PRISON);
+		this.cible.chosesAFaire().clear();
 	}
 	
 	public String toString()
