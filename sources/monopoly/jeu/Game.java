@@ -23,7 +23,14 @@ public class Game
 	
 	public Game()
 	{
-		
+		this.creerParamsMonop("cartes.csv", this.paramsCartes);
+		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
+		//this.creerParamsMonop("test.csv", this.paramsMonop);
+		this.creerGroupes();
+		this.creerCases();
+		this.creerCartes();
+		this.creerEvents();
+		this.creerJoueurs();
 	}
 	
 	public List<Groupe> lesGroupes()
