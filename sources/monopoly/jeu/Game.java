@@ -365,8 +365,8 @@ public class Game
 	public void play()
 	{
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
-		//this.creerParamsMonop("monopoly.csv", this.paramsMonop);
-		this.creerParamsMonop("test.csv", this.paramsMonop);
+		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
+		//this.creerParamsMonop("test.csv", this.paramsMonop);
 		this.creerGroupes();
 		this.creerCases();
 		this.creerCartes();
