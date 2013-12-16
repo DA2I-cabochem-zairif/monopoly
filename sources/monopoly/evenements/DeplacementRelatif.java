@@ -29,6 +29,7 @@ public class DeplacementRelatif extends AbstractEvent
 	    int dep = this.changement;
 	    int indexCible = 0;
 	    int taille = this.lesCases.size();
+	    boolean depart = false;
 	    if (indexActuel + dep < 1)
 	    {
 	    	for (int i = indexActuel ; i > 0 ; i--)
@@ -44,15 +45,18 @@ public class DeplacementRelatif extends AbstractEvent
 	    		dep--;
 	    	}
 	    	Game.DEPART.evenement().setCible(this.cible);
-	    	this.cible.chosesAFaire().push(Game.DEPART.evenement());
+	    	depart = true;
 	    	indexCible = dep;
 	    }
 	    else
 	    {
 	    	indexCible = indexActuel + dep;
 	    }
-	    
 	    this.cible.chosesAFaire().push(new Deplacement(this.nom, this.cible, this.lesCases.get(indexCible - 1)));
+	    if (depart)
+	    {
+	    	this.cible.chosesAFaire().push(Game.DEPART.evenement());
+	    }
 	}
 	
 	public void setCible(Joueur j)

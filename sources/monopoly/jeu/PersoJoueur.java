@@ -84,15 +84,10 @@ public class PersoJoueur implements Joueur
 					}
 				}
 			}
-	    	/*for (Propriete p : this.titres)
+	    	for (Propriete p : this.titres)
 	    	{
-	    		System.out.println(p.nom()+" est libéré");
-	    		while (p.niveauImmobilier() >= 0)
-	    		{
-	    			p.detruire();
-	    		}
 	    		p.setProprietaire(null);
-	    	}*/
+	    	}
 	    	System.out.println(this.listerProp());
     	}
     }

@@ -52,7 +52,6 @@ public class Terrain extends UnePropriete implements Comparable
 	if (this.niveauImmobilier() > 0)
 	{
 	    this.niveauImmo--;
-	    //this.proprietaire().verser(this.prixMaison / 2);
 	    new Recette("detruire", this.proprietaire(), this.prixMaison / 2).executer();
 	    detruire = true;
 	}
@@ -76,6 +75,11 @@ public class Terrain extends UnePropriete implements Comparable
     public String toString()
     {
     	return super.toString()+"\nPrix de la maison : "+this.prixMaison+"\n";
+    }
+    
+    public int prixMaison()
+    {
+    	return this.prixMaison;
     }
     
 	public int compareTo(Object o)

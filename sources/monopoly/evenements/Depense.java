@@ -81,7 +81,10 @@ public class Depense extends AbstractEvent
 						p = it.next();
 						while (p.niveauImmobilier() > 0 && this.cible.especes() <= this.somme && !p.hypotheque())
 						{
-							p.detruire();
+							if (p.detruire())
+							{
+								System.out.println(p.proprietaire().nom()+" vend une maison. Nb Maisons : "+p.niveauImmobilier());
+							}
 						}
 						if (this.cible.especes() <= this.somme && !p.hypotheque())
 						{
