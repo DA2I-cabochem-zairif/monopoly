@@ -1,6 +1,7 @@
 package monopoly.jeu;
 
 import java.io.*;
+import javax.swing.*;
 import java.util.*;
 
 import monopoly.evenements.*;
@@ -422,17 +423,20 @@ public class Game
 		int tour = 1;
 		while (!this.lesJoueurs.get(0).elimine() || !this.lesJoueurs.get(1).elimine() || !this.lesJoueurs.get(2).elimine() || !this.lesJoueurs.get(3).elimine())
 		{
-			System.out.println("====================================");
+			/*System.out.println("====================================");
 			System.out.println("========== Début du tour "+tour+"==========");
-			System.out.println("====================================");
+			System.out.println("====================================");*/
+			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Début du tour "+tour+"==========\n====================================");
 			for (Joueur j : this.lesJoueurs)
 			{
-				System.out.println(j.nom()+" est éliminé ? "+j.elimine());
+				//System.out.println(j.nom()+" est éliminé ? "+j.elimine());
+				JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé ? "+j.elimine());
 				this.jouerTour(j);
 			}
-			System.out.println("====================================");
+			/*System.out.println("====================================");
 			System.out.println("========== Fin du tour "+tour+"==========");
-			System.out.println("====================================");
+			System.out.println("====================================");*/
+			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Fin du tour "+tour+"==========\n====================================");
 			tour++;
 		}
 	}
@@ -446,13 +450,15 @@ public class Game
 			{
 				j.chosesAFaire().pop().executer();
 			}
-			System.out.println();
+			/*System.out.println();
 			System.out.println("Topo de "+j.nom()+" : \n"+j);
-			System.out.println();
+			System.out.println();*/
+			JOptionPane.showMessageDialog(new JFrame(), "Topo de "+j.nom()+" : \n"+j);
 		}
 		else
 		{
-			System.out.println(j.nom()+" est éliminé !");
+			//System.out.println(j.nom()+" est éliminé !");
+			JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé !");
 		}
 	}
 	

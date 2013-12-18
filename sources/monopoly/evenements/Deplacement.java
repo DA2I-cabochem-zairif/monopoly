@@ -1,6 +1,8 @@
 package monopoly.evenements ;
 
 import java.util.*;
+import javax.swing.*;
+
 import monopoly.jeu.*;
 
 public class Deplacement extends AbstractEvent
@@ -27,7 +29,8 @@ public class Deplacement extends AbstractEvent
 	public void executer()
 	{
 		this.cible.placerSur(this.caseCible);
-		System.out.println(this.cible.nom()+" est maintenant sur "+this.cible.position().nom());
+		//System.out.println(this.cible.nom()+" est maintenant sur "+this.cible.position().nom());
+		JOptionPane.showMessageDialog(new JFrame(), this.cible.nom()+" est maintenant sur "+this.cible.position().nom());
 	    Scanner sc = new Scanner(System.in);
 	    if (this.cible.position().propriete() != null)
 	    {
@@ -43,7 +46,8 @@ public class Deplacement extends AbstractEvent
 			{
 	    		if (this.cible.position().propriete().hypotheque())
 	    		{
-	    			System.out.println(this.cible.position().propriete().nom()+" est hypothéqué ! Pas de loyer à payer");
+	    			//System.out.println(this.cible.position().propriete().nom()+" est hypothéqué ! Pas de loyer à payer");
+	    			JOptionPane.showMessageDialog(new JFrame(), this.cible.position().propriete().nom()+" est hypothéqué ! Pas de loyer à payer");
 	    		}
 	    		else
 	    		{

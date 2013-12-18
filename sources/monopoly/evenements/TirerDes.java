@@ -1,5 +1,8 @@
 package monopoly.evenements ;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import monopoly.jeu.* ;
 
 /** Cette Classes abstraite implémente les fonctionnalités associées aux
@@ -24,12 +27,13 @@ public class TirerDes extends AbstractEvent
     	{
     		this.faitUnDouble = true;
     	}
-    	System.out.println(this.cible.nom()+" est sur "+this.cible.position().nom());
-    	System.out.println("Dé 1 : "+(int)lancer1+" et dé 2 : "+(int)lancer2);
+    	/*System.out.println(this.cible.nom()+" est sur "+this.cible.position().nom());
+    	System.out.println("Dé 1 : "+(int)lancer1+" et dé 2 : "+(int)lancer2);*/
+    	JOptionPane.showMessageDialog(new JFrame(), this.cible.nom()+" est sur "+this.cible.position().nom()+"\n"+"Dé 1 : "+(int)lancer1+" et dé 2 : "+(int)lancer2+"\n"+this.cible.nom()+" fait "+this.lancer);
     	this.lancer = (int)lancer1 + (int)lancer2;
     	//this.lancer = 4;
     	TirerDes.DERNIER_LANCER = this.lancer;
-    	System.out.println(this.cible.nom()+" fait "+this.lancer);
+    	//System.out.println(this.cible.nom()+" fait "+this.lancer);
 		if (this.cible.enPrison())
 		{
 			Emprisonnement.TAB_PRISON.put(this.cible, Emprisonnement.TAB_PRISON.get(this.cible) + 1);
@@ -37,7 +41,8 @@ public class TirerDes extends AbstractEvent
 			{
 				this.cible.liberer();
 				Emprisonnement.TAB_PRISON.put(this.cible, 0);
-				System.out.println(this.cible.nom()+" sort de prison !");
+				//System.out.println(this.cible.nom()+" sort de prison !");
+				JOptionPane.showMessageDialog(new JFrame(), this.cible.nom()+" sort de prison !");
 			}
 		}
     	if (this.faitUnDouble())
@@ -45,14 +50,16 @@ public class TirerDes extends AbstractEvent
     		if (this.cible.enPrison())
     		{
     			this.cible.liberer();
-    			System.out.println(this.cible.nom()+" a fait un double, il sort de prison !");
+    			//System.out.println(this.cible.nom()+" a fait un double, il sort de prison !");
+    			JOptionPane.showMessageDialog(new JFrame(), this.cible.nom()+" a fait un double, il sort de prison !");
     		}
     		else
     		{
     			this.faitUnDouble = false;
     			this.cible.chosesAFaire().push(this);
-	    		System.out.println(this.cible.nom()+" a fait un double, il va donc rejouer !");
-	    		System.out.println("Nb de lancers : "+this.nbLancer);
+	    		/*System.out.println(this.cible.nom()+" a fait un double, il va donc rejouer !");
+	    		System.out.println("Nb de lancers : "+this.nbLancer);*/
+    			JOptionPane.showMessageDialog(new JFrame(), this.cible.nom()+" a fait un double, il va donc rejouer !\nNb de lancers : "+this.nbLancer);
 	    		this.nbLancer++;
 	    		if (this.nbLancer == 3)
 	    		{
