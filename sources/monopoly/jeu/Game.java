@@ -1,7 +1,9 @@
 package monopoly.jeu;
 
 import java.io.*;
+
 import javax.swing.*;
+
 import java.util.*;
 
 import monopoly.evenements.*;
@@ -16,6 +18,8 @@ public class Game
 	private List<Joueur> lesJoueurs = new ArrayList<Joueur>();
 	private List<String[]> paramsMonop = new ArrayList<String[]>();
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
+	private List<String[]> joueursSaved = new ArrayList<String[]>();
+	private List<String[]> titresSaved = new ArrayList<String[]>();
 	public static Case PRISON;
 	public static Case DEPART;
 	public static List<Case> LES_CASES;
@@ -26,12 +30,28 @@ public class Game
 	{
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
 		this.creerParamsMonop("monopoly.csv", this.paramsMonop);
-		//this.creerParamsMonop("test.csv", this.paramsMonop);
+		this.creerParamsMonop("partie.joueurs", this.joueursSaved);
+		this.creerParamsMonop("partie.titres", this.titresSaved);
 		this.creerGroupes();
 		this.creerCases();
 		this.creerCartes();
 		this.creerEvents();
 		this.creerJoueurs();
+		this.editTitres();
+	}
+	
+	public void editTitres()
+	{
+		for (String[] list : this.titresSaved)
+		{
+			UnePropriete p = (UnePropriete)this.lesCases.get(0).get(Integer.parseInt(list[0])).propriete();
+			if (list[1].equals("oui"))
+			{
+				p.hypothequer();
+				p.proprietaire().payer(p.prixAchat() / 2);
+			}
+			p.setNiveauImmobilier(Integer.parseInt(list[2]));
+		}
 	}
 	
 	public List<Groupe> lesGroupes()
@@ -198,11 +218,33 @@ public class Game
 	
 	public void creerJoueurs()
 	{
-		for (int i = 1 ; i <= 4 ; i++)
+		if (this.joueursSaved == null)
 		{
-			Joueur j = new PersoJoueur(i, "Joueur "+i, this.lesCases.get(0), this);
-			this.lesJoueurs.add(j);
-			Emprisonnement.TAB_PRISON.put(j, 0);
+			for (int i = 1 ; i <= 4 ; i++)
+			{
+				Joueur j = new PersoJoueur(i, "Joueur "+i, this.lesCases.get(0), this);
+				this.lesJoueurs.add(j);
+				Emprisonnement.TAB_PRISON.put(j, 0);
+			}
+		}
+		else
+		{
+			for (String[] list : this.joueursSaved)
+			{
+				PersoJoueur pj = new PersoJoueur(Integer.parseInt(list[0]), list[1], this.lesCases.get(Integer.parseInt(list[3]) - 1), this);
+				if (list[4].equals("oui"))
+				{
+					pj.emprisonner();
+				}
+				pj.setEspeces(Integer.parseInt(list[2]));
+				String[] prop = list[5].split(",");
+				for (String s : prop)
+				{
+					pj.titres().add(this.lesCases.get(Integer.parseInt(s) - 1).propriete());
+					this.lesCases.get(Integer.parseInt(s) - 1).propriete().setProprietaire(pj);
+				}
+				this.lesJoueurs.add(pj);
+			}
 		}
 	}
 	
@@ -392,52 +434,31 @@ public class Game
 		{
 			System.out.println(j);
 		}*/
-		/*Joueur j1 = this.lesJoueurs.get(0);
-		Joueur j2 = this.lesJoueurs.get(1);
-		while (!j1.elimine() || !j2.elimine())
-		{
-			System.out.println(("========== Au tour de "+j1.nom()+" =========="));
-			this.initialiserTour(j1);
-			System.out.println();
-			System.out.println("Topo : "+j1);
-			System.out.println();
-			System.out.println(("========== Au tour de "+j2.nom()+" =========="));
-			this.initialiserTour(j2);
-			System.out.println();
-			System.out.println("Topo : "+j2);
-			System.out.println();
-		}*/
-		/*Joueur j = this.lesJoueurs.get(0);
-		j.titres().add(this.lesCases.get(1).propriete());
-		j.titres().add(this.lesCases.get(21).propriete());
-		j.titres().add(this.lesCases.get(32).propriete());
-		j.titres().add(this.lesCases.get(26).propriete());
-		j.titres().add(this.lesCases.get(14).propriete());
-		j.titres().add(this.lesCases.get(6).propriete());
-		j.titres().add(this.lesCases.get(19).propriete());
-		*/
 		
 		Game.LES_CASES = this.lesCases;
 		Game.LES_CC = this.lesCartesCC;
 		Game.LES_CHANCES = this.lesCartesChances;
 		int tour = 1;
-		while (!this.lesJoueurs.get(0).elimine() || !this.lesJoueurs.get(1).elimine() || !this.lesJoueurs.get(2).elimine() || !this.lesJoueurs.get(3).elimine())
+		boolean jouer = true;
+		while (jouer)
 		{
-			/*System.out.println("====================================");
-			System.out.println("========== Début du tour "+tour+"==========");
-			System.out.println("====================================");*/
 			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Début du tour "+tour+"==========\n====================================");
 			for (Joueur j : this.lesJoueurs)
 			{
-				//System.out.println(j.nom()+" est éliminé ? "+j.elimine());
-				JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé ? "+j.elimine());
+				if (j.elimine())
+					JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé");
 				this.jouerTour(j);
 			}
-			/*System.out.println("====================================");
-			System.out.println("========== Fin du tour "+tour+"==========");
-			System.out.println("====================================");*/
 			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Fin du tour "+tour+"==========\n====================================");
 			tour++;
+			jouer = false;
+			for (Joueur j : this.lesJoueurs)
+			{
+				if (!j.elimine())
+				{
+					jouer = true;
+				}
+			}
 		}
 	}
 	

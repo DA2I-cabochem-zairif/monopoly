@@ -2,6 +2,8 @@ package monopoly.evenements ;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import monopoly.jeu.Joueur ;
 import monopoly.jeu.Case ;
 import monopoly.proprietes.Propriete;
@@ -31,16 +33,19 @@ public class Depense extends AbstractEvent
 	{
 		if (this.cible.payer(this.somme))
 		{
-			System.out.println(this.cible.nom()+" a payé "+somme+" euros");
+			//System.out.println(this.cible.nom()+" a payé "+somme+" euros");
+			JOptionPane.showMessageDialog(null, this.cible.nom()+" a payé "+somme+" euros");
 		}
 		else
 		{
 			int diff = this.somme - this.cible.especes();
-			System.out.println("Il manque "+diff+" euros à "+this.cible.nom());
+			//System.out.println("Il manque "+diff+" euros à "+this.cible.nom());
+			JOptionPane.showMessageDialog(null, "Il manque "+diff+" euros à "+this.cible.nom());
 			if (this.cible.titres().size() == 0)
 			{
 				this.cible.eliminer();
-				System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de prop");
+				//System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de prop");
+				JOptionPane.showMessageDialog(null, this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de prop");
 			}
 			else
 			{
@@ -83,31 +88,37 @@ public class Depense extends AbstractEvent
 						{
 							if (p.detruire())
 							{
-								System.out.println(p.proprietaire().nom()+" vend une maison. Nb Maisons : "+p.niveauImmobilier());
+								//System.out.println(p.proprietaire().nom()+" vend une maison. Nb Maisons : "+p.niveauImmobilier());
+								JOptionPane.showMessageDialog(null, p.proprietaire().nom()+" vend une maison. Nb Maisons : "+p.niveauImmobilier());
 							}
 						}
 						if (this.cible.especes() <= this.somme && !p.hypotheque())
 						{
 							p.hypothequer();
-							System.out.println(this.cible.nom()+" hypothèque "+p.nom()+" et récupère "+p.prixAchat() / 2+" euros.");
+							//System.out.println(this.cible.nom()+" hypothèque "+p.nom()+" et récupère "+p.prixAchat() / 2+" euros.");
+							JOptionPane.showMessageDialog(null, this.cible.nom()+" hypothèque "+p.nom()+" et récupère "+p.prixAchat() / 2+" euros.");
 						}
 					}
 					else
 					{
 						this.cible.eliminer();
-						System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car plus rien à hypo");
+						//System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car plus rien à hypo");
+						JOptionPane.showMessageDialog(null, this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car plus rien à hypo");
 					}
 				}
 				if (this.cible.payer(this.somme))
 				{
-					System.out.println(this.cible.nom()+" a payé "+somme+" euros");
+					//System.out.println(this.cible.nom()+" a payé "+somme+" euros");
+					JOptionPane.showMessageDialog(null, this.cible.nom()+" a payé "+somme+" euros");
 				}
 				else
 				{
 					diff = this.somme - this.cible.especes();
-					System.out.println("Il manque "+diff+" euros à "+this.cible.nom());
+					//System.out.println("Il manque "+diff+" euros à "+this.cible.nom());
+					JOptionPane.showMessageDialog(null, "Il manque "+diff+" euros à "+this.cible.nom());
 					this.cible.eliminer();
-					System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de thune");
+					//System.out.println(this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de thune");
+					JOptionPane.showMessageDialog(null, this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de thune");
 				}
 			}
 		}

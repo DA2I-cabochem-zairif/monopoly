@@ -2,6 +2,9 @@ package monopoly.jeu;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
+import monopoly.evenements.Emprisonnement;
 import monopoly.evenements.Evenement;
 import monopoly.evenements.TirerDes;
 import monopoly.proprietes.Propriete;
@@ -58,6 +61,7 @@ public class PersoJoueur implements Joueur
     public void emprisonner()
     {
     	this.estEnPrison = true;
+    	Emprisonnement.TAB_PRISON.put(this, 0);
     }
     
     /** Indique si le joueur est éliminé */
@@ -73,22 +77,12 @@ public class PersoJoueur implements Joueur
     	{
 	    	this.elimine = true;
 	    	this.chosesAFaire.clear();
-	    	for (Joueur j : this.adversaires())
-			{
-				Iterator<Joueur> it = this.adversaires.iterator();
-				while (it.hasNext())
-				{
-					if (it.next().nom().equals(this.nom))
-					{
-						it.remove();
-					}
-				}
-			}
 	    	for (Propriete p : this.titres)
 	    	{
 	    		p.setProprietaire(null);
 	    	}
-	    	System.out.println(this.listerProp());
+	    	//System.out.println(this.listerProp());
+	    	JOptionPane.showMessageDialog(null, this.listerProp());
     	}
     }
     
@@ -138,7 +132,7 @@ public class PersoJoueur implements Joueur
     	ArrayList<Joueur> adv = new ArrayList<Joueur>();
     	for (Joueur j : this.g.lesJoueurs())
     	{
-    		if (j.numero() != this.numero)
+    		if (j.numero() != this.numero && !j.elimine())
     			adv.add(j);
     	}
     	this.adversaires = adv;
@@ -172,7 +166,14 @@ public class PersoJoueur implements Joueur
     {
 	String liste = "Liste des propriétés : \n";
 	for (Propriete p : this.titres)
-	    liste += p.nom()+" | ";
+	{
+	    liste += p.nom()+" ";
+	    if (p.hypotheque())
+	    {
+	    	liste += "(hypothéqué) ";
+	    }
+	    liste += " | ";
+	}
 	return liste;
     }
     
@@ -186,6 +187,12 @@ public class PersoJoueur implements Joueur
     	TirerDes td = new TirerDes("Lancer", this);
     	td.executer();
     	return td.valeur();
+    }
+    
+    /** Met les espèces du joueur à la valeur de la somme en paramètre **/
+    public void setEspeces(int somme)
+    {
+    	this.especes = somme;
     }
     
     public String toString()

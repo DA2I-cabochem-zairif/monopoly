@@ -18,8 +18,8 @@ NUMÉRO;NOM;ÉVÉNEMENT;TYPE PROPRIÉTÉ;GROUPE;ACHAT;COÛT IMMOBILIER;LOYERS
 17;Avenue Mozart;;terrain;orange;18000;10000;1400,7000,20000,55000,75000,95000
 18;Caisse de communauté;carte,CC;;;;;
 19;Boulevard Saint-Michel;;terrain;orange;18000;10000;1400,7000,20000,55000,75000,95000
-20;Place Pigalle;;terrain;orange;20000;10000;1600,8000,22000,60000,80000,100000
-21;Parc gratuit;;;;;;
+20;Parc gratuit;;;;;;
+21;Place Pigalle;;terrain;orange;20000;10000;1600,8000,22000,60000,80000,100000
 22;Avenue Montaigne;;terrain;rouge;22000;15000;1800,9000,25000,70000,87500,105000
 23;Chance;carte,chance;;;;;
 24;Boulevard Malesherbes;;terrain;rouge;22000;15000;1800,9000,25000,70000,87500,105000
@@ -39,4 +39,3 @@ NUMÉRO;NOM;ÉVÉNEMENT;TYPE PROPRIÉTÉ;GROUPE;ACHAT;COÛT IMMOBILIER;LOYERS
 38;Avenue des Champs-Elysées;;terrain;bleu roi;35000;20000;3500,17500,50000,110000,130000,150000
 39;Taxe de luxe;dépense,10000;;;;;
 40;Rue de la Paix;;terrain;bleu roi;40000;20000;5000,20000,60000,140000,170000,200000
-

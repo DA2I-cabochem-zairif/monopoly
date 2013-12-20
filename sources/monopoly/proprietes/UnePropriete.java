@@ -1,7 +1,7 @@
 package monopoly.proprietes ;
 
-import monopoly.jeu.Joueur ;
-import monopoly.jeu.Case ;
+import javax.swing.JOptionPane;
+import monopoly.jeu.*;
 
 /** Cette interface décrit les fonctionnalités associées à tout titre
  * de propriété */
@@ -132,6 +132,11 @@ public abstract class UnePropriete implements Propriete
     public int niveauImmobilier()
     {
 	return this.niveauImmo;
+    }
+    
+    public void setNiveauImmobilier(int immo)
+    {
+    	this.niveauImmo = immo;
     }
     
     public String toString()

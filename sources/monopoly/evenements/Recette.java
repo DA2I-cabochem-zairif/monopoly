@@ -2,6 +2,8 @@ package monopoly.evenements ;
 
 import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
 import monopoly.jeu.Joueur ;
 import monopoly.proprietes.Propriete;
 
@@ -28,10 +30,11 @@ public class Recette extends AbstractEvent
     
 	public void executer()
 	{
-		System.out.println("Versement de "+this.somme+" à "+this.cible.nom());
+		//System.out.println("Versement de "+this.somme+" à "+this.cible.nom());
+		JOptionPane.showMessageDialog(null, "Versement de "+this.somme+" à "+this.cible.nom());
 		this.cible.verser(this.somme);
-		System.out.println(this.cible.nom()+" possède "+this.cible.especes()+" euros.");
-		// trier ici du prix d'achat le 
+		//System.out.println(this.cible.nom()+" possède "+this.cible.especes()+" euros.");
+		JOptionPane.showMessageDialog(null, this.cible.nom()+" possède "+this.cible.especes()+" euros.");
 		Iterator<Propriete> it = this.cible.titres().iterator();
 		Propriete p = null;
 		if (it.hasNext())
@@ -39,7 +42,8 @@ public class Recette extends AbstractEvent
 			p = it.next();
 			while (p.deshypothequer())
 			{
-				System.out.println(this.cible.nom()+" a récupéré son bien : "+p.nom());
+				//System.out.println(this.cible.nom()+" a récupéré son bien : "+p.nom());
+				JOptionPane.showMessageDialog(null, this.cible.nom()+" a récupéré son bien : "+p.nom());
 				if (it.hasNext())
 				{
 					p = it.next();

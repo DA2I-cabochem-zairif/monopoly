@@ -36,11 +36,17 @@ public class Deplacement extends AbstractEvent
 	    {
 	    	if (this.cible.position().propriete().proprietaire() == null)
 	    	{
-	    		System.out.println("Voulez-vous acheter "+this.cible.position().propriete().nom()+" pour "+this.cible.position().propriete().prixAchat()+" ? (Liquidités disponibles : "+this.cible.especes()+" euros)");
-				if (sc.nextLine().equals("o"))
+	    		int achat = JOptionPane.showConfirmDialog(null, "Voulez-vous acheter "+this.cible.position().propriete().nom()+" pour "+this.cible.position().propriete().prixAchat()+" ? (Liquidités disponibles : "+this.cible.especes()+" euros)", this.cible.nom()+" achète "+this.caseCible.propriete().nom(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    		//System.out.println("Voulez-vous acheter "+this.cible.position().propriete().nom()+" pour "+this.cible.position().propriete().prixAchat()+" ? (Liquidités disponibles : "+this.cible.especes()+" euros)");
+				//if (sc.nextLine().equals("o"))
+	    		if (achat == JOptionPane.YES_OPTION)
 				{
 					this.cible.chosesAFaire().push(new AchatProp(this.cible.position().propriete(), "acheter", this.cible));
 				}
+	    		else
+	    		{
+	    			JOptionPane.showMessageDialog(null, this.cible.nom()+" n'achète pas "+this.caseCible.propriete().nom());
+	    		}
 	    	}
 	    	else if (!this.cible.position().propriete().proprietaire().nom().equals(this.cible.nom()))
 			{
@@ -59,20 +65,28 @@ public class Deplacement extends AbstractEvent
 			{
 				if (this.cible.position().propriete().constructible())
 				{
-					System.out.println("Voulez-vous construire une maison ?");
-					if (sc.nextLine().equals("o"))
+					int maison = JOptionPane.showConfirmDialog(null, "Voulez-vous construire une maison ?", this.cible.nom()+" achète "+this.caseCible.propriete().nom(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					//System.out.println("Voulez-vous construire une maison ?");
+					//if (sc.nextLine().equals("o"))
+					if (maison == JOptionPane.YES_OPTION)
 					{
 						int ancienLoyer = this.cible.position().propriete().loyer();
 						if (this.cible.position().propriete().construire())
 						{
-							System.out.println("Bravo vous avez une maison");
+							/*System.out.println("Bravo vous avez une maison");
 							System.out.println("Ancien loyer : "+ancienLoyer);
-							System.out.println("Nouveau loyer : "+this.cible.position().propriete().loyer());
+							System.out.println("Nouveau loyer : "+this.cible.position().propriete().loyer());*/
+							JOptionPane.showMessageDialog(null, "Bravo vous avez une maison\nAncien loyer : "+ancienLoyer+"\nNouveau loyer : "+this.cible.position().propriete().loyer());
 						}
 						else
 						{
-							System.out.println("Tu n'as pas assez de pognon, vive le capitalisme !");
+							//System.out.println("Tu n'as pas assez de pognon, vive le capitalisme !");
+							JOptionPane.showMessageDialog(null, "Tu n'as pas assez de pognon, vive le capitalisme !");
 						}
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, this.cible.nom()+" n'achète pas de maison pour "+this.caseCible.propriete().nom());
 					}
 				}
 			}
@@ -97,12 +111,14 @@ public class Deplacement extends AbstractEvent
 					this.cible.position().setEvent(c);
 				}
 				this.cible.position().evenement().setCible(this.cible);
-				System.out.println(this.cible.position().evenement());
+				//System.out.println(this.cible.position().evenement());
+				JOptionPane.showMessageDialog(null, this.cible.position().evenement());
 				this.cible.chosesAFaire().push(this.cible.position().evenement());
 			}
 			else
 			{
-				System.out.println("Bienvenue à la visite de "+this.cible.position().nom());
+				//System.out.println("Bienvenue à la visite de "+this.cible.position().nom());
+				JOptionPane.showMessageDialog(null, "Bienvenue à la visite de "+this.cible.position().nom());
 			}
 	    }
 	}
