@@ -20,18 +20,21 @@ import javax.swing.JPanel;
 
 import monopoly.jeu.*;
 
-public class Plateau extends JFrame {
+public class Plateau extends JFrame
+{
 	private JPanel panel;
-	public static void main(String [] args){
+	public static void main(String [] args)
+	{
 		Plateau p = new Plateau();
 		p.pack();
 		p.setVisible(true);
 	}
 	
-	public Plateau(){
+	public Plateau()
+	{
 		super("Monopoly");
 		Game g = new Game();
-		int nbCasesparTour = g.lesCases().size()/4;
+		int nbCasesparTour = g.lesCases().size() / 4;
 		int cpt = 0;
 		int cardinalite = 0;
 		

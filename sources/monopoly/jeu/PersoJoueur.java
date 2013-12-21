@@ -29,6 +29,7 @@ public class PersoJoueur implements Joueur
 		this.nom = nom;
 		this.position = new MonoCase(1, "Case départ", g);
 		this.g = g;
+		Emprisonnement.TAB_PRISON.put(this, 0);
 	}
 	
 	public PersoJoueur(int numero, String nom, Case depart, Game g)
@@ -37,6 +38,7 @@ public class PersoJoueur implements Joueur
 		this.nom = nom;
 		this.position = depart;
 		this.g = g;
+		Emprisonnement.TAB_PRISON.put(this, 0);
 	}
 	
 	/** Le numéro du joueur */

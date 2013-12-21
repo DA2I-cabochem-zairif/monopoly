@@ -29,16 +29,12 @@ public class Deplacement extends AbstractEvent
 	public void executer()
 	{
 		this.cible.placerSur(this.caseCible);
-		//System.out.println(this.cible.nom()+" est maintenant sur "+this.cible.position().nom());
 		JOptionPane.showMessageDialog(new JFrame(), this.cible.nom()+" est maintenant sur "+this.cible.position().nom());
-	    Scanner sc = new Scanner(System.in);
 	    if (this.cible.position().propriete() != null)
 	    {
 	    	if (this.cible.position().propriete().proprietaire() == null)
 	    	{
 	    		int achat = JOptionPane.showConfirmDialog(null, "Voulez-vous acheter "+this.cible.position().propriete().nom()+" pour "+this.cible.position().propriete().prixAchat()+" ? (Liquidités disponibles : "+this.cible.especes()+" euros)", this.cible.nom()+" achète "+this.caseCible.propriete().nom(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-	    		//System.out.println("Voulez-vous acheter "+this.cible.position().propriete().nom()+" pour "+this.cible.position().propriete().prixAchat()+" ? (Liquidités disponibles : "+this.cible.especes()+" euros)");
-				//if (sc.nextLine().equals("o"))
 	    		if (achat == JOptionPane.YES_OPTION)
 				{
 					this.cible.chosesAFaire().push(new AchatProp(this.cible.position().propriete(), "acheter", this.cible));
@@ -52,7 +48,6 @@ public class Deplacement extends AbstractEvent
 			{
 	    		if (this.cible.position().propriete().hypotheque())
 	    		{
-	    			//System.out.println(this.cible.position().propriete().nom()+" est hypothéqué ! Pas de loyer à payer");
 	    			JOptionPane.showMessageDialog(new JFrame(), this.cible.position().propriete().nom()+" est hypothéqué ! Pas de loyer à payer");
 	    		}
 	    		else
@@ -65,23 +60,21 @@ public class Deplacement extends AbstractEvent
 			{
 				if (this.cible.position().propriete().constructible())
 				{
-					int maison = JOptionPane.showConfirmDialog(null, "Voulez-vous construire une maison ?", this.cible.nom()+" achète "+this.caseCible.propriete().nom(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-					//System.out.println("Voulez-vous construire une maison ?");
-					//if (sc.nextLine().equals("o"))
+					int maison = JOptionPane.showConfirmDialog(null, "Voulez-vous construire une maison ? (Nombre de maisons sur ce terrain : "+this.cible.position().propriete().niveauImmobilier()+")", this.cible.nom()+" achète "+this.caseCible.propriete().nom(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (maison == JOptionPane.YES_OPTION)
 					{
 						int ancienLoyer = this.cible.position().propriete().loyer();
 						if (this.cible.position().propriete().construire())
 						{
-							/*System.out.println("Bravo vous avez une maison");
-							System.out.println("Ancien loyer : "+ancienLoyer);
-							System.out.println("Nouveau loyer : "+this.cible.position().propriete().loyer());*/
 							JOptionPane.showMessageDialog(null, "Bravo vous avez une maison\nAncien loyer : "+ancienLoyer+"\nNouveau loyer : "+this.cible.position().propriete().loyer());
+						}
+						else if (this.cible.position().propriete().niveauImmobilier() != 5)
+						{
+							JOptionPane.showMessageDialog(null, this.cible.nom()+" n'a pas assez d'argent, impossible de construire une maison");
 						}
 						else
 						{
-							//System.out.println("Tu n'as pas assez de pognon, vive le capitalisme !");
-							JOptionPane.showMessageDialog(null, "Tu n'as pas assez de pognon, vive le capitalisme !");
+							JOptionPane.showMessageDialog(null, "Il y a déjà un hôtel ici : pas possible de construire quoi que ce soit !");
 						}
 					}
 					else
@@ -111,13 +104,11 @@ public class Deplacement extends AbstractEvent
 					this.cible.position().setEvent(c);
 				}
 				this.cible.position().evenement().setCible(this.cible);
-				//System.out.println(this.cible.position().evenement());
 				JOptionPane.showMessageDialog(null, this.cible.position().evenement());
 				this.cible.chosesAFaire().push(this.cible.position().evenement());
 			}
 			else
 			{
-				//System.out.println("Bienvenue à la visite de "+this.cible.position().nom());
 				JOptionPane.showMessageDialog(null, "Bienvenue à la visite de "+this.cible.position().nom());
 			}
 	    }

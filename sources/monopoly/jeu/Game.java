@@ -218,13 +218,23 @@ public class Game
 	
 	public void creerJoueurs()
 	{
-		if (this.joueursSaved == null)
+		if (JOptionPane.showConfirmDialog(null, "Reprendre une partie sauvegardée ?") != JOptionPane.YES_OPTION)
 		{
-			for (int i = 1 ; i <= 4 ; i++)
+			this.lesJoueurs.clear();
+			this.joueursSaved.clear();
+			this.titresSaved.clear();
+		}
+		if (this.joueursSaved.size() == 0)
+		{
+			String listeJoueurs = "";
+			int num = 1;
+			while (JOptionPane.showConfirmDialog(null, "Créer un joueur ?\nJoueurs présents :\n"+listeJoueurs) == JOptionPane.YES_OPTION)
 			{
-				Joueur j = new PersoJoueur(i, "Joueur "+i, this.lesCases.get(0), this);
-				this.lesJoueurs.add(j);
-				Emprisonnement.TAB_PRISON.put(j, 0);
+				String nom = JOptionPane.showInputDialog("Nom du joueur : ");
+				JOptionPane.showMessageDialog(null, "Création joueur "+nom);
+				listeJoueurs += "- "+nom+"\n";
+				this.lesJoueurs.add(new PersoJoueur(num, nom, this));
+				num++;
 			}
 		}
 		else
@@ -317,7 +327,7 @@ public class Game
 					}
 					else
 					{
-						//System.out.println("créer l'event "+list[2]);
+						
 					}
 				}
 			}
@@ -354,7 +364,6 @@ public class Game
 			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom()+" et possède "+j.especes());
 			System.out.println(td);
 			DeplacementRelatif dr = new DeplacementRelatif("Déplace", j, td.valeur(), this.lesCases);
-			// j.chosesAFaire().push(dr);
 			dr.executer();
 			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
 			if (j.position().propriete() == null)
@@ -446,8 +455,9 @@ public class Game
 			for (Joueur j : this.lesJoueurs)
 			{
 				if (j.elimine())
-					JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé");
-				this.jouerTour(j);
+					JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé !");
+				else
+					this.jouerTour(j);
 			}
 			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Fin du tour "+tour+"==========\n====================================");
 			tour++;
@@ -471,15 +481,7 @@ public class Game
 			{
 				j.chosesAFaire().pop().executer();
 			}
-			/*System.out.println();
-			System.out.println("Topo de "+j.nom()+" : \n"+j);
-			System.out.println();*/
 			JOptionPane.showMessageDialog(new JFrame(), "Topo de "+j.nom()+" : \n"+j);
-		}
-		else
-		{
-			//System.out.println(j.nom()+" est éliminé !");
-			JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé !");
 		}
 	}
 	
