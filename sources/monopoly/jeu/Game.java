@@ -301,12 +301,12 @@ public class Game
 						String[] paramsEvent = list[2].split(",");
 						if (paramsEvent[0].equals("dépense"))
 						{
-							Evenement d = new Depense(paramsEvent[0], Integer.parseInt(paramsEvent[1]));
+							Depense d = new Depense(paramsEvent[0], Integer.parseInt(paramsEvent[1]), paramsEvent[0]);
 							this.lesCases.get(index).setEvent(d);
 						}
 						else if (paramsEvent[0].equals("recette"))
 						{
-							Evenement r = new Recette(paramsEvent[0], Integer.parseInt(paramsEvent[1]));
+							Recette r = new Recette(paramsEvent[0], Integer.parseInt(paramsEvent[1]), paramsEvent[0]);
 							this.lesCases.get(index).setEvent(r);
 						}
 						else if (paramsEvent[0].equals("carte"))

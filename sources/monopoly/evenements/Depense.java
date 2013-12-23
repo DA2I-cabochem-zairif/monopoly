@@ -11,6 +11,7 @@ import monopoly.proprietes.Propriete;
 public class Depense extends AbstractEvent
 {
 	private int somme;
+	private String type = "";
 	
     public Depense(String nom, Joueur cible, int somme)
     {
@@ -24,9 +25,21 @@ public class Depense extends AbstractEvent
 		this.somme = somme;
 	}
     
+    public Depense(String nom, int somme, String type)
+    {
+		super(nom);
+		this.somme = somme;
+		this.type = type;
+	}
+    
     public void setCible(Joueur j)
     {
     	this.cible = j;
+    }
+    
+    public int somme()
+    {
+    	return this.somme;
     }
 
 	public void executer()
@@ -42,7 +55,7 @@ public class Depense extends AbstractEvent
 			if (this.cible.titres().size() == 0)
 			{
 				this.cible.eliminer();
-				JOptionPane.showMessageDialog(null, this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé !!! car pas de prop");
+				JOptionPane.showMessageDialog(null, this.cible.nom()+" n'a pas les fonds suffisants, il est éliminé car il ne possède pas de propriété à hypothéquer !");
 			}
 			else
 			{
@@ -104,6 +117,11 @@ public class Depense extends AbstractEvent
 				}
 			}
 		}
+	}
+	
+	public String type()
+	{
+		return this.type;
 	}
 	
 	public String toString()

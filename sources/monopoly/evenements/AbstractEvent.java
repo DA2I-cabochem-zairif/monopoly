@@ -38,5 +38,10 @@ public abstract class AbstractEvent implements Evenement
     	this.cible = j;
     }
     
+    public String type()
+    {
+    	return "";
+    }
+    
     public abstract void executer();
 }

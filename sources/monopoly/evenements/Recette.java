@@ -10,6 +10,7 @@ import monopoly.proprietes.Propriete;
 public class Recette extends AbstractEvent
 {
 	private int somme;
+	private String type = "";
 	
     public Recette(String nom, Joueur cible, int somme)
     {
@@ -23,9 +24,26 @@ public class Recette extends AbstractEvent
     	this.somme = somme;
     }
     
+    public Recette(String nom, int somme, String type)
+    {
+    	super(nom);
+    	this.somme = somme;
+    	this.type = type;
+    }
+    
     public void setCible(Joueur j)
     {
     	this.cible = j;
+    }
+    
+    public int somme()
+    {
+    	return this.somme;
+    }
+    
+    public String type()
+    {
+    	return this.type;
     }
     
 	public void executer()

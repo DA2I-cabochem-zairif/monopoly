@@ -15,4 +15,6 @@ public interface Evenement {
     void executer();
     /** Définit le joueur qui est concerné par l'évènement **/
     void setCible(Joueur j);
+    /** Retourne le type d'évènement **/
+    String type();
 }
