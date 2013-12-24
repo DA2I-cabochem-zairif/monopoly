@@ -30,6 +30,7 @@ public class Test
 		int hauteur = (int)tailleEcran.getHeight();
 		int largeur = (int)tailleEcran.getWidth();
 	    fen.setSize(largeur, hauteur);
+	    
 	    fen.setLocationRelativeTo(null);
 	    fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
@@ -110,7 +111,7 @@ public class Test
 	    	
 		    c.fill = GridBagConstraints.HORIZONTAL;
 		    c.weightx = 0.5;
-		    c.ipady = 40;
+		    c.ipady = 30;
 		    c.gridx = i;
 		    c.gridy = 0;
 		    lacase.setLayout(gl);
@@ -190,7 +191,7 @@ public class Test
 	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
 		    c.fill = GridBagConstraints.BOTH;
 		    c.weightx = 0.5;
-		    c.ipady = 40;
+		    c.ipady = 30;
 		    c.gridx = i - 1;
 		    c.gridy = j;
 		    lacase.setLayout(gl);
@@ -270,7 +271,7 @@ public class Test
 	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
 		    c.fill = GridBagConstraints.HORIZONTAL;
 		    c.weightx = 0.5;
-		    c.ipady = 40;
+		    c.ipady = 30;
 		    c.gridx = k - 1;
 		    c.gridy = j;
 		    lacase.setLayout(gl);
@@ -350,7 +351,7 @@ public class Test
 	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
 		    c.fill = GridBagConstraints.HORIZONTAL;
 		    c.weightx = 0.5;
-		    c.ipady = 40;
+		    c.ipady = 30;
 		    c.gridx = k;
 		    c.gridy = l - 1;
 		    lacase.setLayout(gl);
@@ -379,7 +380,7 @@ public class Test
 		    y++;
 	    }
 	    fen.setContentPane(pan);
-	    fen.pack();
+	    //fen.pack();
 	    JFrame.setDefaultLookAndFeelDecorated(true);
 	    fen.setExtendedState(Frame.MAXIMIZED_BOTH);
 	    fen.setVisible(true);
