@@ -26,7 +26,10 @@ public class Test
 	{
 		int hauteurCase = 30;
 		Test p = new Test();
-	    fen.setSize(1100, 700);
+		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		int hauteur = (int)tailleEcran.getHeight();
+		int largeur = (int)tailleEcran.getWidth();
+	    fen.setSize(largeur, hauteur);
 	    fen.setLocationRelativeTo(null);
 	    fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
