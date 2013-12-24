@@ -12,8 +12,8 @@ import monopoly.proprietes.*;
 public class Game
 {
 	private List<Case> lesCases = new ArrayList<Case>();
-	private List<Carte> lesCartesChances = new ArrayList<Carte>();
-	private List<Carte> lesCartesCC = new ArrayList<Carte>();
+	public static List<Carte> lesCartesChances = new ArrayList<Carte>();
+	public static List<Carte> lesCartesCC = new ArrayList<Carte>();
 	private List<Groupe> lesGroupes = new ArrayList<Groupe>();
 	private List<Joueur> lesJoueurs = new ArrayList<Joueur>();
 	private List<String[]> paramsMonop = new ArrayList<String[]>();
@@ -38,6 +38,16 @@ public class Game
 		this.creerEvents();
 		this.creerJoueurs();
 		this.editTitres();
+	}
+	
+	public List<Carte> lesChances()
+	{
+		return this.lesCartesChances;
+	}
+	
+	public List<Carte> lesCC()
+	{
+		return this.lesCartesCC;
 	}
 	
 	public void editTitres()
@@ -143,7 +153,7 @@ public class Game
 			}
 			else if (list[3].equals("déplacement relatif"))
 			{
-				DeplacementRelatif d = new DeplacementRelatif(list[2], Integer.parseInt(list[4]), this.lesCases);
+				DeplacementRelatif d = new DeplacementRelatif(list[2], Integer.parseInt(list[4]), this.lesCases, this);
 				if (list[1].equals("CC"))
 				{
 					this.lesCartesCC.add(new Carte(Integer.parseInt(list[0]), list[1], list[2], d, list[3]));
@@ -359,11 +369,11 @@ public class Game
 		}
 		if (!j.enPrison())
 		{
-			TirerDes td = new TirerDes("Tirage de dés de "+j.nom(), j);
+			TirerDes td = new TirerDes("Tirage de dés de "+j.nom(), j, this);
 			td.executer();
 			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom()+" et possède "+j.especes());
 			System.out.println(td);
-			DeplacementRelatif dr = new DeplacementRelatif("Déplace", j, td.valeur(), this.lesCases);
+			DeplacementRelatif dr = new DeplacementRelatif("Déplace", j, td.valeur(), this.lesCases, this);
 			dr.executer();
 			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
 			if (j.position().propriete() == null)
@@ -476,7 +486,7 @@ public class Game
 	{
 		if (!j.elimine())
 		{
-			j.chosesAFaire().push(new TirerDes("test", j));
+			j.chosesAFaire().push(new TirerDes("test", j, this));
 			while (!j.chosesAFaire().empty())
 			{
 				j.chosesAFaire().pop().executer();

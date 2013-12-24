@@ -186,7 +186,7 @@ public class PersoJoueur implements Joueur
     
     public int dernierLancer()
     {
-    	TirerDes td = new TirerDes("Lancer", this);
+    	TirerDes td = new TirerDes("Lancer", this, this.g);
     	td.executer();
     	return td.valeur();
     }

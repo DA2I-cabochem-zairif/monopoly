@@ -12,11 +12,13 @@ public class TirerDes extends AbstractEvent
     private int lancer;
     private boolean faitUnDouble = false;
     private int nbLancer = 1;
+    private Game g;
     public static int DERNIER_LANCER;
     
-    public TirerDes(String nom, Joueur cible)
+    public TirerDes(String nom, Joueur cible, Game g)
     {
     	super(nom, cible);
+    	this.g = g;
     }
     
     public void executer()
@@ -69,7 +71,7 @@ public class TirerDes extends AbstractEvent
     	}
     	if (!this.cible.enPrison())
     	{
-    		this.cible.chosesAFaire().push(new DeplacementRelatif(this.nom, this.cible, this.lancer, Game.LES_CASES));
+    		this.cible.chosesAFaire().push(new DeplacementRelatif(this.nom, this.cible, this.lancer, Game.LES_CASES, this.g));
     	}
     }
     

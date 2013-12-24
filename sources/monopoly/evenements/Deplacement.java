@@ -93,13 +93,13 @@ public class Deplacement extends AbstractEvent
 					Carte c = (Carte)this.cible.position().evenement();
 					if (c.type().equals("chance"))
 					{
-						Collections.shuffle(Game.LES_CHANCES);
-						c = Game.LES_CHANCES.get(0);
+						Collections.shuffle(Game.lesCartesChances);
+						c = Game.lesCartesChances.get(0);
 					}
 					else
 					{
-						Collections.shuffle(Game.LES_CC);
-						c = Game.LES_CC.get(0);
+						Collections.shuffle(Game.lesCartesCC);
+						c = Game.lesCartesCC.get(0);
 					}
 					this.cible.position().setEvent(c);
 				}

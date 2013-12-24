@@ -1,25 +1,31 @@
 import monopoly.evenements.*;
 import monopoly.jeu.*;
 import monopoly.proprietes.*;
+
 import java.awt.*;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class Test
 {
+	private JFrame fen = new JFrame("Monopoly");
+	
 	public Test()
 	{
 		
 	}
 	
-	public void init()
+	public void actualiser(Game g)
+	{
+		this.init(g);
+	}
+	
+	public void init(Game g)
 	{
 		int hauteurCase = 30;
-		Game g = new Game();
 		Test p = new Test();
-		JFrame fen = new JFrame();
-		fen.setTitle("test gbl");
 	    fen.setSize(1100, 700);
 	    fen.setLocationRelativeTo(null);
 	    fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +47,7 @@ public class Test
 	    	couleur.setMaximumSize(new Dimension(10, 1));
 	    	String nom = g.lesCases().get(cpt).nom();
 	    	String[] seq = nom.split(" ");
-	    	nom = "<html>";
+	    	nom = "<html><center>";
 	    	int taille = 0;
 	    	for (String s : seq)
 	    	{
@@ -92,6 +98,8 @@ public class Test
 	    	}
 	    	JLabel test = new JLabel(nom);
 	    	test.setFont(new Font("calibri", 12, 12));
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
 	    	lacase.add(couleur);
 	    	lacase.add(test);
 	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
@@ -103,6 +111,7 @@ public class Test
 		    c.gridx = i;
 		    c.gridy = 0;
 		    lacase.setLayout(gl);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		    pan.add(lacase, c);
 		    i++;
 	    }
@@ -119,7 +128,7 @@ public class Test
 	    	couleur.setMaximumSize(new Dimension(10, 1));
 	    	String nom = g.lesCases().get(cpt).nom();
 	    	String[] seq = nom.split(" ");
-	    	nom = "<html>";
+	    	nom = "<html><center>";
 	    	int taille = 0;
 	    	for (String s : seq)
 	    	{
@@ -172,6 +181,8 @@ public class Test
 	    	test.setFont(new Font("calibri", 12, 12));
 	    	lacase.add(couleur);
 	    	lacase.add(test);
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
 	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
 	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
 		    c.fill = GridBagConstraints.BOTH;
@@ -181,6 +192,7 @@ public class Test
 		    c.gridy = j;
 		    lacase.setLayout(gl);
 		    pan.add(lacase, c);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		    j++;
 	    }
 	    
@@ -196,7 +208,7 @@ public class Test
 	    	couleur.setMaximumSize(new Dimension(10, 1));
 	    	String nom = g.lesCases().get(cpt).nom();
 	    	String[] seq = nom.split(" ");
-	    	nom = "<html>";
+	    	nom = "<html><center>";
 	    	int taille = 0;
 	    	for (String s : seq)
 	    	{
@@ -249,6 +261,8 @@ public class Test
 	    	test.setFont(new Font("calibri", 12, 12));
 	    	lacase.add(couleur);
 	    	lacase.add(test);
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
 	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
 	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
 		    c.fill = GridBagConstraints.HORIZONTAL;
@@ -258,6 +272,7 @@ public class Test
 		    c.gridy = j;
 		    lacase.setLayout(gl);
 		    pan.add(lacase, c);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		    k--;
 	    }
 	    
@@ -273,7 +288,7 @@ public class Test
 	    	couleur.setMaximumSize(new Dimension(10, 1));
 	    	String nom = g.lesCases().get(cpt).nom();
 	    	String[] seq = nom.split(" ");
-	    	nom = "<html>";
+	    	nom = "<html><center>";
 	    	int taille = 0;
 	    	for (String s : seq)
 	    	{
@@ -326,6 +341,8 @@ public class Test
 	    	test.setFont(new Font("calibri", 12, 12));
 	    	lacase.add(couleur);
 	    	lacase.add(test);
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
 	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
 	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
 		    c.fill = GridBagConstraints.HORIZONTAL;
@@ -335,14 +352,34 @@ public class Test
 		    c.gridy = l - 1;
 		    lacase.setLayout(gl);
 		    pan.add(lacase, c);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		    l--;
 	    }
-	    
+	    int y = 1;
+	    for (Joueur j1 : g.lesJoueurs())
+	    {
+		    JLabel topo = new JLabel("");
+		    String legende = "<html><center>";
+	    	legende += j1.nom()+" = "+j1.numero()+"<br>";
+		    legende += "</html>";
+		    topo.setText(legende);
+		    GridBagConstraints gbc = new GridBagConstraints();
+		    gbc.weightx = 0.5;
+		    gbc.fill = GridBagConstraints.HORIZONTAL;
+		    gbc.ipady = 40;
+		    gbc.ipadx = 40;
+		    gbc.gridx = 5;
+		    gbc.gridy = y;
+		    topo.setMinimumSize(new Dimension(10, 10));
+	    	topo.setMaximumSize(new Dimension(10, 10));
+		    pan.add(topo, gbc);
+		    y++;
+	    }
 	    fen.setContentPane(pan);
 	    fen.pack();
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    fen.setExtendedState(Frame.MAXIMIZED_BOTH);
 	    fen.setVisible(true);
-	    
-		//g.play();
 	}
 	
 	public void setColor(Case lacase, Component c)
@@ -408,6 +445,29 @@ public class Test
 	
 	public static void main(String[] args)
 	{
-		
+		Test t = new Test();
+		Game g = new Game();
+		t.init(g);
+		int tour = 1;
+		while (JOptionPane.showConfirmDialog(null, "Jouer le tour "+tour+" ?") == JOptionPane.YES_OPTION)
+		{
+			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Début du tour "+tour+"==========\n====================================");
+			for (Joueur j : g.lesJoueurs())
+			{
+				if (j.elimine())
+				{
+					JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé !");
+				}
+				else
+				{
+					g.jouerTour(j);
+				}
+				
+				t.actualiser(g);
+			}
+			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Fin du tour "+tour+"==========\n====================================");
+			tour++;
+		}
+		JOptionPane.showMessageDialog(null, "Fin du jeu");
 	}
 }

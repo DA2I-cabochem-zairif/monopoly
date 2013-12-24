@@ -9,17 +9,17 @@ public class DeplacementRelatif extends AbstractEvent
 	private int changement;
 	private List<Case> lesCases;
 	
-	public DeplacementRelatif(String nom, int changement, List<Case> lesCases)
+	public DeplacementRelatif(String nom, int changement, List<Case> lesCases, Game g)
 	{
 		super(nom);
-		this.lesCases = lesCases;
+		this.lesCases = g.lesCases();
 		this.changement = changement;
 	}
 	
-	public DeplacementRelatif(String nom, Joueur cible, int changement, List<Case> lesCases)
+	public DeplacementRelatif(String nom, Joueur cible, int changement, List<Case> lesCases, Game g)
 	{
 		super(nom, cible);
-		this.lesCases = lesCases;
+		this.lesCases = g.lesCases();
 		this.changement = changement;
 	}
 
