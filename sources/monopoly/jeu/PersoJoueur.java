@@ -23,6 +23,12 @@ public class PersoJoueur implements Joueur
 	private List<Joueur> adversaires = new ArrayList<Joueur>();
 	private Game g;
 	
+	/**
+	 * Crée un joueur
+	 * @param numero
+	 * @param nom
+	 * @param g
+	 */
 	public PersoJoueur(int numero, String nom, Game g)
 	{
 		this.numero = numero;
@@ -32,6 +38,13 @@ public class PersoJoueur implements Joueur
 		Emprisonnement.TAB_PRISON.put(this, 0);
 	}
 	
+	/**
+	 * Crée un joueur
+	 * @param numero
+	 * @param nom
+	 * @param depart
+	 * @param g
+	 */
 	public PersoJoueur(int numero, String nom, Case depart, Game g)
 	{
 		this.numero = numero;
@@ -164,6 +177,10 @@ public class PersoJoueur implements Joueur
 		return this.chosesAFaire;
 	}
     
+    /**
+     * Liste les propriétés possédées par le joueur
+     * @return liste des propriétés du joueur
+     */
     public String listerProp()
     {
 	String liste = "Liste des propriétés : \n";
@@ -179,11 +196,18 @@ public class PersoJoueur implements Joueur
 	return liste;
     }
     
+    /**
+     * Libère le joueur de prison
+     */
     public void liberer()
     {
     	this.estEnPrison = false;
     }
     
+    /**
+     * 
+     * @return la valeur du dernier lancer de dé du joueur
+     */
     public int dernierLancer()
     {
     	TirerDes td = new TirerDes("Lancer", this, this.g);
@@ -197,6 +221,9 @@ public class PersoJoueur implements Joueur
     	this.especes = somme;
     }
     
+    /** Décrit le joueur
+     * @return la description du joueur
+     */
     public String toString()
     {
 		String j = "Numéro : "+this.numero+"\nNom : "+this.nom+"\nSomme : "+this.especes+"\nPlacé sur : "+this.position.nom()+"\n"+this.listerProp();

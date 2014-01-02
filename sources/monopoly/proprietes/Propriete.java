@@ -42,5 +42,6 @@ public interface Propriete {
     /** Niveau des constructions (0 = terrain nu, 1 à 4 = nb de
      * maisons, 5 = hôtel)  */
     int niveauImmobilier() ;
+    /** Met en tant que propriétaire le Joueur j en paramètre **/
     void setProprietaire(Joueur j);
 }

@@ -1,219 +1,482 @@
 package monopoly.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Panel;
-import java.awt.TextArea;
+import monopoly.evenements.*;
+import monopoly.jeu.*;
+import monopoly.proprietes.*;
+
+import java.awt.*;
 import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.border.Border;
 
-import monopoly.jeu.*;
-
-public class Plateau extends JFrame
+public class Plateau
 {
-	private JPanel panel;
-	public static void main(String [] args)
-	{
-		Plateau p = new Plateau();
-		p.pack();
-		p.setVisible(true);
-	}
+	private JFrame fen = new JFrame("Monopoly");
 	
 	public Plateau()
 	{
-		super("Monopoly");
-		Game g = new Game();
-		int nbCasesparTour = g.lesCases().size() / 4;
-		int cpt = 0;
-		int cardinalite = 0;
 		
-		JPanel middle = new JPanel();
-		middle.setBackground(new Color(39,134,58));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(new BorderLayout());
-//		getContentPane().setLayout(new GridBagLayout());
-//		GridBagConstraints gbc = new GridBagConstraints();
-//		panel = new JPanel();
-//		// On instancie le jeu
-//		Iterator<Case> it = g.lesCases().iterator();
-////		gbc.fill = GridBagConstraints.HORIZONTAL;
-////		gbc.gridx=1;
-////		gbc.gridy=1;
-////		gbc.weightx=1.00;
-//		this.add(middle,gbc);
-//		for(int i = 0; i<g.lesCases().size(); i++){
-////			if(i%nbCasesparTour==0)
-//			gbc.fill = GridBagConstraints.CENTER;
-//			gbc.gridx=i%nbCasesparTour;
-//			System.out.println("Y : " + cardinalite + " i = " + i);
-//			
-//			gbc.gridy=cardinalite;
-//			this.add(new JButton(g.lesCases().get(i).nom()),gbc);
-//			if(i%nbCasesparTour==0){
-//				cardinalite++;
-//			}else if(cardinalite == 2 )
-//			{
-//
-//				System.out.println("up");
-//				cardinalite++;
-//			}
-//		}
-		
-//		gbc.fill = GridBagConstraints.LAST_LINE_START;
-//		gbc.gridx=0;
-//		gbc.gridy=0;
-//		this.add(new JButton("Bas Gauche"),gbc);
-//		gbc.fill = GridBagConstraints.PAGE_END;
-//		gbc.gridx=1;
-//		gbc.gridy=0;
-//		this.add(new JButton("Bas Mid"),gbc);
-//		gbc.fill = GridBagConstraints.LAST_LINE_END;
-//		gbc.gridx=2;
-//		gbc.gridy=0;
-//		this.add(new JButton("Bas Droite"),gbc);
-//		gbc.fill = GridBagConstraints.LINE_START;
-//		gbc.gridx=0;
-//		gbc.gridy=1;
-//		this.add(new JButton("Mid Gauche"),gbc);
-//		gbc.fill = GridBagConstraints.LINE_END;
-//		gbc.gridx=2;
-//		gbc.gridy=1;
-//		this.add(new JButton("Mid Droit"),gbc);
-//		gbc.fill = GridBagConstraints.FIRST_LINE_START;
-//		gbc.gridx=0;
-//		gbc.gridy=2;
-//		this.add(new JButton("Top Gauche"),gbc);
-//		gbc.fill = GridBagConstraints.PAGE_START;
-//		gbc.gridx=1;
-//		gbc.gridy=2;
-//		this.add(new JButton("Top Mid"),gbc);
-//		gbc.fill = GridBagConstraints.FIRST_LINE_END;
-//		gbc.gridx=2;
-//		gbc.gridy=2;
-//		this.add(new JButton("Top Droite"),gbc);
-		
-		
-		Panel north = new Panel(new GridLayout(1,0));
-		Panel south = new Panel(new GridLayout(1,0));
-		Panel east = new Panel(new GridLayout(0,1));
-		Panel west = new Panel(new GridLayout(0,1));
-		Panel center = new Panel(new FlowLayout());
-		
-		int size = g.lesCases().size();
-		ArrayList<Case> haut = new ArrayList();
-		ArrayList<Case> bas = new ArrayList();
-		ArrayList<Case> gauche = new ArrayList();
-		ArrayList<Case> droite = new ArrayList();
-		
-		Iterator<Case> it = g.lesCases().iterator();
-
-		while(it.hasNext()){
-			Case tmp = it.next();
-			if(cardinalite==0){
-				bas.add(tmp);
-			}else if(cardinalite==1){
-				gauche.add(tmp);
-			}else if(cardinalite==2){
-				haut.add(tmp);
-			}else if(cardinalite==3){
-				droite.add(tmp);
-			}			
-			cpt++;
-			if(cpt==nbCasesparTour)
+	}
+	
+	/** Met à jour le plateau **/
+	public void actualiser(Game g)
+	{
+		this.init(g);
+	}
+	
+	/** Affiche le plateau représentant l'avancement en cours du jeu **/
+	public void init(Game g)
+	{
+		int hauteurCase = 30;
+		Plateau p = new Plateau();
+		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		int hauteur = (int)tailleEcran.getHeight();
+		int largeur = (int)tailleEcran.getWidth();
+	    fen.setSize(largeur, hauteur);
+	    
+	    fen.setLocationRelativeTo(null);
+	    fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    
+	    GridBagLayout gb = new GridBagLayout();
+	    JPanel pan = new JPanel();
+	    pan.setLayout(gb);
+	    GridBagConstraints c = new GridBagConstraints();
+	    
+	    // haut gauche à haut droit
+	    int i = 0;
+	    for (int cpt = 0 ; cpt <= g.lesCases().size() / 4 ; cpt++)
+	    {
+	    	JPanel lacase = new JPanel();
+	    	GridLayout gl = new GridLayout(2, 1);
+	    	JButton couleur = new JButton("");
+	    	p.setColor(g.lesCases().get(cpt), couleur);
+	    	couleur.setMinimumSize(new Dimension(10, 1));
+	    	couleur.setMaximumSize(new Dimension(10, 1));
+	    	String nom = g.lesCases().get(cpt).nom();
+	    	String[] seq = nom.split(" ");
+	    	nom = "<html><center>";
+	    	int taille = 0;
+	    	for (String s : seq)
+	    	{
+	    		taille += s.length();
+	    		if (taille > 15)
+	    		{
+	    			nom += "<br>"+s;
+	    			taille = s.length();
+	    		}
+	    		else
+	    		{
+	    			nom += " "+s;
+	    		}
+	    	}
+	    	if (g.lesCases().get(cpt).propriete() != null)
+	    	{
+	    		couleur.setText(g.lesCases().get(cpt).propriete().prixAchat()+" F");
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	else if (g.lesCases().get(cpt).evenement() != null)
+	    	{
+	    		if (g.lesCases().get(cpt).evenement().type().equals("dépense"))
+	    		{
+	    			Depense d = (Depense)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(d.somme())+" F");
+	    		}
+	    		else if (g.lesCases().get(cpt).evenement().type().equals("recette"))
+	    		{
+	    			Recette r = (Recette)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(r.somme())+" F");
+	    		}
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	nom += "</html>";
+	    	for (Joueur j3 : g.lesJoueurs())
+	    	{
+	    		if (j3.position().numero() == g.lesCases().get(cpt).numero())
+	    		{
+	    			couleur.setText(couleur.getText()+" -> "+j3.numero());
+	    			couleur.setFont(new Font("calibri", 10, 10));
+	    		}
+	    	}
+	    	JLabel test = new JLabel(nom);
+	    	test.setFont(new Font("calibri", 12, 12));
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
+	    	lacase.add(couleur);
+	    	lacase.add(test);
+	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
+	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
+	    	
+		    c.fill = GridBagConstraints.HORIZONTAL;
+		    c.weightx = 0.5;
+		    c.ipady = 35;
+		    c.gridx = i;
+		    c.gridy = 0;
+		    lacase.setLayout(gl);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+		    pan.add(lacase, c);
+		    i++;
+	    }
+	    
+	    // haut droit à bas droit
+	    int j = 1;
+	    for (int cpt = (g.lesCases().size() / 4)  + 1; cpt < g.lesCases().size() / 2 ; cpt++)
+	    {
+	    	JPanel lacase = new JPanel();
+	    	GridLayout gl = new GridLayout(2, 1);
+	    	JButton couleur = new JButton("");
+	    	p.setColor(g.lesCases().get(cpt), couleur);
+	    	couleur.setMinimumSize(new Dimension(10, 1));
+	    	couleur.setMaximumSize(new Dimension(10, 1));
+	    	String nom = g.lesCases().get(cpt).nom();
+	    	String[] seq = nom.split(" ");
+	    	nom = "<html><center>";
+	    	int taille = 0;
+	    	for (String s : seq)
+	    	{
+	    		taille += s.length();
+	    		if (taille > 15)
+	    		{
+	    			nom += "<br>"+s;
+	    			taille = s.length();
+	    		}
+	    		else
+	    		{
+	    			nom += " "+s;
+	    		}
+	    	}
+	    	nom += "</html>";
+	    	if (g.lesCases().get(cpt).propriete() != null)
+	    	{
+	    		couleur.setText(g.lesCases().get(cpt).propriete().prixAchat()+" F");
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	else if (g.lesCases().get(cpt).evenement() != null)
+	    	{
+	    		if (g.lesCases().get(cpt).evenement().type().equals("dépense"))
+	    		{
+	    			Depense d = (Depense)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(d.somme())+" F");
+	    		}
+	    		else if (g.lesCases().get(cpt).evenement().type().equals("recette"))
+	    		{
+	    			Recette r = (Recette)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(r.somme())+" F");
+	    		}
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	for (Joueur j3 : g.lesJoueurs())
+	    	{
+	    		if (j3.position().numero() == g.lesCases().get(cpt).numero())
+	    		{
+	    			couleur.setText(couleur.getText()+" -> "+j3.numero());
+	    			couleur.setFont(new Font("calibri", 10, 10));
+	    		}
+	    	}
+	    	JLabel test = new JLabel(nom);
+	    	test.setFont(new Font("calibri", 12, 12));
+	    	lacase.add(couleur);
+	    	lacase.add(test);
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
+	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
+	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
+		    c.fill = GridBagConstraints.BOTH;
+		    c.weightx = 0.5;
+		    c.ipady = 35;
+		    c.gridx = i - 1;
+		    c.gridy = j;
+		    lacase.setLayout(gl);
+		    pan.add(lacase, c);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+		    j++;
+	    }
+	    
+	    // bas droit à bas gauche
+	    int k = i;
+	    for (int cpt = g.lesCases().size() / 2 ; cpt <= (g.lesCases().size() / 2 + (g.lesCases().size() / 4)) ; cpt++)
+	    {
+	    	JPanel lacase = new JPanel();
+	    	GridLayout gl = new GridLayout(2, 1);
+	    	JButton couleur = new JButton("");
+	    	p.setColor(g.lesCases().get(cpt), couleur);
+	    	couleur.setMinimumSize(new Dimension(10, 1));
+	    	couleur.setMaximumSize(new Dimension(10, 1));
+	    	String nom = g.lesCases().get(cpt).nom();
+	    	String[] seq = nom.split(" ");
+	    	nom = "<html><center>";
+	    	int taille = 0;
+	    	for (String s : seq)
+	    	{
+	    		taille += s.length();
+	    		if (taille > 15)
+	    		{
+	    			nom += "<br>"+s;
+	    			taille = s.length();
+	    		}
+	    		else
+	    		{
+	    			nom += " "+s;
+	    		}
+	    	}
+	    	nom += "</html>";
+	    	if (g.lesCases().get(cpt).propriete() != null)
+	    	{
+	    		couleur.setText(g.lesCases().get(cpt).propriete().prixAchat()+" F");
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	else if (g.lesCases().get(cpt).evenement() != null)
+	    	{
+	    		if (g.lesCases().get(cpt).evenement().type().equals("dépense"))
+	    		{
+	    			Depense d = (Depense)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(d.somme())+" F");
+	    		}
+	    		else if (g.lesCases().get(cpt).evenement().type().equals("recette"))
+	    		{
+	    			Recette r = (Recette)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(r.somme())+" F");
+	    		}
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	for (Joueur j3 : g.lesJoueurs())
+	    	{
+	    		if (j3.position().numero() == g.lesCases().get(cpt).numero())
+	    		{
+	    			couleur.setText(couleur.getText()+" -> "+j3.numero());
+	    			couleur.setFont(new Font("calibri", 10, 10));
+	    		}
+	    	}
+	    	JLabel test = new JLabel(nom);
+	    	test.setFont(new Font("calibri", 12, 12));
+	    	lacase.add(couleur);
+	    	lacase.add(test);
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
+	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
+	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
+		    c.fill = GridBagConstraints.HORIZONTAL;
+		    c.weightx = 0.5;
+		    c.ipady = 35;
+		    c.gridx = k - 1;
+		    c.gridy = j;
+		    lacase.setLayout(gl);
+		    pan.add(lacase, c);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+		    k--;
+	    }
+	    
+	    // bas gauche à haut gauche
+	    int l = j;
+	    for (int cpt = (g.lesCases().size() / 2 + (g.lesCases().size() / 4)) + 1; cpt < g.lesCases().size() ; cpt++)
+	    {
+	    	JPanel lacase = new JPanel();
+	    	GridLayout gl = new GridLayout(2, 1);
+	    	JButton couleur = new JButton("");
+	    	p.setColor(g.lesCases().get(cpt), couleur);
+	    	couleur.setMinimumSize(new Dimension(10, 1));
+	    	couleur.setMaximumSize(new Dimension(10, 1));
+	    	String nom = g.lesCases().get(cpt).nom();
+	    	String[] seq = nom.split(" ");
+	    	nom = "<html><center>";
+	    	int taille = 0;
+	    	for (String s : seq)
+	    	{
+	    		taille += s.length();
+	    		if (taille > 15)
+	    		{
+	    			nom += "<br>"+s;
+	    			taille = s.length();
+	    		}
+	    		else
+	    		{
+	    			nom += " "+s;
+	    		}
+	    	}
+	    	nom += "</html>";
+	    	if (g.lesCases().get(cpt).propriete() != null)
+	    	{
+	    		couleur.setText(g.lesCases().get(cpt).propriete().prixAchat()+" F");
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	else if (g.lesCases().get(cpt).evenement() != null)
+	    	{
+	    		if (g.lesCases().get(cpt).evenement().type().equals("dépense"))
+	    		{
+	    			Depense d = (Depense)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(d.somme())+" F");
+	    		}
+	    		else if (g.lesCases().get(cpt).evenement().type().equals("recette"))
+	    		{
+	    			Recette r = (Recette)g.lesCases().get(cpt).evenement();
+	    			couleur.setText(String.valueOf(r.somme())+" F");
+	    		}
+	    		if (couleur.getBackground().equals(Color.BLACK) || couleur.getBackground().equals(Color.BLUE))
+	    		{
+	    			couleur.setForeground(Color.WHITE);
+	    		}
+	    	}
+	    	for (Joueur j3 : g.lesJoueurs())
+	    	{
+	    		if (j3.position().numero() == g.lesCases().get(cpt).numero())
+	    		{
+	    			couleur.setText(couleur.getText()+" -> "+j3.numero());
+	    			couleur.setFont(new Font("calibri", 10, 10));
+	    		}
+	    	}
+	    	JLabel test = new JLabel(nom);
+	    	test.setFont(new Font("calibri", 12, 12));
+	    	lacase.add(couleur);
+	    	lacase.add(test);
+	    	test.setHorizontalAlignment(JLabel.CENTER);
+	    	test.setVerticalAlignment(JLabel.CENTER);
+	    	lacase.setMinimumSize(new Dimension(10, hauteurCase));
+	    	lacase.setMaximumSize(new Dimension(10, hauteurCase));
+		    c.fill = GridBagConstraints.HORIZONTAL;
+		    c.weightx = 0.5;
+		    c.ipady = 35;
+		    c.gridx = k;
+		    c.gridy = l - 1;
+		    lacase.setLayout(gl);
+		    pan.add(lacase, c);
+		    lacase.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+		    l--;
+	    }
+	    int y = 1;
+	    for (Joueur j1 : g.lesJoueurs())
+	    {
+		    JLabel topo = new JLabel("");
+		    String legende = "<html><center>";
+	    	legende += j1.nom()+" = "+j1.numero()+"<br>";
+		    legende += "</html>";
+		    topo.setText(legende);
+		    GridBagConstraints gbc = new GridBagConstraints();
+		    gbc.weightx = 0.5;
+		    gbc.fill = GridBagConstraints.HORIZONTAL;
+		    gbc.ipady = 40;
+		    gbc.ipadx = 40;
+		    gbc.gridx = 5;
+		    gbc.gridy = y;
+		    topo.setMinimumSize(new Dimension(10, 10));
+	    	topo.setMaximumSize(new Dimension(10, 10));
+		    pan.add(topo, gbc);
+		    y++;
+	    }
+	    fen.setContentPane(pan);
+	    //fen.pack();
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    fen.setExtendedState(Frame.MAXIMIZED_BOTH);
+	    fen.setVisible(true);
+	}
+	
+	/**  Attribue à la case une couleur en fonction du type **/
+	public void setColor(Case lacase, Component c)
+	{
+		if (lacase.propriete() != null)
+    	{
+    		if (lacase.propriete().groupe().nom().equals("bleu ciel"))
+    		{
+    			c.setBackground(Color.CYAN);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("bleu roi"))
+    		{
+    			c.setBackground(Color.BLUE);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("jaune"))
+    		{
+    			c.setBackground(Color.YELLOW);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("mauve"))
+    		{
+    			c.setBackground(Color.MAGENTA);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("orange"))
+    		{
+    			c.setBackground(Color.ORANGE);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("rouge"))
+    		{
+    			c.setBackground(Color.RED);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("vert"))
+    		{
+    			c.setBackground(Color.GREEN);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("violet"))
+    		{
+    			c.setBackground(Color.GRAY);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("gares"))
+    		{
+    			c.setBackground(Color.BLACK);
+    		}
+    		else if (lacase.propriete().groupe().nom().equals("compagnies"))
+    		{
+    			c.setBackground(Color.WHITE);
+    		}
+    	}
+		/*else if (lacase.evenement() != null)
+		{
+			if (lacase.evenement().type() != null)
 			{
-				cardinalite++;
-				cpt=0;
-			}
-		}
-		
-		for (int i = nbCasesparTour-1; i>=0;i--)
-		{
-			Panel p = new Panel();
-			if(bas.get(i).get(i) != null)
-				if(bas.get(i).get(i) != null){
-				JPanel color = new JPanel();
-				Color rgb;
-				//get(i).propriete().groupe().nom()
-				System.out.println(bas);
-				switch (bas.get(i).propriete().groupe().nom()) {
-				case "bleu ciel":
-					rgb = new Color(0,178,238);
-					break;
-				case "bleu roi":
-					rgb = new Color(16,78,139);
-					break;
-				case "jaune":
-					rgb = new Color(255,255,0);
-					break;
-				case "mauve":
-					rgb = new Color(122,55,139);
-					break;
-				case "orange":
-					rgb = new Color(255,140,0);
-					break;
-				case "rouge":
-					rgb = new Color(205,55,0);
-					break;
-				case "vert":
-					rgb = new Color(0,100,0);
-					break;				
-				case "violet":
-					rgb = new Color(255,0,255);
-					break;
-				case "gares":
-					rgb = new Color(0,0,0);
-					break;
-
-				default:
-					rgb = new Color(255,255,255);
-					break;
+				if (lacase.evenement().type().equals("chance"))
+				{
+					c.setBackground(Color.PINK);
 				}
-				color.setBackground(rgb);
-				p.add(color);
+				else if (lacase.evenement().type().equals("CC"))
+				{
+					c.setBackground(Color.WHITE);
+				}
 			}
-			
-			
-			JLabel nom = new JLabel(g.lesCases().get(i).nom());
-			
-		
-			p.setLayout(new GridLayout(0,1));
-			
-			p.add(nom);
-			
-			south.add(p);
-		}
-		
-		for (int i = nbCasesparTour-1; i!=-1;i--)
+		}*/
+	}
+	
+	public static void main(String[] args)
+	{
+		Plateau p = new Plateau();
+		Game g = new Game();
+		p.init(g);
+		int tour = 1;
+		while (JOptionPane.showConfirmDialog(null, "Jouer le tour "+tour+" ?") == JOptionPane.YES_OPTION)
 		{
-			west.add(new JButton(gauche.get(i).nom()));
+			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Début du tour "+tour+"==========\n====================================");
+			for (Joueur j : g.lesJoueurs())
+			{
+				if (j.elimine())
+				{
+					JOptionPane.showMessageDialog(new JFrame(), j.nom()+" est éliminé !");
+				}
+				else
+				{
+					g.jouerTour(j);
+				}
+				
+				p.actualiser(g);
+			}
+			JOptionPane.showMessageDialog(new JFrame(), "====================================\n========== Fin du tour "+tour+"==========\n====================================");
+			tour++;
 		}
-		for (int i = 0; i<haut.size();i++)
-		{
-			north.add(new JButton(haut.get(i).nom()));
-		}
-		for (int i = 0; i<droite.size();i++)
-		{
-			east.add(new JButton(droite.get(i).nom()));
-		}
-		
-		
-		add(north,BorderLayout.NORTH);
-		add(south,BorderLayout.SOUTH);
-		add(east,BorderLayout.EAST);
-		add(west,BorderLayout.WEST);
-		add(middle,BorderLayout.CENTER);
-		setBounds(400, 200, 800, 400);
-		
+		JOptionPane.showMessageDialog(null, "Fin du jeu");
 	}
 }

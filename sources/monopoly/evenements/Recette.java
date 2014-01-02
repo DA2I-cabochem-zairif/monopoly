@@ -12,18 +12,35 @@ public class Recette extends AbstractEvent
 	private int somme;
 	private String type = "";
 	
+	/**
+	 * Crée l'évènement Recette qui va faire gagner une somme à une cible
+	 * @param nom
+	 * @param cible
+	 * @param somme
+	 */
     public Recette(String nom, Joueur cible, int somme)
     {
 		super(nom, cible);
 		this.somme = somme;
 	}
     
+    /**
+     * Crée l'évènement Recette qui va faire gagner une somme à une cible
+     * @param nom
+     * @param somme
+     */
     public Recette(String nom, int somme)
     {
     	super(nom);
     	this.somme = somme;
     }
     
+    /**
+     * Crée l'évènement Recette qui va faire gagner une somme à une cible
+     * @param nom
+     * @param somme
+     * @param type
+     */
     public Recette(String nom, int somme, String type)
     {
     	super(nom);
@@ -31,27 +48,37 @@ public class Recette extends AbstractEvent
     	this.type = type;
     }
     
+    /** Met le joueur en paramètre en tant que cible de l'évènement
+     */
     public void setCible(Joueur j)
     {
     	this.cible = j;
     }
     
+    /** Indique la somme perçue par la cible
+     * 
+     * @return la somme associée à l'évènement
+     */
     public int somme()
     {
     	return this.somme;
     }
     
+    /**
+     * @return Le type d'évènement
+     */
     public String type()
     {
     	return this.type;
     }
     
+    /**
+     * Execute l'évènement et verse la somme associée au joueur cible. Si il a assez d'argent, il déshypothèque le plus possible les propriétés qu'il a hypothéqué.
+     */
 	public void executer()
 	{
-		//System.out.println("Versement de "+this.somme+" à "+this.cible.nom());
 		JOptionPane.showMessageDialog(null, "Versement de "+this.somme+" à "+this.cible.nom());
 		this.cible.verser(this.somme);
-		//System.out.println(this.cible.nom()+" possède "+this.cible.especes()+" euros.");
 		JOptionPane.showMessageDialog(null, this.cible.nom()+" possède "+this.cible.especes()+" euros.");
 		Iterator<Propriete> it = this.cible.titres().iterator();
 		Propriete p = null;
@@ -60,7 +87,6 @@ public class Recette extends AbstractEvent
 			p = it.next();
 			while (p.deshypothequer())
 			{
-				//System.out.println(this.cible.nom()+" a récupéré son bien : "+p.nom());
 				JOptionPane.showMessageDialog(null, this.cible.nom()+" a récupéré son bien : "+p.nom());
 				if (it.hasNext())
 				{
@@ -70,6 +96,9 @@ public class Recette extends AbstractEvent
 		}
 	}
 	
+	/**
+	 * @return La description de l'évènement
+	 */
 	public String toString()
 	{
 		return this.nom+". Somme à empocher : "+this.somme;

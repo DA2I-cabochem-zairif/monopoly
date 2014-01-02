@@ -16,8 +16,14 @@ public interface Case {
     /** Événément susceptible de se déclencher à l'arrivée sur cette
      * case (éventuellement <code>null</code>) */
     Evenement evenement() ;
-    
+    /**
+     * Place une propriété sur la Case
+     * @param p La nouvelle propriete
+     */
     void setProp(Propriete p);
-    
+    /**
+     * Place un évènement sur la Case
+     * @param e Le nouvel evenement
+     */
     void setEvent(Evenement e);
 }

@@ -12,12 +12,23 @@ public class UnGroupe implements Groupe
     private Game g;
     private List<Propriete> lesProp = new ArrayList<Propriete>();
     
+    /**
+     * Crée un groupe
+     * @param nom
+     * @param cout
+     */
     public UnGroupe(String nom, int cout)
     {
 	this.nom = nom;
 	this.coutImmo = cout;
     }
     
+    /**
+     * Crée un groupe
+     * @param nom
+     * @param cout
+     * @param g
+     */
     public UnGroupe(String nom, int cout, Game g)
     {
 	this.nom = nom;
@@ -77,6 +88,7 @@ public class UnGroupe implements Groupe
 		return prop;
     }
     
+    /** Retourne la description du groupe. Liste les propriétés du groupe **/
     public String toString()
     {
     	String caracs = "Nom du groupe : "+this.nom+"\nCout immobilier : "+this.coutImmo+"\nPropriétés de ce groupe : \n"; 

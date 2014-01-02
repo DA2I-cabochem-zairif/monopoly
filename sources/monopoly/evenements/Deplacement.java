@@ -9,23 +9,38 @@ public class Deplacement extends AbstractEvent
 {
 	private Case caseCible;
 	
+	/** Construit le déplacement d'un joueur indépendemment du fait que ce soit un déplacement relatif ou absolu
+	 * @param nom
+	 * @param cible
+	 * @param caseCible
+	 */
     public Deplacement(String nom, Joueur cible, Case caseCible)
     {
 		super(nom, cible);
 		this.caseCible = caseCible;
 	}
     
+    /** Construit le déplacement d'un joueur indépendemment du fait que ce soit un déplacement relatif ou absolu
+     * 
+     * @param nom
+     * @param caseCible
+     */
     public Deplacement(String nom, Case caseCible)
     {
 		super(nom);
 		this.caseCible = caseCible;
 	}
     
+    /** Met le joueur en paramètre en tant que cible de l'évènement
+     */
     public void setCible(Joueur j)
     {
     	this.cible = j;
     }
     
+    /**
+     * Execute le déplacement, et push un nouvel évènement en fonction de la nouvelle case.
+     */
 	public void executer()
 	{
 		this.cible.placerSur(this.caseCible);
@@ -114,6 +129,10 @@ public class Deplacement extends AbstractEvent
 	    }
 	}
 	
+	/**
+	 * Descrit le déplacement du joueur
+	 * @return String le déplacement du joueur cible
+	 */
 	public String toString()
 	{
 		return "Déplacement à la case numéro "+this.caseCible.numero()+" : "+this.caseCible.nom();

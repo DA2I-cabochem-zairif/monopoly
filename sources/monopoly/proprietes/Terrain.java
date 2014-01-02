@@ -7,12 +7,29 @@ public class Terrain extends UnePropriete implements Comparable
 {
     private int prixMaison;
     
+    /**
+     * Crée un Terrain
+     * @param nom
+     * @param prixMaison
+     * @param pos
+     * @param prix
+     * @param groupe
+     * @param loyer
+     */
     public Terrain(String nom, int prixMaison, Case pos, int prix, Groupe groupe, int[] loyer)
     {
 	super(nom, pos, prix, groupe, loyer);
 	this.prixMaison = prixMaison;
     }
     
+    /**
+     * Crée un Terrain
+     * @param nom
+     * @param prixMaison
+     * @param prix
+     * @param groupe
+     * @param loyer
+     */
     public Terrain(String nom, int prixMaison, int prix, Groupe groupe, int[] loyer)
     {
 	super(nom, prix, groupe, loyer);
@@ -72,16 +89,19 @@ public class Terrain extends UnePropriete implements Comparable
 	}
     }
     
+    /** Retourne la description de la maison **/
     public String toString()
     {
     	return super.toString()+"\nPrix de la maison : "+this.prixMaison+"\n";
     }
     
+    /** Retourne le prix de la maison **/
     public int prixMaison()
     {
     	return this.prixMaison;
     }
     
+    /** Compare la propriété avec une autre en fonction de son prix d'achat **/
 	public int compareTo(Object o)
 	{
 		int result = 0;

@@ -12,7 +12,9 @@ import monopoly.proprietes.*;
 public class Game
 {
 	private List<Case> lesCases = new ArrayList<Case>();
+	/** La liste des carte chances **/
 	public static List<Carte> lesCartesChances = new ArrayList<Carte>();
+	/** La liste des carte Caisse de communauté **/
 	public static List<Carte> lesCartesCC = new ArrayList<Carte>();
 	private List<Groupe> lesGroupes = new ArrayList<Groupe>();
 	private List<Joueur> lesJoueurs = new ArrayList<Joueur>();
@@ -20,12 +22,20 @@ public class Game
 	private List<String[]> paramsCartes = new ArrayList<String[]>();
 	private List<String[]> joueursSaved = new ArrayList<String[]>();
 	private List<String[]> titresSaved = new ArrayList<String[]>();
+	/** La case prison **/
 	public static Case PRISON;
+	/** La case départ **/
 	public static Case DEPART;
+	/** La liste des cases **/
 	public static List<Case> LES_CASES;
+	/** La liste des carte chances **/
 	public static List<Carte> LES_CHANCES;
+	/** La liste des carte Caisse de communauté **/
 	public static List<Carte> LES_CC;
 	
+	/**
+	 * Crée les différents paramètres du jeu, les groupes, les cartes, les sauvegardes, etc...
+	 */
 	public Game()
 	{
 		this.creerParamsMonop("cartes.csv", this.paramsCartes);
@@ -40,16 +50,27 @@ public class Game
 		this.editTitres();
 	}
 	
+	/**
+	 * Liste les cartes chances
+	 * @return la liste des cartes chances
+	 */
 	public List<Carte> lesChances()
 	{
 		return this.lesCartesChances;
 	}
 	
+	/**
+	 * Liste les cartes caisse de communauté
+	 * @return la liste des cartes caisse de communauté
+	 */
 	public List<Carte> lesCC()
 	{
 		return this.lesCartesCC;
 	}
 	
+	/**
+	 * Met à jour les propriétés concernées par la fichier de sauvegarde
+	 */
 	public void editTitres()
 	{
 		for (String[] list : this.titresSaved)
@@ -64,11 +85,18 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Liste les groupes de propriétés
+	 * @return la liste les groupes de propriétés
+	 */
 	public List<Groupe> lesGroupes()
 	{
 		return this.lesGroupes;
 	}
 	
+	/**
+	 * Crée les cases du jeu en fonction du fichier csv mis en paramètre dans le constructeur
+	 */
 	public void creerCases()
 	{
 		for (String[] list : this.paramsMonop)
@@ -123,6 +151,9 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Crée les cartes du jeu en fonction du fichier csv monopoly.csv
+	 */
 	public void creerCartes()
 	{
 		for (String[] list : this.paramsCartes)
@@ -226,6 +257,9 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Crée les joueurs en fonction du souhait de l'utilisateur : reprendre la sauvegarde ou créer une nouvelle partie ?
+	 */
 	public void creerJoueurs()
 	{
 		if (JOptionPane.showConfirmDialog(null, "Reprendre une partie sauvegardée ?") != JOptionPane.YES_OPTION)
@@ -268,6 +302,9 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Crée les différents groupes en fonction des différentes propriétés du fichier csv monopoly.csv
+	 */
 	public void creerGroupes()
 	{
 		for (String[] list : this.paramsMonop)
@@ -296,6 +333,9 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Crée les différents évènements en fonction des différentes propriétés, cases et cartes du fichier csv monopoly.csv
+	 */
 	public void creerEvents()
 	{
 		int cpt = 0;
@@ -344,116 +384,29 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Liste les cases du plateau
+	 * @return la liste des cases du plateau
+	 */
 	public List<Case> lesCases()
 	{
 		return this.lesCases;
 	}
 	
+	/**
+	 * Liste les joueurs
+	 * @return la liste des joueurs
+	 */
 	public List<Joueur> lesJoueurs()
 	{
 		return this.lesJoueurs;
 	}
 	
-	public void initialiserTour(Joueur j)
-	{
-		Scanner sc = new Scanner(System.in);
-		System.out.println(j.nom()+" est en prison : "+j.enPrison());
-		if (j.enPrison())
-		{
-			Emprisonnement.TAB_PRISON.put(j, Emprisonnement.TAB_PRISON.get(j) + 1);
-			if (Emprisonnement.TAB_PRISON.get(j) >= 3)
-			{
-				j.liberer();
-				Emprisonnement.TAB_PRISON.put(j, 0);
-			}
-		}
-		if (!j.enPrison())
-		{
-			TirerDes td = new TirerDes("Tirage de dés de "+j.nom(), j, this);
-			td.executer();
-			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom()+" et possède "+j.especes());
-			System.out.println(td);
-			DeplacementRelatif dr = new DeplacementRelatif("Déplace", j, td.valeur(), this.lesCases, this);
-			dr.executer();
-			System.out.println(j.nom()+" est sur la case "+j.position().numero()+" : "+j.position().nom());
-			if (j.position().propriete() == null)
-			{
-				if (j.position().evenement() != null)
-				{
-					j.position().evenement().setCible(j);
-					System.out.println(j.position().evenement());
-					j.position().evenement().executer();
-				}
-				else
-				{
-					System.out.println("Bienvenue à la visite de "+j.position().nom());
-				}
-			}
-			else
-			{
-				if (j.position().propriete().proprietaire() == null)
-				{
-					System.out.println("Voulez-vous acheter "+j.position().propriete().nom()+" ?");
-					if (sc.nextLine().equals("o"))
-					{
-						new AchatProp(j.position().propriete(), "acheter", j).executer();
-					}
-				}
-				else if (!j.position().propriete().proprietaire().nom().equals(j.nom()))
-				{
-					PayerLoyer pl = new PayerLoyer(j.position().propriete(), "Raquer", j);
-					pl.executer();
-				}
-				else
-				{
-					System.out.println("Voulez-vous construire une maison ?");
-					if (sc.nextLine().equals("o"))
-					{
-						System.out.println("Ancien loyer : "+j.position().propriete().loyer());
-						if (j.position().propriete().construire())
-						{
-							System.out.println("Bravo vous avez une maison");
-							System.out.println("Nouveau loyer : "+j.position().propriete().loyer());
-						}
-						else
-						{
-							System.out.println("Tu n'as pas assez de pognon, vive le capitalisme (ou bien tu as un monopole et tu ne peux pas construire dessus !!!)");
-						}
-					}
-				}
-			}
-			if (td.faitUnDouble())
-			{
-				System.out.println("Vous avez fait un double : rejouez !");
-				System.out.println("============================================================================");
-				this.initialiserTour(j);
-			}
-		}
-	}
-	
+	/**
+	 * Lance le jeu et le continue tant qu'il n'y a pas de vainqueur
+	 */
 	public void play()
 	{
-		/*for (Groupe g : this.lesGroupes)
-		{
-			System.out.println(g);
-		}*/
-		/*for (Carte carte : this.lesCartesCC)
-		{
-			System.out.println(carte+"\n");
-		}
-		for (Carte carte : this.lesCartesChances)
-		{
-			System.out.println(carte+"\n");
-		}*/
-		/*for (Case c : this.lesCases)
-		{
-			System.out.println(c+"\n");
-		}*/
-		/*for (Joueur j : this.lesJoueurs)
-		{
-			System.out.println(j);
-		}*/
-		
 		Game.LES_CASES = this.lesCases;
 		Game.LES_CC = this.lesCartesCC;
 		Game.LES_CHANCES = this.lesCartesChances;
@@ -482,6 +435,10 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Joue le tour d'un joueur
+	 * @param j
+	 */
 	public void jouerTour(Joueur j)
 	{
 		if (!j.elimine())
@@ -495,6 +452,11 @@ public class Game
 		}
 	}
 	
+	/**
+	 * Lit le fichier et retourne les lignes du fichier
+	 * @param file
+	 * @return Les lignes du fichier
+	 */
 	public static ArrayList<String> readFile(File file)
 	{
         ArrayList<String> result = new ArrayList<String>();
@@ -542,6 +504,11 @@ public class Game
         return result;
     }
 	
+	/**
+	 * Crée les paramètre du monopoly en retournant une liste des cases, propriétés etc
+	 * @param fileName
+	 * @param list Les paramètres du jeu
+	 */
 	public void creerParamsMonop(String fileName, List<String[]> list)
 	{
 		String path = System.getProperty("user.dir" );

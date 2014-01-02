@@ -11,6 +11,14 @@ public class MonoCase implements Case
     private Evenement event;
     private Game g;
     
+    /**
+     * Crée une case
+     * @param num
+     * @param nom
+     * @param prop
+     * @param event
+     * @param g
+     */
     public MonoCase(int num, String nom, Propriete prop, Evenement event, Game g)
     {
 	this.num = num;
@@ -20,6 +28,12 @@ public class MonoCase implements Case
 	this.g = g;
     }
     
+    /**
+     * Crée une case
+     * @param num
+     * @param nom
+     * @param g
+     */
     public MonoCase(int num, String nom, Game g)
     {
 	this.num = num;
@@ -29,6 +43,13 @@ public class MonoCase implements Case
 	this.g = g;
     }
     
+    /**
+     * Crée une case
+     * @param num
+     * @param nom
+     * @param prop
+     * @param g
+     */
     public MonoCase(int num, String nom, Propriete prop, Game g)
     {
 	this.num = num;
@@ -38,6 +59,12 @@ public class MonoCase implements Case
 	this.g = g;
     }
     
+    /**
+     * Crée une case
+     * @param num
+     * @param nom
+     * @param event
+     */
     public MonoCase(int num, String nom, Evenement event)
     {
 	this.num = num;
@@ -84,16 +111,25 @@ public class MonoCase implements Case
 	return this.event;
     }
     
+    /**
+     * Place une nouvelle propriété sur la case
+     */
     public void setProp(Propriete p)
     {
 	this.prop = p;
     }
     
+    /**
+     * Place un  nouvel évènement sur la case
+     */
     public void setEvent(Evenement e)
     {
 	this.event = e;
     }
     
+    /**
+     * Description de la case
+     */
     public String toString()
     {
     	String carac = "Numero de la case : "+this.num+"\nNom de la case : "+this.nom+"\nEvenement : "+this.event+"\n";

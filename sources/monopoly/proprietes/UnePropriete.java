@@ -17,6 +17,14 @@ public abstract class UnePropriete implements Propriete
     private Groupe groupe;
     protected int niveauImmo;
     
+    /**
+     * Crée une propriété
+     * @param nom
+     * @param pos
+     * @param prix
+     * @param groupe
+     * @param loyer
+     */
     public UnePropriete(String nom, Case pos, int prix, Groupe groupe, int[] loyer)
     {
 	this.position = pos;
@@ -29,6 +37,13 @@ public abstract class UnePropriete implements Propriete
 	this.loyer = loyer;
     }
     
+    /**
+     * Crée une propriété
+     * @param nom
+     * @param prix
+     * @param groupe
+     * @param loyer
+     */
     public UnePropriete(String nom, int prix, Groupe groupe, int[] loyer)
     {
 	this.nom = nom;
@@ -40,6 +55,7 @@ public abstract class UnePropriete implements Propriete
 	this.loyer = loyer;
     }
     
+    /** Place la propriété dans la Case c en paramètre **/
     public void setPosition(Case c)
     {
     	this.position = c;
@@ -57,6 +73,7 @@ public abstract class UnePropriete implements Propriete
 	return this.nom;
     }
 
+    /** Met le Joueur j en tant que nouveau propriétaire **/
     public void setProprietaire(Joueur j){
 	this.proprietaire = j;
     }
@@ -134,11 +151,13 @@ public abstract class UnePropriete implements Propriete
 	return this.niveauImmo;
     }
     
+    /** Change le niveau immobilier **/
     public void setNiveauImmobilier(int immo)
     {
     	this.niveauImmo = immo;
     }
     
+    /** Retourne la description de la propriete **/
     public String toString()
     {
     	String prop = "Nom de la propriété : "+this.nom+"\nPrix : "+this.prix+"\nLa case : "+this.position.numero()+"\nLoyers : "+this.loyer+"\nGroupe : "+this.groupe.nom()+"\n";

@@ -15,12 +15,23 @@ public class TirerDes extends AbstractEvent
     private Game g;
     public static int DERNIER_LANCER;
     
+    /**
+     * Crée l'évènement qui permettra à une cible de tirer les dés.
+     * @param nom
+     * @param cible
+     * @param g
+     */
     public TirerDes(String nom, Joueur cible, Game g)
     {
     	super(nom, cible);
     	this.g = g;
     }
     
+    /**
+     * Execute l'évènement et tire les dés si le joueur n'est pas en prison ou s'il a purgé ses 3 tours de prisons.
+     * Le joueur sort de prison s'il fait un double, ou bien il rejoue s'il n'y était pas.
+     * Au bout du troisième double il est emprisonné.
+     */
     public void executer()
     {
     	String listeAdv = "Liste des adversaires de "+this.cible.nom()+" :\n";
@@ -36,7 +47,6 @@ public class TirerDes extends AbstractEvent
     		this.faitUnDouble = true;
     	}
     	this.lancer = (int)lancer1 + (int)lancer2;
-    	//this.lancer = 4;
     	JOptionPane.showMessageDialog(new JFrame(), this.cible.nom()+" est sur "+this.cible.position().nom()+"\n"+"Dé 1 : "+(int)lancer1+" et dé 2 : "+(int)lancer2+"\n"+this.cible.nom()+" fait "+this.lancer);
     	TirerDes.DERNIER_LANCER = this.lancer;
 		if (this.cible.enPrison())
@@ -75,16 +85,27 @@ public class TirerDes extends AbstractEvent
     	}
     }
     
+    /**
+     * Indique si le joueur a fait un double
+     * @return true si les dés sont identiques
+     */
     public boolean faitUnDouble()
     {
     	return this.faitUnDouble;
     }
     
+    /**
+     * Indique la valeur du déplacement
+     * @return La somme es deux dés
+     */
     public int valeur()
     {
 	return this.lancer;
     }
     
+    /**
+     * La description de l'évènement
+     */
     public String toString()
     {
     	return this.cible.nom()+" fait "+this.lancer;

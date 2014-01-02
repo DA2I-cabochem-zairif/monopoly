@@ -9,6 +9,13 @@ public class DeplacementRelatif extends AbstractEvent
 	private int changement;
 	private List<Case> lesCases;
 	
+	/**
+	 * Créé un évènement de déplacement relatif
+	 * @param nom
+	 * @param changement
+	 * @param lesCases
+	 * @param g
+	 */
 	public DeplacementRelatif(String nom, int changement, List<Case> lesCases, Game g)
 	{
 		super(nom);
@@ -16,6 +23,14 @@ public class DeplacementRelatif extends AbstractEvent
 		this.changement = changement;
 	}
 	
+	/**
+	 * Créé un évènement de déplacement relatif
+	 * @param nom
+	 * @param cible
+	 * @param changement
+	 * @param lesCases
+	 * @param g
+	 */
 	public DeplacementRelatif(String nom, Joueur cible, int changement, List<Case> lesCases, Game g)
 	{
 		super(nom, cible);
@@ -23,6 +38,9 @@ public class DeplacementRelatif extends AbstractEvent
 		this.changement = changement;
 	}
 
+	/**
+	 * Execute l'évènement sur le joueur cible. Si il passe par la case départ, on push l'évènement de cette case dans la stack d'évènement du joueur cible
+	 */
 	public void executer()
 	{
 		int indexActuel = this.cible.position().numero();
@@ -59,13 +77,18 @@ public class DeplacementRelatif extends AbstractEvent
 	    }
 	}
 	
+	/** Met le joueur en paramètre en tant que cible de l'évènement
+     */
 	public void setCible(Joueur j)
 	{
 		this.cible = j;
 	}
 	
+	/** Retourne le nom du joueur
+	 * @return Le nom du joueur cible
+	 */
 	public String toString()
 	{
-		return this.nom+". Nouvelle case : ";
+		return this.nom;
 	}
 }
